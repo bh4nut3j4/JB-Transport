@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Base64;
 
-import java.io.UnsupportedEncodingException;
+import in.errorlabs.jbtransport.R;
 
 /**
  * Created by root on 6/27/17.
@@ -26,24 +26,32 @@ public class SharedPrefs{
         sharedPreferences = context.getSharedPreferences(myprefs,Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
     }
-    public String encodeKey(String key) throws UnsupportedEncodingException {
-        byte[] data = key.getBytes("UTF-8");
-        return Base64.encodeToString(data, Base64.DEFAULT);
+    public String encodeKey(String key){
+        byte[] data = Base64.encode(key.getBytes(), Base64.DEFAULT);
+        return new String(data);
     }
-    public String encodeValue(String key) throws UnsupportedEncodingException {
-        byte[] data = key.getBytes("UTF-8");
-        return Base64.encodeToString(data, Base64.DEFAULT);
+    public String encodeValue(String key){
+        byte[] data = Base64.encode(key.getBytes(), Base64.DEFAULT);
+        return new String(data);
     }
-    public String decodeValue(String Key) throws UnsupportedEncodingException {
+    public String decodeValue(String Key){
         byte[] data = Base64.decode(Key, Base64.DEFAULT);
-        return new String(data, "UTF-8");
+        return new String(data);
     }
-    public void setFirebaseInstanceToken(String token) throws UnsupportedEncodingException {
+    public void setFirstOpen(){
+        editor.putString(encodeKey(FirstOpen), String.valueOf(R.string.truestring));
+        editor.commit();
+    }
+    public String getFirstOpen(){
+        return sharedPreferences.getString(encodeKey(FirstOpen),null);
+    }
+    public void setFirebaseInstanceToken(String token){
         editor.putString(encodeKey(FirebaseInstanceToken),encodeValue(token));
         editor.commit();
     }
-    public String getFirebaseInstanceToken() throws UnsupportedEncodingException {
-        return sharedPreferences.getString(encodeKey(FirebaseInstanceToken),null);
+    public String getFirebaseInstanceToken(){
+        String value = sharedPreferences.getString(encodeKey(FirebaseInstanceToken),null);
+        return decodeValue(value);
     }
 
 }

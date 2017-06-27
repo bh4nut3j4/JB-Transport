@@ -5,6 +5,9 @@ android {
     buildToolsVersion "26.0.0"
     defaultConfig {
         applicationId "in.errorlabs.jbtransport"
+        manifestPlaceholders = [onesignal_app_id: "a9f592f2-e9ac-43f0-8bcd-39c855737ace",
+                                // Project number pulled from dashboard, local value is ignored.
+                                onesignal_google_project_number: "REMOTE"]
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 1
@@ -35,6 +38,7 @@ dependencies {
     compile 'com.google.firebase:firebase-messaging:10.0.1'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+    compile 'com.onesignal:OneSignal:[3.5.3,4.0.0)'
 }
 
 
