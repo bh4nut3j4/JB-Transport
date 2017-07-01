@@ -98,6 +98,7 @@
                         android:layout_height="50dp"
                         android:layout_marginLeft="15dp"
                         android:layout_marginStart="15dp"
+                        android:id="@+id/busimg"
                         android:contentDescription="@string/directionsimagedesc"
                         android:src="@drawable/busleft"/>
                     <TextView

@@ -34,7 +34,8 @@
             android:label="@string/title_activity_college_map"
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.activities.HomeActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <service android:name=".firebase.FirebaseInstanceIDToken">
             <intent-filter>

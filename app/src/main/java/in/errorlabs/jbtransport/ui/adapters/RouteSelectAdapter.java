@@ -1,6 +1,5 @@
 package in.errorlabs.jbtransport.ui.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -95,7 +94,6 @@ public class RouteSelectAdapter extends RecyclerView.Adapter<RouteSelectAdapter.
                                     Intent intent= new Intent(v.getContext(),HomeActivity.class);
                                     intent.putExtra("IntentKey",sharedPrefs.getSelectedRouteNumber());
                                     v.getContext().startActivity(intent);
-                                    ((Activity)context).finish();
                                 }else {
                                     Toast.makeText(v.getContext(),R.string.tryagainlater,Toast.LENGTH_SHORT).show();
                                 }

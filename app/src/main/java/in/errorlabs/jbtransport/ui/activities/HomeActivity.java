@@ -23,6 +23,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -32,22 +36,41 @@ import com.onesignal.OneSignal;
 
 import net.steamcrafted.loadtoast.LoadToast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.concurrent.TimeUnit;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import in.errorlabs.jbtransport.R;
 import in.errorlabs.jbtransport.ui.activities.CollegeMap.CollegeMap;
+import in.errorlabs.jbtransport.ui.constants.HomeConstants;
 import in.errorlabs.jbtransport.utils.Connection;
+import in.errorlabs.jbtransport.utils.Constants;
 import in.errorlabs.jbtransport.utils.SharedPrefs;
+import okhttp3.OkHttpClient;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
     public static final String TAG = "HomeActivity";
+    OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+            .connectTimeout(120, TimeUnit.SECONDS)
+            .readTimeout(120, TimeUnit.SECONDS)
+            .writeTimeout(120, TimeUnit.SECONDS)
+            .build();
     SharedPrefs sharedPrefs;
     private GoogleMap mMap;
     @BindView(R.id.homerouteslist_recyclerview)RecyclerView recyclerView;
     @BindView(R.id.layout1)LinearLayout linearLayout;
-    @BindView(R.id.r1)
-    RelativeLayout relativeLayout;
+    @BindView(R.id.r1)RelativeLayout relativeLayout;
+    @BindView(R.id.routenumber) TextView routeNumber;
+    @BindView(R.id.startingpoint) TextView startingPoint;
+    @BindView(R.id.endingpoint) TextView endingPoint;
+    @BindView(R.id.viapoint) TextView viaPoint;
+    @BindView(R.id.busumber_end) TextView busNumber;
+    @BindView(R.id.departuretime) TextView departureTime;
     LoadToast loadToast;
     Connection connection;
 
@@ -62,8 +85,13 @@ public class HomeActivity extends AppCompatActivity
                 .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
                 .unsubscribeWhenNotificationsAreDisabled(true)
                 .init();
+        sharedPrefs = new SharedPrefs(this);
         loadToast = new LoadToast(this);
         connection = new Connection(this);
+        if (FirebaseInstanceId.getInstance().getToken() != null) {
+            FirebaseMessaging.getInstance().subscribeToTopic(sharedPrefs.getSelectedRouteFcmID());
+            Log.d("MSG", "topic");
+        }
         startMainActivity();
 
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -100,10 +128,6 @@ public class HomeActivity extends AppCompatActivity
             linearLayout.setVisibility(View.GONE);
             getAllRoutes();
         } else if (sharedPrefs.getSelectedRouteNumber() != null && sharedPrefs.getSelectedRouteFcmID() != null) {
-            if (FirebaseInstanceId.getInstance().getToken() != null) {
-                FirebaseMessaging.getInstance().subscribeToTopic(sharedPrefs.getSelectedRouteFcmID());
-                Log.d("MSG", "topic");
-            }
             relativeLayout.setVisibility(View.GONE);
             getSelectedRouteDetails();
             SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -121,7 +145,42 @@ public class HomeActivity extends AppCompatActivity
 
 
     public void getSelectedRouteDetails() {
-
+        loadToast.show();
+        AndroidNetworking.post(Constants.RouteGetDetailsById)
+                .setOkHttpClient(okHttpClient)
+                .setPriority(Priority.HIGH)
+                .addBodyParameter(Constants.AppKey, String.valueOf(R.string.transportAppKey))
+                .addBodyParameter(Constants.RouteNumber,sharedPrefs.getSelectedRouteNumber())
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        if (response.length()>0){
+                            if (response.has(Constants.HomeRouteObjectName)){
+                                try {
+                                    JSONArray routeArray = response.getJSONArray(Constants.HomeRouteObjectName);
+                                    for (int i=0;i<=routeArray.length();i++){
+                                        JSONObject routeObject = routeArray.getJSONObject(i);
+                                        routeNumber.setText(routeObject.getString(HomeConstants.routeNumber));
+                                        startingPoint.setText(routeObject.getString(HomeConstants.startPoint));
+                                        endingPoint.setText(routeObject.getString(HomeConstants.endPoint));
+                                        viaPoint.setText(routeObject.getString(HomeConstants.viaPoint));
+                                        busNumber.setText(routeObject.getString(HomeConstants.busNumber));
+                                        departureTime.setText(routeObject.getString(HomeConstants.departureTime));
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }else {
+                            showDataError();
+                        }
+                    }
+                    @Override
+                    public void onError(ANError anError) {
+                        showDataError();
+                    }
+                });
     }
 
     public void showError() {
@@ -134,6 +193,10 @@ public class HomeActivity extends AppCompatActivity
                 }
             }
         });
+    }
+    public void showDataError() {
+        loadToast.error();
+        Snackbar.make(relativeLayout, getString(R.string.tryagainlater), Snackbar.LENGTH_INDEFINITE).show();
     }
 
     @Override

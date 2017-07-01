@@ -79,7 +79,8 @@ public class SharedPrefs{
         editor.commit();
     }
     public String getSelectedRouteNumber(){
-        return sharedPreferences.getString(encodeKey(SelectedRouteNumber),null);
+        String value =  sharedPreferences.getString(encodeKey(SelectedRouteNumber),null);
+        return decodeValue(value);
     }
 
     public void setSelectedRouteFcmID(String fcmID){
@@ -87,7 +88,8 @@ public class SharedPrefs{
         editor.commit();
     }
     public String getSelectedRouteFcmID(){
-        return sharedPreferences.getString(encodeKey(SelectedRouteFcmID),null);
+        String value = sharedPreferences.getString(encodeKey(SelectedRouteFcmID),null);
+        return decodeValue(value);
     }
 
     public void setAlreadySkipped(){

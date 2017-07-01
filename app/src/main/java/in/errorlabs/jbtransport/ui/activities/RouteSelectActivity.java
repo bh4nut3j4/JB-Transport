@@ -145,7 +145,6 @@ public class RouteSelectActivity extends AppCompatActivity {
                 });
     }
 
-
     public void showError(){
         loadToast.error();
         Snackbar.make(relativeLayout,getString(R.string.tryagainlater),Snackbar.LENGTH_INDEFINITE).setAction("Retry", new View.OnClickListener() {
