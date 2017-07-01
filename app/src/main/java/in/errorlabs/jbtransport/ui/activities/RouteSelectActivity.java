@@ -17,6 +17,8 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
+import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 
 import net.steamcrafted.loadtoast.LoadToast;
 
@@ -54,6 +56,7 @@ public class RouteSelectActivity extends AppCompatActivity {
     Connection connection;
     SharedPrefs sharedPrefs;
     LoadToast loadToast;
+    NiftyDialogBuilder dialogBuilder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,10 +69,17 @@ public class RouteSelectActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(animator);
         recyclerView.setItemAnimator(new SlideInLeftAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        dialogBuilder= NiftyDialogBuilder.getInstance(this);
         if (connection.isInternet()){
-            if (sharedPrefs.getRouteSelected()){
-                Log.d("LOG","true");
-                startActivity(new Intent(getApplicationContext(),HomeActivity.class));
+            if (sharedPrefs.getSelectedRouteNumber()!=null && sharedPrefs.getSelectedRouteFcmID()!=null){
+                Intent intent= new Intent(getApplicationContext(),HomeActivity.class);
+                intent.putExtra(getString(R.string.IntentKey),sharedPrefs.getSelectedRouteNumber());
+                startActivity(intent);
+                finish();
+            }else if(sharedPrefs.getAlreadySkipped()){
+                Intent intent= new Intent(getApplicationContext(),HomeActivity.class);
+                intent.putExtra(getString(R.string.IntentKey),getString(R.string.SkipStatus));
+                startActivity(intent);
                 finish();
             }else {
                 loadToast.show();
@@ -158,7 +168,31 @@ public class RouteSelectActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.skip) {
-            return true;
+            dialogBuilder
+                    .withTitle("Warning")
+                    .withMessage("If you skip this step, You wont be able to receive any notification updates regarding changes made in buses.")
+                    .withEffect(Effectstype.Fall)
+                    .withDialogColor("#1565c0")
+                    .withDividerColor("#11000000")
+                    .withButton1Text("Skip")
+                    .withButton2Text("Cancel")
+                    .setButton1Click(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            sharedPrefs.setAlreadySkipped();
+                            Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+                            intent.putExtra(getString(R.string.IntentKey),getString(R.string.SkipStatus));
+                            startActivity(intent);
+                            finish();
+                        }
+                    })
+                    .setButton2Click(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialogBuilder.dismiss();
+                        }
+                    })
+                    .show();
         }
         return super.onOptionsItemSelected(item);
     }

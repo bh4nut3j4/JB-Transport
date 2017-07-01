@@ -16,6 +16,9 @@ public class SharedPrefs{
     public static final String FirstOpen = "FirstOpen";
     public static final String FirebaseInstanceToken = "Token";
     public static final String RouteSelected = "Route";
+    public static final String SelectedRouteNumber = "selectedRoute";
+    public static final String SelectedRouteFcmID = "fcm";
+    public static final String AlreadySkipped = "skipped";
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -69,6 +72,31 @@ public class SharedPrefs{
     }
     public boolean getRouteSelected(){
         return sharedPreferences.getBoolean(encodeKey(RouteSelected),false);
+    }
+
+    public void setSelectedRouteNumber(String number){
+        editor.putString(encodeKey(SelectedRouteNumber),encodeValue(number));
+        editor.commit();
+    }
+    public String getSelectedRouteNumber(){
+        return sharedPreferences.getString(encodeKey(SelectedRouteNumber),null);
+    }
+
+    public void setSelectedRouteFcmID(String fcmID){
+        editor.putString(encodeKey(SelectedRouteFcmID),encodeValue(fcmID));
+        editor.commit();
+    }
+    public String getSelectedRouteFcmID(){
+        return sharedPreferences.getString(encodeKey(SelectedRouteFcmID),null);
+    }
+
+    public void setAlreadySkipped(){
+        editor.putBoolean(encodeKey(AlreadySkipped),true);
+        editor.commit();
+    }
+
+    public boolean getAlreadySkipped(){
+        return sharedPreferences.getBoolean(encodeKey(AlreadySkipped),false);
     }
 
 }

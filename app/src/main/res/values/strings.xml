@@ -57,4 +57,23 @@
     <string name="Setasdefaultroute">Set As Primary Route</string>
     <string name="Loading">Loading...</string>
     <string name="alert_dailog_message">Are you sure you want to set this route as your primary route ?</string>
+    <string name="IntentKey">IntentKey</string>
+    <string name="SkipStatus">SkipStatus</string>
+    <string name="mailto">mailto:</string>
+    <string name="bhanuteja.r07email">bhanuteja.r07@gmail.com</string>
+    <string name="subjectemailqstn">\?subject=</string>
+    <string name="reportingabug">Reporting A Bug/Feedback</string>
+    <string name="bodymail"><![CDATA[&body=]]></string>
+    <string name="mailintro">Hello, Team Sync  I want to report a bug/give feedback corresponding to the app Sync-Jbiet...  -Your name</string>
+    <string name="sendemail">Send Email</string>
+    <string name="opensource">Open Source Licenses</string>
+    <string name="licenses_text">\t\nThe following are third party software/api that are used in Sync-Jbiet app.\n\n
+        \t<a href="https://github.com/amitshekhariitbhu/Fast-Android-Networking">Fast-Android-Networking</a>\n\n
+\t<a href="https://github.com/bumptech/glide">Glide</a>\n\n
+        \t<a href="https://github.com/OneSignal">One Signal</a>\n\n
+\t<a href="https://github.com/code-mc/loadtoast">Load Toast</a>\n\n
+        \t<a href="https://github.com/lopspower/CircularImageView">CircularImageView</a>\n\n
+        \t<a href="https://github.com/JakeWharton/butterknife">ButterKnife</a>\n\n
+        \t<a href="https://github.com/jeremiemartinez/ZoomableImageView">ZoomableImageView</a>
+    </string>
 </resources>

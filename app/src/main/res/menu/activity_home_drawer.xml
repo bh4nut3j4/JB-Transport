@@ -3,34 +3,36 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_all_routes"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:title="All Routes" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/nav_select_primary"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Select Primary Route" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_complaints"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:title="Complaints" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_notifications"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Notifications" />
+        <item
+            android:id="@+id/nav_collegemap"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:title="College Map" />
+        <item
+            android:id="@+id/nav_aboutus"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="About Us" />
+        <item
+            android:id="@+id/nav_reportabug"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Report A Bug" />
+        <item
+            android:id="@+id/nav_opensourcelicenses"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Open Source License" />
     </group>
-
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
-        </menu>
-    </item>
-
 </menu>
