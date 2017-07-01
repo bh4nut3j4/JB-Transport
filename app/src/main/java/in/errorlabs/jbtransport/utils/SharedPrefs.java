@@ -15,7 +15,7 @@ public class SharedPrefs{
     public static final String myprefs = "myprefs";
     public static final String FirstOpen = "FirstOpen";
     public static final String FirebaseInstanceToken = "Token";
-    public static final String LogedInKey = "Key";
+    public static final String RouteSelected = "Route";
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -27,12 +27,21 @@ public class SharedPrefs{
         editor = sharedPreferences.edit();
     }
     public String encodeKey(String key){
-        byte[] data = Base64.encode(key.getBytes(), Base64.DEFAULT);
-        return new String(data);
+        if (key==null){
+            return null;
+        }else {
+            byte[] data = Base64.encode(key.getBytes(), Base64.DEFAULT);
+            return new String(data);
+        }
+
     }
     public String encodeValue(String key){
-        byte[] data = Base64.encode(key.getBytes(), Base64.DEFAULT);
-        return new String(data);
+        if (key==null){
+            return null;
+        }else {
+            byte[] data = Base64.encode(key.getBytes(), Base64.DEFAULT);
+            return new String(data);
+        }
     }
     public String decodeValue(String Key){
         byte[] data = Base64.decode(Key, Base64.DEFAULT);
@@ -52,6 +61,14 @@ public class SharedPrefs{
     public String getFirebaseInstanceToken(){
         String value = sharedPreferences.getString(encodeKey(FirebaseInstanceToken),null);
         return decodeValue(value);
+    }
+    public void setRouteSelectedStatus(){
+        editor.putString(encodeKey(RouteSelected), String.valueOf(R.string.truestring));
+        editor.putBoolean(encodeKey(RouteSelected),true);
+        editor.commit();
+    }
+    public boolean getRouteSelected(){
+        return sharedPreferences.getBoolean(encodeKey(RouteSelected),false);
     }
 
 }

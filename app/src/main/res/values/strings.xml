@@ -1,10 +1,60 @@
 <resources>
     <string name="app_name">JB Transport</string>
+    <string name="select_route">Select Primary Route</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <string name="transportAppKey">SkJUcmFzcG9ydEFwcEFwcEtleQ==</string>
     <string name="action_settings">Settings</string>
     <string name="truestring">true</string>
     <string name="falsestring">false</string>
+    <string name="noticefaketext">Fake notice text demo text</string>
+    <string name="primaryroute">PRIMARY ROUTE</string>
+    <string name="routenumbertext">Route Number :</string>
+    <string name="routenumbervalue">Route 1232</string>
+    <string name="directionsimagedesc">Directions Image Icon</string>
+    <string name="departuretime">Departure Time :</string>
+    <string name="noticetext">NOTICE</string>
+    <string name="via">Via :</string>
+    <string name="title_activity_college_map">Map</string>
+    <string name="JBIET_Entrance">JBIET Entrance</string>
+    <string name="mainblock">JBIET Main Block</string>
+    <string name="frstyrblck">JBIET First Yr Block</string>
+    <string name="basktbal">BasketBall Court</string>
+    <string name="sae">SAE-JBIET</string>
+    <string name="cokehub">Coke Hub</string>
+    <string name="cricktground">Cricket Ground</string>
+    <string name="bank">Syndicate Bank</string>
+    <string name="cafe">Cafeteria</string>
+    <string name="cc">Central Canteen</string>
+    <string name="mnr">MNR Auditorium Second Floor</string>
+    <string name="prkn1">Parking Lot 1</string>
+    <string name="prkn2">Parking Lot 2</string>
+    <string name="cvlece"><![CDATA[Civil & EEE Block]]></string>
+    <string name="eee">Dept. of EEE Ground Floor</string>
+    <string name="cvl">Dept. of CIVIL First Floor</string>
+    <string name="mech">Dept. of MECHANICAL First Floor</string>
+    <string name="cse">Dept. of CSE First Floor</string>
+    <string name="ece">Dept. of ECE Second Floor</string>
+    <string name="it">Dept. of IT First Floor</string>
+    <string name="ecm">Dept. of ECM Second Floor</string>
+    <string name="transprtoffce">Transport Office</string>
+    <string name="stationery">Stationery</string>
+    <string name="sac">SAC-JBIET Ground Floor</string>
+    <string name="sprts">Sports Room Ground Floor</string>
+    <string name="placmnt">Placement Cell</string>
+    <string name="admin">Administration Block</string>
+    <string name="mba">MBA Block</string>
+    <string name="fullroute">Full Route :</string>
+    <string name="nointernet">No Internet Connection</string>
+    <string name="skip">Skip</string>
+    <string name="nodetailsfound">No Details Found</string>
+    <string name="tryagainlater">Try Again Later</string>
+    <string name="AuthError">AuthKeyError</string>
+    <string name="ErrorSelecting">ErrorSelecting</string>
+    <string name="RoutesSelectJsonArrayName">Routes</string>
+    <string name="Setasdefaultroute">Set As Primary Route</string>
+    <string name="Loading">Loading...</string>
+    <string name="alert_dailog_message">Are you sure you want to set this route as your primary route ?</string>
 </resources>

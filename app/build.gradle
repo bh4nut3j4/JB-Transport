@@ -5,11 +5,11 @@ android {
     buildToolsVersion "26.0.0"
     defaultConfig {
         applicationId "in.errorlabs.jbtransport"
-        manifestPlaceholders = [onesignal_app_id: "a9f592f2-e9ac-43f0-8bcd-39c855737ace",
+        manifestPlaceholders = [onesignal_app_id               : "a9f592f2-e9ac-43f0-8bcd-39c855737ace",
                                 // Project number pulled from dashboard, local value is ignored.
                                 onesignal_google_project_number: "REMOTE"]
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -27,6 +27,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
@@ -36,10 +37,14 @@ dependencies {
     compile 'com.android.support:cardview-v7:25.3.1'
     compile 'com.amitshekhar.android:android-networking:1.0.0'
     compile 'com.google.firebase:firebase-messaging:10.0.1'
+    compile 'com.onesignal:OneSignal:[3.5.3,4.0.0)'
+    compile 'com.google.android.gms:play-services-maps:10.0.1'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
-    compile 'com.onesignal:OneSignal:[3.5.3,4.0.0)'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'jp.wasabeef:recyclerview-animators:2.2.7'
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.github.sd6352051.niftydialogeffects:niftydialogeffects:1.0.0@aar'
+    compile "com.android.support:support-core-utils:25.4.0"
 }
-
-
 apply plugin: 'com.google.gms.google-services'
