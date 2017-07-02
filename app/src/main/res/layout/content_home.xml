@@ -9,14 +9,18 @@
     tools:showIn="@layout/app_bar_home">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/r1">
-        <android.support.v7.widget.RecyclerView
+        android:layout_height="match_parent">
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/homerouteslist_recyclerview"
-            android:visibility="gone">
-        </android.support.v7.widget.RecyclerView>
+            android:id="@+id/r1">
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/homerouteslist_recyclerview"
+                android:visibility="gone">
+            </android.support.v7.widget.RecyclerView>
+        </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -161,10 +165,10 @@
                     android:layout_marginBottom="5dp"
                     android:background="@color/blacklow"/>
                 <fragment
-                    class="com.google.android.gms.maps.MapFragment"
+                    android:name="in.errorlabs.jbtransport.ui.fragments.HomeRouteFragment"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:id="@+id/mapfragment"/>
+                    android:id="@+id/mapfrag"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

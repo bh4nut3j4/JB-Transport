@@ -71,20 +71,8 @@ public class RouteSelectActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         dialogBuilder= NiftyDialogBuilder.getInstance(this);
         if (connection.isInternet()){
-            if (sharedPrefs.getSelectedRouteNumber()!=null && sharedPrefs.getSelectedRouteFcmID()!=null){
-                Intent intent= new Intent(getApplicationContext(),HomeActivity.class);
-                intent.putExtra(getString(R.string.IntentKey),sharedPrefs.getSelectedRouteNumber());
-                startActivity(intent);
-                finish();
-            }else if(sharedPrefs.getAlreadySkipped()){
-                Intent intent= new Intent(getApplicationContext(),HomeActivity.class);
-                intent.putExtra(getString(R.string.IntentKey),getString(R.string.SkipStatus));
-                startActivity(intent);
-                finish();
-            }else {
-                loadToast.show();
-                getRouteSelectData();
-            }
+            loadToast.show();
+            getRouteSelectData();
         }else {
             recyclerView.setVisibility(View.GONE);
             relativeLayout.setVisibility(View.VISIBLE);

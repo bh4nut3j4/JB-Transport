@@ -12,4 +12,7 @@ public class HomeConstants {
     public static final String busNumber ="Last4Digits";
     public static final String departureTime ="DepartureTime";
     public static final String lastUpdatedTime ="LastUpdatedTimeStamp";
+    public static final String latitude ="Latitude";
+    public static final String longitude ="Longitude";
+    public static final String stopID ="StopID";
 }

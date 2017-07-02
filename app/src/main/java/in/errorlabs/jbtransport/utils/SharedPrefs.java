@@ -22,7 +22,6 @@ public class SharedPrefs{
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-    Base64 base64;
 
     public SharedPrefs(Context context){
         this.context=context;
@@ -33,22 +32,23 @@ public class SharedPrefs{
         if (key==null){
             return null;
         }else {
-            byte[] data = Base64.encode(key.getBytes(), Base64.DEFAULT);
-            return new String(data);
+            return Base64.encodeToString(key.getBytes(), Base64.DEFAULT);
         }
-
     }
-    public String encodeValue(String key){
+    private String encodeValue(String key){
         if (key==null){
             return null;
         }else {
-            byte[] data = Base64.encode(key.getBytes(), Base64.DEFAULT);
-            return new String(data);
+            return Base64.encodeToString(key.getBytes(), Base64.DEFAULT);
         }
     }
-    public String decodeValue(String Key){
-        byte[] data = Base64.decode(Key, Base64.DEFAULT);
-        return new String(data);
+    private String decodeValue(String Key){
+        if (Key==null){
+            return null;
+        }else {
+            return new String(Base64.decode(Key, Base64.DEFAULT));
+        }
+
     }
     public void setFirstOpen(){
         editor.putString(encodeKey(FirstOpen), String.valueOf(R.string.truestring));
@@ -64,14 +64,6 @@ public class SharedPrefs{
     public String getFirebaseInstanceToken(){
         String value = sharedPreferences.getString(encodeKey(FirebaseInstanceToken),null);
         return decodeValue(value);
-    }
-    public void setRouteSelectedStatus(){
-        editor.putString(encodeKey(RouteSelected), String.valueOf(R.string.truestring));
-        editor.putBoolean(encodeKey(RouteSelected),true);
-        editor.commit();
-    }
-    public boolean getRouteSelected(){
-        return sharedPreferences.getBoolean(encodeKey(RouteSelected),false);
     }
 
     public void setSelectedRouteNumber(String number){

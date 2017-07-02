@@ -76,4 +76,7 @@
         \t<a href="https://github.com/JakeWharton/butterknife">ButterKnife</a>\n\n
         \t<a href="https://github.com/jeremiemartinez/ZoomableImageView">ZoomableImageView</a>
     </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
