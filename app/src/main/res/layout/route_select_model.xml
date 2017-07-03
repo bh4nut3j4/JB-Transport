@@ -152,7 +152,7 @@
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorAccent"
+                    android:background="@color/teal"
                     android:textColor="@color/white"
                     android:textStyle="bold"
                     android:id="@+id/setroutebutton"

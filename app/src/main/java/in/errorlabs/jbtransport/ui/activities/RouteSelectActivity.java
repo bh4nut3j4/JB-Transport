@@ -111,7 +111,7 @@ public class RouteSelectActivity extends AppCompatActivity {
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
-                                    }adapter = new RouteSelectAdapter(list,getApplicationContext());
+                                    }adapter = new RouteSelectAdapter(list,RouteSelectActivity.this);
                                     recyclerView.setAdapter(adapter);
                                 }else {
                                     showError();

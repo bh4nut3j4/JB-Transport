@@ -182,7 +182,7 @@ public class HomeRouteFragment extends Fragment implements OnMapReadyCallback, L
                             if (i == middle) {
                                 CameraPosition cameraPosition = new CameraPosition.Builder()
                                         .target(latLng)
-                                        .zoom(12)
+                                        .zoom(13)
                                         .bearing(180)
                                         .tilt(30)
                                         .build();
