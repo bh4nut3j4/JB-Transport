@@ -26,12 +26,6 @@ public class Splash extends AppCompatActivity {
         if (connection.isInternet()){
             if (sharedPrefs.getRouteSelected()){
                 Intent intent= new Intent(getApplicationContext(),HomeActivity.class);
-                intent.putExtra(getString(R.string.IntentKey),sharedPrefs.getSelectedRouteNumber());
-                startActivity(intent);
-                finish();
-            }else if(sharedPrefs.getAlreadySkipped()){
-                Intent intent= new Intent(getApplicationContext(),HomeActivity.class);
-                intent.putExtra(getString(R.string.IntentKey),getString(R.string.SkipStatus));
                 startActivity(intent);
                 finish();
             }else {

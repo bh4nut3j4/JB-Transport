@@ -31,7 +31,6 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.onesignal.OneSignal;
@@ -42,7 +41,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -78,7 +76,6 @@ public class HomeActivity extends AppCompatActivity
     Connection connection;
     public static final int DETAILS_LOADER_ID = 11;
     public static final int COORDINATES_LOADER_ID = 12;
-    ArrayList<LatLng> coordinatesarray_List = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

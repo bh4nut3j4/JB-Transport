@@ -183,7 +183,7 @@ public class HomeRouteFragment extends Fragment implements OnMapReadyCallback, L
                                 CameraPosition cameraPosition = new CameraPosition.Builder()
                                         .target(latLng)
                                         .zoom(12)
-                                        .bearing(90)
+                                        .bearing(180)
                                         .tilt(30)
                                         .build();
                                 mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
