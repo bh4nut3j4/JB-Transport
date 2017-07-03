@@ -24,7 +24,7 @@ public class Splash extends AppCompatActivity {
         sharedPrefs = new SharedPrefs(this);
         connection = new Connection(this);
         if (connection.isInternet()){
-            if (sharedPrefs.getSelectedRouteNumber()!=null && sharedPrefs.getSelectedRouteFcmID()!=null){
+            if (sharedPrefs.getRouteSelected()){
                 Intent intent= new Intent(getApplicationContext(),HomeActivity.class);
                 intent.putExtra(getString(R.string.IntentKey),sharedPrefs.getSelectedRouteNumber());
                 startActivity(intent);

@@ -109,11 +109,9 @@ public class HomeRouteFragment extends Fragment implements OnMapReadyCallback, L
                                 @Override
                                 public void onResponse(JSONObject response) {
                                     coordinatesarray_List= generatePath(response);
-                                    Log.d("LIST1", coordinatesarray_List.toString());
                                     if (coordinatesarray_List!=null&& coordinatesarray_List.size()>0){
                                         generateURL(coordinatesarray_List);
                                     }
-
                                 }
                                 @Override
                                 public void onError(ANError anError) {

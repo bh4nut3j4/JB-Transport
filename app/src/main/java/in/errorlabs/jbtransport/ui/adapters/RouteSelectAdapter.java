@@ -1,7 +1,9 @@
 package in.errorlabs.jbtransport.ui.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,15 +14,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
-import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
-
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import in.errorlabs.jbtransport.R;
-import in.errorlabs.jbtransport.ui.activities.HomeActivity;
+import in.errorlabs.jbtransport.ui.activities.Splash;
 import in.errorlabs.jbtransport.ui.models.RouteSelectModel;
 import in.errorlabs.jbtransport.utils.SharedPrefs;
 
@@ -29,9 +28,11 @@ import in.errorlabs.jbtransport.utils.SharedPrefs;
  */
 
 public class RouteSelectAdapter extends RecyclerView.Adapter<RouteSelectAdapter.RouteSelectViewHolder> {
-    Context context;
+    private Context context;
     List<RouteSelectModel> list;
-    boolean isclick=false;
+    private boolean isclick=false;
+    SharedPrefs sharedPrefs;
+
 
     public RouteSelectAdapter(List<RouteSelectModel> list,Context context) {
         this.context = context;
@@ -39,6 +40,7 @@ public class RouteSelectAdapter extends RecyclerView.Adapter<RouteSelectAdapter.
     }
     @Override
     public RouteSelectViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        sharedPrefs = new SharedPrefs(parent.getContext());
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.route_select_model,parent,false);
         return new RouteSelectViewHolder(view);
     }
@@ -66,49 +68,77 @@ public class RouteSelectAdapter extends RecyclerView.Adapter<RouteSelectAdapter.
         });
         holder.setRouteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 String s,e,f;
                 s=holder.routeStartPoint.getText().toString();
                 e=holder.rouetEndPoint.getText().toString();
                 f=holder.fullRoute.getText().toString();
-                final NiftyDialogBuilder dialogBuilder= NiftyDialogBuilder.getInstance(v.getContext());
-                dialogBuilder
-                        .withTitle(s+"<-->"+e)
-                        .withMessage("Full Route :"+"\n\n"
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+//                builder.setTitle(String.format("%1$s", context.getString()));
+                builder.setTitle(s+"<-->"+e);
+                builder.setMessage("Full Route :"+"\n\n"
                         +f+"\n\n\n"+"Are you sure you want to set this route as your primary route ?"+"\n\n"
-                                +"Dont worry you can change your route later if needed.")
-                        .withEffect(Effectstype.Fall)
-                        .withDialogColor("#1565c0")
-                        .withDividerColor("#11000000")
-                        .withButton1Text("Proceed")
-                        .withButton2Text("Cancel")
-                        .setButton1Click(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                String routeNumber = holder.routeNumber.getText().toString();
-                                String fcmRouteId = holder.fcmRouteID.getText().toString();
-                                if (routeNumber.length()>0&&fcmRouteId.length()>0){
-                                    SharedPrefs sharedPrefs = new SharedPrefs(v.getContext());
-                                    sharedPrefs.setSelectedRouteNumber(routeNumber);
-                                    sharedPrefs.setSelectedRouteFcmID(fcmRouteId);
-                                    Intent intent= new Intent(v.getContext(),HomeActivity.class);
-                                    intent.putExtra("IntentKey",sharedPrefs.getSelectedRouteNumber());
-                                    v.getContext().startActivity(intent);
-                                }else {
-                                    Toast.makeText(v.getContext(),R.string.tryagainlater,Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        })
-                        .setButton2Click(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialogBuilder.dismiss();
-                            }
-                        })
-                        .show();
+                        +"Dont worry you can change your route later if needed.");
+                builder.setPositiveButton("PROCEED", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String routeNumber = holder.routeNumber.getText().toString();
+                        String fcmRouteId = holder.fcmRouteID.getText().toString();
+                        Toast.makeText(context,routeNumber+fcmRouteId,Toast.LENGTH_SHORT).show();
+                        if (routeNumber.length()>0&&fcmRouteId.length()>0){
+                            sharedPrefs.setSelectedRouteNumber(routeNumber);
+                            sharedPrefs.setSelectedRouteFcmID(fcmRouteId);
+                            sharedPrefs.setRouteSelected();
+                            Intent intent= new Intent(context,Splash.class);
+                            v.getContext().startActivity(intent);
+                        }else {
+                            Toast.makeText(context,R.string.tryagainlater,Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                builder.setNegativeButton("CANCEL",null);
+                builder.show();
+//                AlertDialog welcomeAlert = builder.create();
+//                welcomeAlert.show();
+//                ((TextView) welcomeAlert.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
+//                final NiftyDialogBuilder dialogBuilder= NiftyDialogBuilder.getInstance(v.getContext());
+//                dialogBuilder
+//                        .withTitle(s+"<-->"+e)
+//                        .withMessage("Full Route :"+"\n\n"
+//                        +f+"\n\n\n"+"Are you sure you want to set this route as your primary route ?"+"\n\n"
+//                                +"Dont worry you can change your route later if needed.")
+//                        .withDialogColor("#1565c0")
+//                        .withDividerColor("#11000000")
+//                        .withButton1Text("Proceed")
+//                        .withButton2Text("Cancel")
+//                        .setButton1Click(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                String routeNumber = holder.routeNumber.getText().toString();
+//                                String fcmRouteId = holder.fcmRouteID.getText().toString();
+//                                Toast.makeText(v.getContext(),routeNumber+fcmRouteId,Toast.LENGTH_SHORT).show();
+//                                if (routeNumber.length()>0&&fcmRouteId.length()>0){
+//                                    sharedPrefs.setRouteSelected();
+//                                    Intent intent= new Intent(v.getContext(),HomeActivity.class);
+//                                    intent.putExtra("IntentKey",sharedPrefs.getSelectedRouteNumber());
+//                                    intent.putExtra("IntentKeyFCMID",sharedPrefs.getSelectedRouteFcmID());
+//                                    v.getContext().startActivity(intent);
+//                                }else {
+//                                    Toast.makeText(v.getContext(),R.string.tryagainlater,Toast.LENGTH_SHORT).show();
+//                                }
+//                            }
+//                        })
+//                        .setButton2Click(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                dialogBuilder.dismiss();
+//                            }
+//                        })
+//                        .show();
             }
         });
     }
+
 
     @Override
     public int getItemCount() {
@@ -125,6 +155,7 @@ public class RouteSelectAdapter extends RecyclerView.Adapter<RouteSelectAdapter.
         @BindView(R.id.routeimage)ImageView routeImg;
         @BindView(R.id.r2)RelativeLayout rel;
         @BindView(R.id.setroutebutton)Button setRouteBtn;
+
 
         public RouteSelectViewHolder(View itemView) {
             super(itemView);

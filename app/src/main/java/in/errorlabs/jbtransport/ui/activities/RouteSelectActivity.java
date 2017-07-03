@@ -108,7 +108,6 @@ public class RouteSelectActivity extends AppCompatActivity {
                                             model.setRouteEndPoint(object.getString(RoutesSelectConstants.endPoint));
                                             model.setRouteViaPoint(object.getString(RoutesSelectConstants.viaPoint));
                                             list.add(model);
-                                            Log.d("TAG",list.toString());
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }

@@ -122,23 +122,21 @@ public class HomeActivity extends AppCompatActivity
     }
 
     public void startMainActivity() {
-        Bundle bundle = getIntent().getExtras();
-        String check = bundle.getString(getString(R.string.IntentKey));
-        assert check != null;
-        if (check.equals(getString(R.string.SkipStatus))) {
+        if (sharedPrefs.getAlreadySkipped()) {
             linearLayout.setVisibility(View.GONE);
             getAllRoutes();
-        } else if (sharedPrefs.getSelectedRouteNumber() != null && sharedPrefs.getSelectedRouteFcmID() != null) {
+        }
+        else if (sharedPrefs.getRouteSelected()) {
             if (FirebaseInstanceId.getInstance().getToken() != null) {
                 FirebaseMessaging.getInstance().subscribeToTopic(sharedPrefs.getSelectedRouteFcmID());
                 Log.d("MSG", "topic");
             }
             linearLayout.setVisibility(View.VISIBLE);
             relativeLayout.setVisibility(View.GONE);
-
             getSelectedRouteDetails();
         } else {
             relativeLayout.setVisibility(View.GONE);
+            linearLayout.setVisibility(View.GONE);
             showError();
         }
     }
@@ -159,7 +157,7 @@ public class HomeActivity extends AppCompatActivity
 
     public void showError() {
         loadToast.error();
-        Snackbar.make(relativeLayout, getString(R.string.tryagainlater), Snackbar.LENGTH_INDEFINITE).setAction("Retry", new View.OnClickListener() {
+        Snackbar.make(linearLayout, getString(R.string.tryagainlater), Snackbar.LENGTH_INDEFINITE).setAction("Retry", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (connection.isInternet()) {
@@ -179,7 +177,7 @@ public class HomeActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            finish();
         }
     }
 

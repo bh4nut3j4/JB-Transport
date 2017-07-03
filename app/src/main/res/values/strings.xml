@@ -58,6 +58,7 @@
     <string name="Loading">Loading...</string>
     <string name="alert_dailog_message">Are you sure you want to set this route as your primary route ?</string>
     <string name="IntentKey">IntentKey</string>
+    <string name="IntentKeyFCMID">IntentKeyFCMID</string>
     <string name="SkipStatus">SkipStatus</string>
     <string name="mailto">mailto:</string>
     <string name="bhanuteja.r07email">bhanuteja.r07@gmail.com</string>
