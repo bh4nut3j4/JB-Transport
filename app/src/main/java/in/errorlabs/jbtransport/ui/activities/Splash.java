@@ -24,9 +24,21 @@ public class Splash extends AppCompatActivity {
         sharedPrefs = new SharedPrefs(this);
         connection = new Connection(this);
         if (connection.isInternet()){
+           // String value = getIntent().getStringExtra(getString(R.string.DetailsView));
+//            Bundle bundle = getIntent().getExtras();
+//            String value = bundle.getString("DetailsView");
+//            Toast.makeText(getApplicationContext(),"splash"+value,Toast.LENGTH_SHORT);
+//            if (value!=null && value.length()>0){
+//                Intent intent= new Intent(getApplicationContext(),HomeActivity.class);
+//                intent.putExtra(getString(R.string.DetailsView),value);
+//                startActivity(intent);
+//                finish();
+//            }
             if (sharedPrefs.getRouteSelected()){
-                Intent intent= new Intent(getApplicationContext(),HomeActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(getApplicationContext(),HomeActivity.class));
+                finish();
+            } else if (sharedPrefs.getAlreadySkipped()){
+                startActivity(new Intent(getApplicationContext(),HomeActivity.class));
                 finish();
             }else {
                 startActivity(new Intent(getApplicationContext(),RouteSelectActivity.class));

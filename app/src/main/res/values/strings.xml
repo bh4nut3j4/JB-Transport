@@ -46,16 +46,20 @@
     <string name="admin">Administration Block</string>
     <string name="mba">MBA Block</string>
     <string name="fullroute">Full Route :</string>
+    <string name="areyousure"><b>Are you sure you want to set this route as your primary route ?</b> \n\n Dont worry you can change your route later if needed.</string>
+    <string name="areyousuretoskip">Are you sure you want to skip this step ?</string>
     <string name="nointernet">No Internet Connection</string>
     <string name="skip">Skip</string>
+    <string name="search">Search</string>
+    <string name="proceed">PROCEED</string>
+    <string name="cancel">CANCEL</string>
     <string name="tryagainlater">Try Again Later</string>
     <string name="AuthError">AuthKeyError</string>
     <string name="ErrorSelecting">ErrorSelecting</string>
     <string name="RoutesSelectJsonArrayName">Routes</string>
     <string name="Setasdefaultroute">Set As Primary Route</string>
+    <string name="viewfulldetails">View Full Deatils</string>
     <string name="Noticeboard">Notice board</string>
-    <string name="IntentKey">IntentKey</string>
-    <string name="SkipStatus">SkipStatus</string>
     <string name="mailto">mailto:</string>
     <string name="bhanuteja.r07email">bhanuteja.r07@gmail.com</string>
     <string name="subjectemailqstn">\?subject=</string>
@@ -73,6 +77,10 @@
         \t<a href="https://github.com/JakeWharton/butterknife">ButterKnife</a>\n\n
         \t<a href="https://github.com/jeremiemartinez/ZoomableImageView">ZoomableImageView</a>
     </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="warning">Warning</string>
+    <string name="skipwarningmessage">If you skip this step, You wont be able to receive any notification updates regarding changes made in buses.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

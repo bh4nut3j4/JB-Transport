@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -14,6 +15,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.method.LinkMovementMethod;
@@ -23,14 +25,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.google.android.gms.maps.GoogleMap;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.onesignal.OneSignal;
@@ -41,13 +41,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import in.errorlabs.jbtransport.R;
+import in.errorlabs.jbtransport.ui.FragMethodCallInterface;
 import in.errorlabs.jbtransport.ui.activities.CollegeMap.CollegeMap;
+import in.errorlabs.jbtransport.ui.adapters.AllRoutesAdapter;
 import in.errorlabs.jbtransport.ui.constants.HomeConstants;
+import in.errorlabs.jbtransport.ui.constants.RoutesSelectConstants;
+import in.errorlabs.jbtransport.ui.fragments.HomeRouteFragment;
+import in.errorlabs.jbtransport.ui.models.RouteSelectModel;
 import in.errorlabs.jbtransport.utils.Connection;
 import in.errorlabs.jbtransport.utils.Constants;
 import in.errorlabs.jbtransport.utils.SharedPrefs;
@@ -62,10 +69,13 @@ public class HomeActivity extends AppCompatActivity
             .writeTimeout(120, TimeUnit.SECONDS)
             .build();
     SharedPrefs sharedPrefs;
-    private GoogleMap mMap;
+    AllRoutesAdapter adapter;
+    List<RouteSelectModel> list = new ArrayList<>();
     @BindView(R.id.homerouteslist_recyclerview)RecyclerView recyclerView;
     @BindView(R.id.layout1)LinearLayout linearLayout;
-    @BindView(R.id.r1)RelativeLayout relativeLayout;
+    @BindView(R.id.r1)LinearLayout recyclerview_layout;
+    @BindView(R.id.c1)LinearLayout notice_card_layout;
+    @BindView(R.id.rootView)LinearLayout rootView;
     @BindView(R.id.routenumber) TextView routeNumber;
     @BindView(R.id.startingpoint) TextView startingPoint;
     @BindView(R.id.endingpoint) TextView endingPoint;
@@ -76,6 +86,10 @@ public class HomeActivity extends AppCompatActivity
     Connection connection;
     public static final int DETAILS_LOADER_ID = 11;
     public static final int COORDINATES_LOADER_ID = 12;
+    public static final int ALl_ROUTES_LOADER_ID = 13;
+    public static final String DATA_BUNDLE = "bundle";
+    FragMethodCallInterface methodCallInterface;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,8 +105,22 @@ public class HomeActivity extends AppCompatActivity
         sharedPrefs = new SharedPrefs(this);
         loadToast = new LoadToast(this);
         connection = new Connection(this);
-        startMainActivity();
+        String s = getIntent().getStringExtra("DetailsView");
+        if (s!=null && s.length()>0){
+            linearLayout.setVisibility(View.VISIBLE);
+            recyclerview_layout.setVisibility(View.GONE);
+            getSelectedRouteDetails(s);
+            methodCallInterface = new HomeRouteFragment();
+            HomeRouteFragment homeRouteFragment = new HomeRouteFragment();
+            homeRouteFragment.setBusNumber(s);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.mapcontainer,homeRouteFragment).commit();
+            //methodCallInterface.startMapActivity(s);
+        }else {
+            startMainActivity();
+        }
 
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -119,20 +147,21 @@ public class HomeActivity extends AppCompatActivity
     }
 
     public void startMainActivity() {
+
         if (sharedPrefs.getAlreadySkipped()) {
             linearLayout.setVisibility(View.GONE);
+            recyclerview_layout.setVisibility(View.VISIBLE);
             getAllRoutes();
-        }
-        else if (sharedPrefs.getRouteSelected()) {
+        } else if (sharedPrefs.getRouteSelected()) {
             if (FirebaseInstanceId.getInstance().getToken() != null) {
                 FirebaseMessaging.getInstance().subscribeToTopic(sharedPrefs.getSelectedRouteFcmID());
                 Log.d("MSG", "topic");
             }
             linearLayout.setVisibility(View.VISIBLE);
-            relativeLayout.setVisibility(View.GONE);
-            getSelectedRouteDetails();
+            recyclerview_layout.setVisibility(View.GONE);
+            getSelectedRouteDetails(sharedPrefs.getSelectedRouteNumber());
         } else {
-            relativeLayout.setVisibility(View.GONE);
+            recyclerview_layout.setVisibility(View.GONE);
             linearLayout.setVisibility(View.GONE);
             showError();
         }
@@ -140,21 +169,30 @@ public class HomeActivity extends AppCompatActivity
 
     public void getAllRoutes() {
         loadToast.show();
+        LoaderManager loaderManager = getSupportLoaderManager();
+        Loader<Object> details = loaderManager.getLoader(ALl_ROUTES_LOADER_ID);
+        if (details==null){
+            loaderManager.initLoader(ALl_ROUTES_LOADER_ID,null,this);
+        }else {
+            loaderManager.restartLoader(ALl_ROUTES_LOADER_ID,null,this);
+        }
     }
 
-    public void getSelectedRouteDetails() {
+    public void getSelectedRouteDetails(String routeNumber) {
+        Bundle bundle = new Bundle();
+        bundle.putString(DATA_BUNDLE,routeNumber);
         LoaderManager loaderManager = getSupportLoaderManager();
         Loader<Object> details = loaderManager.getLoader(DETAILS_LOADER_ID);
         if (details==null){
-            loaderManager.initLoader(DETAILS_LOADER_ID,null,this);
+            loaderManager.initLoader(DETAILS_LOADER_ID,bundle,this);
         }else {
-            loaderManager.restartLoader(DETAILS_LOADER_ID,null,this);
+            loaderManager.restartLoader(DETAILS_LOADER_ID,bundle,this);
         }
     }
 
     public void showError() {
         loadToast.error();
-        Snackbar.make(linearLayout, getString(R.string.tryagainlater), Snackbar.LENGTH_INDEFINITE).setAction("Retry", new View.OnClickListener() {
+        Snackbar.make(rootView, getString(R.string.tryagainlater), Snackbar.LENGTH_INDEFINITE).setAction("Retry", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (connection.isInternet()) {
@@ -165,7 +203,7 @@ public class HomeActivity extends AppCompatActivity
     }
     public void showDataError() {
         loadToast.error();
-        Snackbar.make(relativeLayout, getString(R.string.tryagainlater), Snackbar.LENGTH_INDEFINITE).show();
+        Snackbar.make(rootView, getString(R.string.tryagainlater), Snackbar.LENGTH_INDEFINITE).show();
     }
 
     @Override
@@ -189,9 +227,9 @@ public class HomeActivity extends AppCompatActivity
 
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -202,6 +240,7 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_all_routes) {
+            getAllRoutes();
 
         } else if (id == R.id.nav_complaints) {
 
@@ -234,49 +273,81 @@ public class HomeActivity extends AppCompatActivity
 
 
     @Override
-    public Loader<Void> onCreateLoader(int id, Bundle args) {
+    public Loader<Void> onCreateLoader(int id, final Bundle args) {
         if (id==DETAILS_LOADER_ID){
             return new AsyncTaskLoader<Void>(this) {
+                String RouteNumber;
                 @Override
+                protected void onStartLoading(){
+                    if (args!=null){
+                        RouteNumber = args.getString(DATA_BUNDLE);
+                        loadToast.show();
+                        forceLoad();
+                    }
+                }
+                @Override
+                public Void loadInBackground() {
+                    fetchData(RouteNumber);
+                    return null;
+                }
+            };
+        }else if (id==ALl_ROUTES_LOADER_ID){
+            return new AsyncTaskLoader<Void>(this) {
                 protected void onStartLoading(){
                     loadToast.show();
                     forceLoad();
                 }
                 @Override
                 public Void loadInBackground() {
-                    AndroidNetworking.post(Constants.RouteGetDetailsById)
+                    AndroidNetworking.post(Constants.RouteSelectDataUrl)
                             .setOkHttpClient(okHttpClient)
                             .setPriority(Priority.HIGH)
                             .addBodyParameter(Constants.AppKey, String.valueOf(R.string.transportAppKey))
-                            .addBodyParameter(Constants.RouteNumber,sharedPrefs.getSelectedRouteNumber())
                             .build()
                             .getAsJSONObject(new JSONObjectRequestListener() {
                                 @Override
                                 public void onResponse(JSONObject response) {
-                                    if (response.length()>0){
-                                        if (response.has(Constants.HomeRouteObjectName)){
-                                            try {
-                                                JSONArray routeArray = response.getJSONArray(Constants.HomeRouteObjectName);
-                                                for (int i=0;i<=routeArray.length();i++){
-                                                    JSONObject routeObject = routeArray.getJSONObject(i);
-                                                    routeNumber.setText(routeObject.getString(HomeConstants.routeNumber));
-                                                    startingPoint.setText(routeObject.getString(HomeConstants.startPoint));
-                                                    endingPoint.setText(routeObject.getString(HomeConstants.endPoint));
-                                                    viaPoint.setText(routeObject.getString(HomeConstants.viaPoint));
-                                                    busNumber.setText(routeObject.getString(HomeConstants.busNumber));
-                                                    departureTime.setText(routeObject.getString(HomeConstants.departureTime));
+                                    loadToast.success();
+                                    Log.d("TAG",response.toString());
+                                    if (response.length()>0 || response.has(getString(R.string.AuthError)) || response.has(getString(R.string.ErrorSelecting))){
+                                        try {
+                                            JSONArray jsonArray = response.getJSONArray(getString(R.string.RoutesSelectJsonArrayName));
+                                            if (jsonArray.length()>0){
+                                                int length = jsonArray.length();
+                                                list.clear();
+                                                for (int i=0;i<=length;i++) {
+                                                    try {
+                                                        JSONObject object = jsonArray.getJSONObject(i);
+                                                        RouteSelectModel model = new RouteSelectModel();
+                                                        model.setRouteNumber(object.getString(RoutesSelectConstants.routeNumber));
+                                                        model.setFcmRouteID(object.getString(RoutesSelectConstants.fcmRouteId));
+                                                        model.setRouteFullPath(object.getString(RoutesSelectConstants.fullRoute));
+                                                        model.setRouteStartPoint(object.getString(RoutesSelectConstants.startPoint));
+                                                        model.setRouteEndPoint(object.getString(RoutesSelectConstants.endPoint));
+                                                        model.setRouteViaPoint(object.getString(RoutesSelectConstants.viaPoint));
+                                                        list.add(model);
+                                                        Log.d("TAG", list.toString());
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
                                                 }
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
+                                                adapter = new AllRoutesAdapter(list,HomeActivity.this);
+                                                recyclerView.setAdapter(adapter);
+                                            }else {
+                                                showError();
                                             }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                            showError();
                                         }
                                     }else {
-                                        showDataError();
+                                        showError();
                                     }
                                 }
                                 @Override
                                 public void onError(ANError anError) {
-                                    showDataError();
+                                    loadToast.error();
+                                    showError();
                                 }
                             });
                     return null;
@@ -296,5 +367,45 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onLoaderReset(Loader<Void> loader) {
+    }
+
+    public void fetchData(String RNumber){
+        AndroidNetworking.post(Constants.RouteGetDetailsById)
+                .setOkHttpClient(okHttpClient)
+                .setPriority(Priority.HIGH)
+                .addBodyParameter(Constants.AppKey, String.valueOf(R.string.transportAppKey))
+                .addBodyParameter(Constants.RouteNumber,RNumber)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        if (response.length()>0){
+                            if (response.has(Constants.HomeRouteObjectName)){
+                                try {
+                                    JSONArray routeArray = response.getJSONArray(Constants.HomeRouteObjectName);
+                                    for (int i=0;i<=routeArray.length();i++){
+                                        JSONObject routeObject = routeArray.getJSONObject(i);
+                                        routeNumber.setText(routeObject.getString(HomeConstants.routeNumber));
+                                        startingPoint.setText(routeObject.getString(HomeConstants.startPoint));
+                                        endingPoint.setText(routeObject.getString(HomeConstants.endPoint));
+                                        viaPoint.setText(routeObject.getString(HomeConstants.viaPoint));
+                                        busNumber.setText(routeObject.getString(HomeConstants.busNumber));
+                                        departureTime.setText(routeObject.getString(HomeConstants.departureTime));
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }else {
+                                showDataError();
+                            }
+                        }else {
+                            showDataError();
+                        }
+                    }
+                    @Override
+                    public void onError(ANError anError) {
+                        showDataError();
+                    }
+                });
     }
 }

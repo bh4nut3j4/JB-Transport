@@ -1,8 +1,10 @@
 package in.errorlabs.jbtransport.ui.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +19,6 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 
 import net.steamcrafted.loadtoast.LoadToast;
@@ -39,7 +40,6 @@ import in.errorlabs.jbtransport.ui.models.RouteSelectModel;
 import in.errorlabs.jbtransport.utils.Connection;
 import in.errorlabs.jbtransport.utils.Constants;
 import in.errorlabs.jbtransport.utils.SharedPrefs;
-import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 import okhttp3.OkHttpClient;
 
@@ -67,7 +67,7 @@ public class RouteSelectActivity extends AppCompatActivity {
         loadToast = new LoadToast(this);
         SlideInUpAnimator animator = new SlideInUpAnimator(new OvershootInterpolator(1f));
         recyclerView.setItemAnimator(animator);
-        recyclerView.setItemAnimator(new SlideInLeftAnimator());
+        //ecyclerView.setItemAnimator(new SlideInLeftAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         dialogBuilder= NiftyDialogBuilder.getInstance(this);
         if (connection.isInternet()){
@@ -154,31 +154,21 @@ public class RouteSelectActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.skip) {
-            dialogBuilder
-                    .withTitle("Warning")
-                    .withMessage("If you skip this step, You wont be able to receive any notification updates regarding changes made in buses.")
-                    .withEffect(Effectstype.Fall)
-                    .withDialogColor("#1565c0")
-                    .withDividerColor("#11000000")
-                    .withButton1Text("Skip")
-                    .withButton2Text("Cancel")
-                    .setButton1Click(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            sharedPrefs.setAlreadySkipped();
-                            Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
-                            intent.putExtra(getString(R.string.IntentKey),getString(R.string.SkipStatus));
-                            startActivity(intent);
-                            finish();
-                        }
-                    })
-                    .setButton2Click(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialogBuilder.dismiss();
-                        }
-                    })
-                    .show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.warning);
+            builder.setMessage(getString(R.string.skipwarningmessage)+"\n\n"
+                    +getString(R.string.areyousuretoskip));
+            builder.setPositiveButton(R.string.proceed, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    sharedPrefs.setAlreadySkipped();
+                    Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+            builder.setNegativeButton(R.string.cancel,null);
+            builder.show();
         }
         return super.onOptionsItemSelected(item);
     }

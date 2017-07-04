@@ -40,8 +40,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activities.RouteSelectActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/select_route"/>
+            android:label="@string/select_route"
+            android:screenOrientation="portrait" />
 
         <service android:name=".firebase.FirebaseInstanceIDToken">
             <intent-filter>
@@ -65,6 +65,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+        <activity android:name=".ui.activities.AllRoutes"></activity>
     </application>
 
 </manifest>

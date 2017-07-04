@@ -1,6 +1,7 @@
 package in.errorlabs.jbtransport.ui.fragments;
 
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -36,6 +37,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import in.errorlabs.jbtransport.R;
+import in.errorlabs.jbtransport.ui.FragMethodCallInterface;
 import in.errorlabs.jbtransport.ui.constants.HomeConstants;
 import in.errorlabs.jbtransport.utils.Constants;
 import in.errorlabs.jbtransport.utils.SharedPrefs;
@@ -46,8 +48,9 @@ import static in.errorlabs.jbtransport.ui.activities.HomeActivity.COORDINATES_LO
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeRouteFragment extends Fragment implements OnMapReadyCallback, LoaderManager.LoaderCallbacks<List<LatLng>> {
+public class HomeRouteFragment extends Fragment implements OnMapReadyCallback,FragMethodCallInterface, LoaderManager.LoaderCallbacks<List<LatLng>> {
 
+    Context context;
     OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
             .connectTimeout(120, TimeUnit.SECONDS)
             .readTimeout(120, TimeUnit.SECONDS)
@@ -58,12 +61,21 @@ public class HomeRouteFragment extends Fragment implements OnMapReadyCallback, L
     List<LatLng> coordinatesarray_List = new ArrayList<LatLng>();
     public static final int POLYLINE_LOADER_ID = 100;
     public static final String STRING_CONSTANT = "CONSTANT";
+    public static final String STRING_CONSTANT_INTERFACE = "Interface";
     SupportMapFragment mapFragment;
+    public String busNumber;
+
+    public String getBusNumber() {
+        return busNumber;
+    }
+
+    public void setBusNumber(String busNumber) {
+        this.busNumber = busNumber;
+    }
 
     public HomeRouteFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,7 +86,6 @@ public class HomeRouteFragment extends Fragment implements OnMapReadyCallback, L
         mapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.mapfragment);
         mapFragment.getMapAsync(this);
         return rootView;
-
     }
 
     @Override
@@ -99,11 +110,17 @@ public class HomeRouteFragment extends Fragment implements OnMapReadyCallback, L
                 }
                 @Override
                 public List<LatLng> loadInBackground() {
+                    String bus_number;
+                    if (busNumber!=null && busNumber.length()>0){
+                        bus_number = busNumber;
+                    }else {
+                        bus_number=sharedPrefs.getSelectedRouteNumber();
+                    }
                     AndroidNetworking.post(Constants.Coordinates)
                             .setOkHttpClient(okHttpClient)
                             .setPriority(Priority.HIGH)
                             .addBodyParameter(Constants.AppKey, String.valueOf(R.string.transportAppKey))
-                            .addBodyParameter(Constants.RouteNumber, sharedPrefs.getSelectedRouteNumber())
+                            .addBodyParameter(Constants.RouteNumber, bus_number)
                             .build()
                             .getAsJSONObject(new JSONObjectRequestListener() {
                                 @Override
@@ -354,4 +371,29 @@ public class HomeRouteFragment extends Fragment implements OnMapReadyCallback, L
         mapFragment.onLowMemory();
     }
 
+    @Override
+    public String startMapActivity(String BusNumber) {
+        LoaderManager loaderManager = getLoaderManager();
+        Bundle bundle = new Bundle();
+        bundle.putString(STRING_CONSTANT_INTERFACE,BusNumber);
+        Loader<Object> details = loaderManager.getLoader(COORDINATES_LOADER_ID);
+        if (details == null) {
+            loaderManager.initLoader(COORDINATES_LOADER_ID, bundle, this);
+        } else {
+            loaderManager.restartLoader(COORDINATES_LOADER_ID, bundle, this);
+        }
+        return null;
+    }
+
+//    public void test(String BusNumber){
+//        LoaderManager loaderManager = getLoaderManager();
+//        Bundle bundle = new Bundle();
+//        bundle.putString(STRING_CONSTANT_INTERFACE,BusNumber);
+//        Loader<Object> details = loaderManager.getLoader(COORDINATES_LOADER_ID);
+//        if (details == null) {
+//            loaderManager.initLoader(COORDINATES_LOADER_ID, bundle, this);
+//        } else {
+//            loaderManager.restartLoader(COORDINATES_LOADER_ID, bundle, this);
+//        }
+//    }
 }

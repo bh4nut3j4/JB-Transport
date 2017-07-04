@@ -20,7 +20,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import in.errorlabs.jbtransport.R;
-import in.errorlabs.jbtransport.ui.activities.Splash;
+import in.errorlabs.jbtransport.ui.activities.HomeActivity;
 import in.errorlabs.jbtransport.ui.models.RouteSelectModel;
 import in.errorlabs.jbtransport.utils.SharedPrefs;
 
@@ -75,12 +75,10 @@ public class RouteSelectAdapter extends RecyclerView.Adapter<RouteSelectAdapter.
                 e=holder.rouetEndPoint.getText().toString();
                 f=holder.fullRoute.getText().toString();
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-//                builder.setTitle(String.format("%1$s", context.getString()));
                 builder.setTitle(s+"<-->"+e);
-                builder.setMessage("Full Route :"+"\n\n"
-                        +f+"\n\n\n"+"Are you sure you want to set this route as your primary route ?"+"\n\n"
-                        +"Dont worry you can change your route later if needed.");
-                builder.setPositiveButton("PROCEED", new DialogInterface.OnClickListener() {
+                builder.setMessage(context.getString(R.string.fullroute)+"\n\n"
+                        +f+"\n\n\n"+context.getString(R.string.areyousure));
+                builder.setPositiveButton(R.string.proceed, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String routeNumber = holder.routeNumber.getText().toString();
@@ -90,7 +88,7 @@ public class RouteSelectAdapter extends RecyclerView.Adapter<RouteSelectAdapter.
                             sharedPrefs.setSelectedRouteNumber(routeNumber);
                             sharedPrefs.setSelectedRouteFcmID(fcmRouteId);
                             sharedPrefs.setRouteSelected();
-                            Intent intent= new Intent(context,Splash.class);
+                            Intent intent= new Intent(context,HomeActivity.class);
                             v.getContext().startActivity(intent);
                             ((Activity)context).finish();
                         }else {
@@ -98,7 +96,7 @@ public class RouteSelectAdapter extends RecyclerView.Adapter<RouteSelectAdapter.
                         }
                     }
                 });
-                builder.setNegativeButton("CANCEL",null);
+                builder.setNegativeButton(R.string.cancel,null);
                 builder.show();
             }
         });
