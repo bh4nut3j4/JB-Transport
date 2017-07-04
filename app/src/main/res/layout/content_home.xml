@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="in.errorlabs.jbtransport.ui.activities.HomeActivity"
     tools:showIn="@layout/app_bar_home">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rootView"
+        android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -325,7 +329,7 @@
                             android:text="@string/last_updated" />
 
                         <TextView
-                            android:id="@+id/main_departuretime"
+                            android:id="@+id/main_last_updated"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
@@ -378,4 +382,17 @@
         </LinearLayout>
     </in.errorlabs.jbtransport.utils.CustomScrollView>
     </LinearLayout>
-</LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+        <ProgressBar
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:visibility="invisible"
+            android:foregroundGravity="center"
+            android:id="@+id/progressbar"/>
+    </RelativeLayout>
+</RelativeLayout>

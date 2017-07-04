@@ -3,6 +3,7 @@ package in.errorlabs.jbtransport.ui.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -20,11 +21,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.androidnetworking.AndroidNetworking;
@@ -48,7 +49,6 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import in.errorlabs.jbtransport.R;
-import in.errorlabs.jbtransport.ui.FragMethodCallInterface;
 import in.errorlabs.jbtransport.ui.activities.CollegeMap.CollegeMap;
 import in.errorlabs.jbtransport.ui.adapters.AllRoutesAdapter;
 import in.errorlabs.jbtransport.ui.constants.HomeConstants;
@@ -82,17 +82,29 @@ public class HomeActivity extends AppCompatActivity
     @BindView(R.id.viapoint) TextView viaPoint;
     @BindView(R.id.busumber_end) TextView busNumber;
     @BindView(R.id.departuretime) TextView departureTime;
+    @BindView(R.id.main_last_updated) TextView lastUpdatedMain;
+    @BindView(R.id.progressbar) ProgressBar progressbar;
     LoadToast loadToast;
     Connection connection;
     public static final int DETAILS_LOADER_ID = 11;
     public static final int COORDINATES_LOADER_ID = 12;
     public static final int ALl_ROUTES_LOADER_ID = 13;
     public static final String DATA_BUNDLE = "bundle";
-    FragMethodCallInterface methodCallInterface;
-
+    LinearLayoutManager layoutManager;
+    public static final String LIST_CONSTANT = "list";
+    public static final String CONSTANT_ROUTENUMBER = "list";
+    public static final String CONSTANT_STARTING = "list";
+    public static final String CONSTANT_ENDING = "list";
+    public static final String CONSTANT_VIA = "list";
+    public static final String CONSTANT_BUSNUMBER = "list";
+    public static final String CONSTANT_DEPARTURETIME = "list";
+    public static final String CONSTANT_LASTUPDATED = "list";
+    Parcelable listState;
+    NavigationView navigationView;
+    Menu menu;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
@@ -105,31 +117,26 @@ public class HomeActivity extends AppCompatActivity
         sharedPrefs = new SharedPrefs(this);
         loadToast = new LoadToast(this);
         connection = new Connection(this);
-        String s = getIntent().getStringExtra("DetailsView");
-        if (s!=null && s.length()>0){
-            linearLayout.setVisibility(View.VISIBLE);
-            recyclerview_layout.setVisibility(View.GONE);
-            getSelectedRouteDetails(s);
-            methodCallInterface = new HomeRouteFragment();
-            HomeRouteFragment homeRouteFragment = new HomeRouteFragment();
-            homeRouteFragment.setBusNumber(s);
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.mapcontainer,homeRouteFragment).commit();
-            //methodCallInterface.startMapActivity(s);
-        }else {
+        if (savedInstanceState==null){
             startMainActivity();
+            layoutManager = new LinearLayoutManager(this);
+            recyclerView.setLayoutManager(layoutManager);
+        }else {
+            list=savedInstanceState.getParcelableArrayList(LIST_CONSTANT);
+            adapter = new AllRoutesAdapter(list,HomeActivity.this);
+            recyclerView.setAdapter(adapter);
+//            getSupportLoaderManager().initLoader(DETAILS_LOADER_ID,null,this);
+//            getSupportLoaderManager().initLoader(ALl_ROUTES_LOADER_ID,null,this);
         }
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        Menu menu = navigationView.getMenu();
+        menu = navigationView.getMenu();
 
         if (sharedPrefs.getAlreadySkipped()){
             menu.findItem(R.id.nav_all_routes).setVisible(false);
@@ -141,14 +148,22 @@ public class HomeActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                drawer.openDrawer(Gravity.START);
+                startMainActivity();
             }
         });
     }
 
     public void startMainActivity() {
-
-        if (sharedPrefs.getAlreadySkipped()) {
+        String s = getIntent().getStringExtra("DetailsView");
+        if (s != null && s.length() > 0) {
+            linearLayout.setVisibility(View.VISIBLE);
+            recyclerview_layout.setVisibility(View.GONE);
+            getSelectedRouteDetails(s);
+            HomeRouteFragment homeRouteFragment = new HomeRouteFragment();
+            homeRouteFragment.setBusNumber(s);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.mapcontainer, homeRouteFragment).commit();
+        }else if (sharedPrefs.getAlreadySkipped()) {
             linearLayout.setVisibility(View.GONE);
             recyclerview_layout.setVisibility(View.VISIBLE);
             getAllRoutes();
@@ -168,7 +183,10 @@ public class HomeActivity extends AppCompatActivity
     }
 
     public void getAllRoutes() {
-        loadToast.show();
+        linearLayout.setVisibility(View.GONE);
+        recyclerview_layout.setVisibility(View.VISIBLE);
+        progressbar.setVisibility(View.VISIBLE);
+        rootView.setVisibility(View.GONE);
         LoaderManager loaderManager = getSupportLoaderManager();
         Loader<Object> details = loaderManager.getLoader(ALl_ROUTES_LOADER_ID);
         if (details==null){
@@ -211,7 +229,12 @@ public class HomeActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        } else if (linearLayout.getVisibility()==View.GONE && recyclerview_layout.getVisibility()==View.VISIBLE){
+            linearLayout.setVisibility(View.VISIBLE);
+            recyclerview_layout.setVisibility(View.GONE);
+            menu.findItem(R.id.nav_all_routes).setVisible(false);
+            menu.findItem(R.id.nav_back_to_primary).setVisible(true);
+        }else {
             finish();
         }
     }
@@ -241,6 +264,9 @@ public class HomeActivity extends AppCompatActivity
 
         if (id == R.id.nav_all_routes) {
             getAllRoutes();
+            menu.findItem(R.id.nav_all_routes).setVisible(false);
+            menu.findItem(R.id.nav_back_to_primary).setVisible(true);
+        } else if (id == R.id.nav_back_to_primary) {
 
         } else if (id == R.id.nav_complaints) {
 
@@ -281,7 +307,8 @@ public class HomeActivity extends AppCompatActivity
                 protected void onStartLoading(){
                     if (args!=null){
                         RouteNumber = args.getString(DATA_BUNDLE);
-                        loadToast.show();
+                        progressbar.setVisibility(View.VISIBLE);
+                        rootView.setVisibility(View.GONE);
                         forceLoad();
                     }
                 }
@@ -294,7 +321,6 @@ public class HomeActivity extends AppCompatActivity
         }else if (id==ALl_ROUTES_LOADER_ID){
             return new AsyncTaskLoader<Void>(this) {
                 protected void onStartLoading(){
-                    loadToast.show();
                     forceLoad();
                 }
                 @Override
@@ -307,7 +333,6 @@ public class HomeActivity extends AppCompatActivity
                             .getAsJSONObject(new JSONObjectRequestListener() {
                                 @Override
                                 public void onResponse(JSONObject response) {
-                                    loadToast.success();
                                     Log.d("TAG",response.toString());
                                     if (response.length()>0 || response.has(getString(R.string.AuthError)) || response.has(getString(R.string.ErrorSelecting))){
                                         try {
@@ -326,13 +351,14 @@ public class HomeActivity extends AppCompatActivity
                                                         model.setRouteEndPoint(object.getString(RoutesSelectConstants.endPoint));
                                                         model.setRouteViaPoint(object.getString(RoutesSelectConstants.viaPoint));
                                                         list.add(model);
-                                                        Log.d("TAG", list.toString());
                                                     } catch (JSONException e) {
                                                         e.printStackTrace();
                                                     }
-                                                }
+                                                }rootView.setVisibility(View.VISIBLE);
+                                                progressbar.setVisibility(View.INVISIBLE);
                                                 adapter = new AllRoutesAdapter(list,HomeActivity.this);
                                                 recyclerView.setAdapter(adapter);
+                                                layoutManager.onRestoreInstanceState(listState);
                                             }else {
                                                 showError();
                                             }
@@ -362,6 +388,12 @@ public class HomeActivity extends AppCompatActivity
         int id = loader.getId();
         if (id==DETAILS_LOADER_ID){
             loadToast.success();
+            progressbar.setVisibility(View.INVISIBLE);
+            rootView.setVisibility(View.VISIBLE);
+        } else if (id==ALl_ROUTES_LOADER_ID){
+            loadToast.success();
+            progressbar.setVisibility(View.INVISIBLE);
+            rootView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -370,6 +402,8 @@ public class HomeActivity extends AppCompatActivity
     }
 
     public void fetchData(String RNumber){
+        rootView.setVisibility(View.GONE);
+        progressbar.setVisibility(View.VISIBLE);
         AndroidNetworking.post(Constants.RouteGetDetailsById)
                 .setOkHttpClient(okHttpClient)
                 .setPriority(Priority.HIGH)
@@ -379,6 +413,7 @@ public class HomeActivity extends AppCompatActivity
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        loadToast.success();
                         if (response.length()>0){
                             if (response.has(Constants.HomeRouteObjectName)){
                                 try {
@@ -391,6 +426,7 @@ public class HomeActivity extends AppCompatActivity
                                         viaPoint.setText(routeObject.getString(HomeConstants.viaPoint));
                                         busNumber.setText(routeObject.getString(HomeConstants.busNumber));
                                         departureTime.setText(routeObject.getString(HomeConstants.departureTime));
+                                        lastUpdatedMain.setText(routeObject.getString(HomeConstants.lastUpdatedTime));
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -398,6 +434,8 @@ public class HomeActivity extends AppCompatActivity
                             }else {
                                 showDataError();
                             }
+                            progressbar.setVisibility(View.INVISIBLE);
+                            rootView.setVisibility(View.VISIBLE);
                         }else {
                             showDataError();
                         }
@@ -407,5 +445,52 @@ public class HomeActivity extends AppCompatActivity
                         showDataError();
                     }
                 });
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if(linearLayout.getVisibility()==View.GONE && recyclerview_layout.getVisibility()==View.VISIBLE){
+//            listState = layoutManager.onSaveInstanceState();
+            outState.putParcelableArrayList(LIST_CONSTANT, (ArrayList<? extends Parcelable>) list);
+        }else{
+            outState.putString(CONSTANT_ROUTENUMBER, routeNumber.getText().toString());
+            outState.putString(CONSTANT_STARTING, startingPoint.getText().toString());
+            outState.putString(CONSTANT_ENDING, endingPoint.getText().toString());
+            outState.putString(CONSTANT_VIA, viaPoint.getText().toString());
+            outState.putString(CONSTANT_BUSNUMBER, busNumber.getText().toString());
+            outState.putString(CONSTANT_DEPARTURETIME, departureTime.getText().toString());
+            outState.putString(CONSTANT_LASTUPDATED, lastUpdatedMain.getText().toString());
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null) {
+            if (recyclerview_layout.getVisibility()==View.VISIBLE){
+                list=savedInstanceState.getParcelableArrayList(LIST_CONSTANT);
+                adapter = new AllRoutesAdapter(list,HomeActivity.this);
+                recyclerView.setAdapter(adapter);
+            }else {
+                listState = savedInstanceState.getParcelable(LIST_CONSTANT);
+                routeNumber.setText(savedInstanceState.getString(CONSTANT_ROUTENUMBER, routeNumber.getText().toString()));
+                startingPoint.setText(savedInstanceState.getString(CONSTANT_STARTING, startingPoint.getText().toString()));
+                endingPoint.setText(savedInstanceState.getString(CONSTANT_ENDING, endingPoint.getText().toString()));
+                viaPoint.setText(savedInstanceState.getString(CONSTANT_VIA, viaPoint.getText().toString()));
+                busNumber.setText(savedInstanceState.getString(CONSTANT_BUSNUMBER, busNumber.getText().toString()));
+                departureTime.setText(savedInstanceState.getString(CONSTANT_DEPARTURETIME, departureTime.getText().toString()));
+                lastUpdatedMain.setText(savedInstanceState.getString(CONSTANT_LASTUPDATED, lastUpdatedMain.getText().toString()));
+            }
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (listState != null) {
+            layoutManager.onRestoreInstanceState(listState);
+        }
     }
 }

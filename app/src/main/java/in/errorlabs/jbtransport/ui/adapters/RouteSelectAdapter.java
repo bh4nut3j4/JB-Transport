@@ -34,7 +34,6 @@ public class RouteSelectAdapter extends RecyclerView.Adapter<RouteSelectAdapter.
     private boolean isclick=false;
     SharedPrefs sharedPrefs;
 
-
     public RouteSelectAdapter(List<RouteSelectModel> list,Context context) {
         this.context = context;
         this.list = list;

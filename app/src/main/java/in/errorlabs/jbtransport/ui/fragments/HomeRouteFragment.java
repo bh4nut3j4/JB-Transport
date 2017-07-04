@@ -4,6 +4,7 @@ package in.errorlabs.jbtransport.ui.fragments;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
@@ -37,7 +38,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import in.errorlabs.jbtransport.R;
-import in.errorlabs.jbtransport.ui.FragMethodCallInterface;
 import in.errorlabs.jbtransport.ui.constants.HomeConstants;
 import in.errorlabs.jbtransport.utils.Constants;
 import in.errorlabs.jbtransport.utils.SharedPrefs;
@@ -48,7 +48,7 @@ import static in.errorlabs.jbtransport.ui.activities.HomeActivity.COORDINATES_LO
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeRouteFragment extends Fragment implements OnMapReadyCallback,FragMethodCallInterface, LoaderManager.LoaderCallbacks<List<LatLng>> {
+public class HomeRouteFragment extends Fragment implements OnMapReadyCallback, LoaderManager.LoaderCallbacks<List<LatLng>> {
 
     Context context;
     OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
@@ -61,17 +61,9 @@ public class HomeRouteFragment extends Fragment implements OnMapReadyCallback,Fr
     List<LatLng> coordinatesarray_List = new ArrayList<LatLng>();
     public static final int POLYLINE_LOADER_ID = 100;
     public static final String STRING_CONSTANT = "CONSTANT";
-    public static final String STRING_CONSTANT_INTERFACE = "Interface";
+    public static final String LIST_CONSTANT = "list";
     SupportMapFragment mapFragment;
     public String busNumber;
-
-    public String getBusNumber() {
-        return busNumber;
-    }
-
-    public void setBusNumber(String busNumber) {
-        this.busNumber = busNumber;
-    }
 
     public HomeRouteFragment() {
         // Required empty public constructor
@@ -82,9 +74,11 @@ public class HomeRouteFragment extends Fragment implements OnMapReadyCallback,Fr
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home_route, container, false);
         sharedPrefs = new SharedPrefs(getContext());
-        FragmentManager fragmentManager = getChildFragmentManager();
-        mapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.mapfragment);
-        mapFragment.getMapAsync(this);
+        if (savedInstanceState==null){
+            FragmentManager fragmentManager = getChildFragmentManager();
+            mapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.mapfragment);
+            mapFragment.getMapAsync(this);
+        }
         return rootView;
     }
 
@@ -218,7 +212,6 @@ public class HomeRouteFragment extends Fragment implements OnMapReadyCallback,Fr
     }
 
     public void getRoutePolyLine(String Url) {
-
         AndroidNetworking.post(Url)
                 .setPriority(Priority.HIGH)
                 .build()
@@ -230,7 +223,6 @@ public class HomeRouteFragment extends Fragment implements OnMapReadyCallback,Fr
                             drawPath(response.toString());
                         }
                     }
-
                     @Override
                     public void onError(ANError anError) {
 
@@ -281,7 +273,6 @@ public class HomeRouteFragment extends Fragment implements OnMapReadyCallback,Fr
 
     public void drawPath(String result) {
         try {
-            //Tranform the string into a json object
             final JSONObject json = new JSONObject(result);
             JSONArray routeArray = json.getJSONArray("routes");
             Log.d("ROUTES", routeArray.toString());
@@ -335,6 +326,15 @@ public class HomeRouteFragment extends Fragment implements OnMapReadyCallback,Fr
 
         return poly;
     }
+
+    public String getBusNumber() {
+        return busNumber;
+    }
+
+    public void setBusNumber(String busNumber) {
+        this.busNumber = busNumber;
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -362,6 +362,7 @@ public class HomeRouteFragment extends Fragment implements OnMapReadyCallback,Fr
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(LIST_CONSTANT, (ArrayList<? extends Parcelable>) coordinatesarray_List);
         mapFragment.onSaveInstanceState(outState);
     }
 
@@ -370,30 +371,4 @@ public class HomeRouteFragment extends Fragment implements OnMapReadyCallback,Fr
         super.onLowMemory();
         mapFragment.onLowMemory();
     }
-
-    @Override
-    public String startMapActivity(String BusNumber) {
-        LoaderManager loaderManager = getLoaderManager();
-        Bundle bundle = new Bundle();
-        bundle.putString(STRING_CONSTANT_INTERFACE,BusNumber);
-        Loader<Object> details = loaderManager.getLoader(COORDINATES_LOADER_ID);
-        if (details == null) {
-            loaderManager.initLoader(COORDINATES_LOADER_ID, bundle, this);
-        } else {
-            loaderManager.restartLoader(COORDINATES_LOADER_ID, bundle, this);
-        }
-        return null;
-    }
-
-//    public void test(String BusNumber){
-//        LoaderManager loaderManager = getLoaderManager();
-//        Bundle bundle = new Bundle();
-//        bundle.putString(STRING_CONSTANT_INTERFACE,BusNumber);
-//        Loader<Object> details = loaderManager.getLoader(COORDINATES_LOADER_ID);
-//        if (details == null) {
-//            loaderManager.initLoader(COORDINATES_LOADER_ID, bundle, this);
-//        } else {
-//            loaderManager.restartLoader(COORDINATES_LOADER_ID, bundle, this);
-//        }
-//    }
 }

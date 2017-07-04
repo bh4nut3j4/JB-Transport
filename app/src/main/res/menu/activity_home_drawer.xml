@@ -11,6 +11,10 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="Select Primary Route" />
         <item
+            android:id="@+id/nav_back_to_primary"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="My Primary Route" />
+        <item
             android:id="@+id/nav_complaints"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Complaints" />
