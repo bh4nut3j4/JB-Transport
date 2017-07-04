@@ -125,8 +125,6 @@ public class HomeActivity extends AppCompatActivity
             list=savedInstanceState.getParcelableArrayList(LIST_CONSTANT);
             adapter = new AllRoutesAdapter(list,HomeActivity.this);
             recyclerView.setAdapter(adapter);
-//            getSupportLoaderManager().initLoader(DETAILS_LOADER_ID,null,this);
-//            getSupportLoaderManager().initLoader(ALl_ROUTES_LOADER_ID,null,this);
         }
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -163,10 +161,6 @@ public class HomeActivity extends AppCompatActivity
             homeRouteFragment.setBusNumber(s);
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.mapcontainer, homeRouteFragment).commit();
-        }else if (sharedPrefs.getAlreadySkipped()) {
-            linearLayout.setVisibility(View.GONE);
-            recyclerview_layout.setVisibility(View.VISIBLE);
-            getAllRoutes();
         } else if (sharedPrefs.getRouteSelected()) {
             if (FirebaseInstanceId.getInstance().getToken() != null) {
                 FirebaseMessaging.getInstance().subscribeToTopic(sharedPrefs.getSelectedRouteFcmID());

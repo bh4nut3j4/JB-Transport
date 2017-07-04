@@ -33,10 +33,6 @@ public class Splash extends AppCompatActivity {
                 loadToast.success();
                 startActivity(new Intent(getApplicationContext(),HomeActivity.class));
                 finish();
-            } else if (sharedPrefs.getAlreadySkipped()){
-                loadToast.success();
-                startActivity(new Intent(getApplicationContext(),HomeActivity.class));
-                finish();
             }else {
                 loadToast.success();
                 startActivity(new Intent(getApplicationContext(),RouteSelectActivity.class));

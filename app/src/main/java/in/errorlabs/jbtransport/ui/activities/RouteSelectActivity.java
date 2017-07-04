@@ -1,11 +1,8 @@
 package in.errorlabs.jbtransport.ui.activities;
 
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -157,30 +154,30 @@ public class RouteSelectActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.routeselect, menu);
+        //getMenuInflater().inflate(R.menu.routeselect, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.skip) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(R.string.warning);
-            builder.setMessage(getString(R.string.skipwarningmessage) + "\n\n"
-                    + getString(R.string.areyousuretoskip));
-            builder.setPositiveButton(R.string.proceed, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    sharedPrefs.setAlreadySkipped();
-                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-            });
-            builder.setNegativeButton(R.string.cancel, null);
-            builder.show();
-        }
+//        if (id == R.id.skip) {
+//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//            builder.setTitle(R.string.warning);
+//            builder.setMessage(getString(R.string.skipwarningmessage) + "\n\n"
+//                    + getString(R.string.areyousuretoskip));
+//            builder.setPositiveButton(R.string.proceed, new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    sharedPrefs.setAlreadySkipped();
+//                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+//                    startActivity(intent);
+//                    finish();
+//                }
+//            });
+//            builder.setNegativeButton(R.string.cancel, null);
+//            builder.show();
+//        }
         return super.onOptionsItemSelected(item);
     }
 

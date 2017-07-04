@@ -46,7 +46,7 @@
     <string name="admin">Administration Block</string>
     <string name="mba">MBA Block</string>
     <string name="fullroute">Full Route :</string>
-    <string name="areyousure"><b>Are you sure you want to set this route as your primary route ?</b> \n\n Dont worry you can change your route later if needed.</string>
+    <string name="areyousure"><b>Are you sure you want to set this route as your primary route ?</b> \n\nDont worry you can change your route later if needed.</string>
     <string name="areyousuretoskip">Are you sure you want to skip this step ?</string>
     <string name="nointernet">No Internet Connection</string>
     <string name="skip">Skip</string>
