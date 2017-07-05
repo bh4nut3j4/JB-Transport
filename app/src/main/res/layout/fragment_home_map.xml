@@ -1,36 +1,6 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mapfragment"
+    class="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/homemapcontainer"
-    tools:context="in.errorlabs.jbtransport.ui.fragments.HomeMapFragment">
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical">
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/teal"
-                android:fontFamily="sans-serif-smallcaps"
-                android:text="@string/MapView"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                tools:targetApi="jelly_bean" />
-            <fragment
-                class="com.google.android.gms.maps.SupportMapFragment"
-                android:layout_width="match_parent"
-                android:layout_height="350dp"
-                android:id="@+id/mapfragment"/>
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
-
-</FrameLayout>
+    android:layout_height="350dp" />

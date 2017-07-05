@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import butterknife.ButterKnife;
 import in.errorlabs.jbtransport.R;
 import in.errorlabs.jbtransport.ui.constants.HomeConstants;
 import in.errorlabs.jbtransport.utils.Constants;
@@ -49,7 +50,7 @@ import static in.errorlabs.jbtransport.ui.activities.HomeActivity.COORDINATES_LO
 public class HomeMapFragment extends Fragment implements OnMapReadyCallback, LoaderManager.LoaderCallbacks<List<LatLng>>{
     SupportMapFragment mapFragment;
     private GoogleMap mMap;
-    public String busNumber;
+    public String routeNumber;
     SharedPrefs sharedPrefs;
     OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
             .connectTimeout(120, TimeUnit.SECONDS)
@@ -60,14 +61,15 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
     public static final int POLYLINE_LOADER_ID = 100;
     public static final String STRING_CONSTANT = "CONSTANT";
     public static final String LIST_CONSTANT = "list";
-
     public HomeMapFragment() {
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home_map, container, false);
+        ButterKnife.bind(this,rootView);
         sharedPrefs = new SharedPrefs(getContext());
         FragmentManager fragmentManager = getChildFragmentManager();
         mapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.mapfragment);
@@ -75,12 +77,12 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
         return rootView;
     }
 
-    public String getBusNumber() {
-        return busNumber;
+    public String getRouteNumber() {
+        return routeNumber;
     }
 
-    public void setBusNumber(String busNumber) {
-        this.busNumber = busNumber;
+    public void setRouteNumber(String routeNumber) {
+        this.routeNumber = routeNumber;
     }
 
     @Override
@@ -106,8 +108,8 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
                 @Override
                 public List<LatLng> loadInBackground() {
                     String bus_number;
-                    if (busNumber!=null && busNumber.length()>0){
-                        bus_number = busNumber;
+                    if (routeNumber!=null && routeNumber.length()>0){
+                        bus_number = routeNumber;
                     }else {
                         bus_number=sharedPrefs.getSelectedRouteNumber();
                     }
