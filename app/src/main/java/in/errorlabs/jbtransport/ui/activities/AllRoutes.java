@@ -169,7 +169,7 @@ public class AllRoutes extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home, menu);
-        menu.findItem(R.id.action_settings).setVisible(false);
+        menu.findItem(R.id.reset).setVisible(false);
         return true;
     }
 
@@ -177,12 +177,13 @@ public class AllRoutes extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.reset) {
             return true;
         }else if(id == R.id.search) {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle(R.string.searchtitle);
             alert.setMessage(R.string.searchmessage);
+            alert.setIcon(R.drawable.searchalert);
             final EditText input = new EditText(this);
             input.setHint(R.string.searchhint);
             alert.setView(input);
@@ -198,11 +199,7 @@ public class AllRoutes extends AppCompatActivity {
                     }
                 }
             });
-            alert.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
-                }
-            });
-            alert.show();
+            alert.setNegativeButton(getString(R.string.cancel),null);
             return true;
         }
         return super.onOptionsItemSelected(item);

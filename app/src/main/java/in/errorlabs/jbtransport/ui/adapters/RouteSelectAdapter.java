@@ -21,7 +21,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import in.errorlabs.jbtransport.R;
-import in.errorlabs.jbtransport.ui.activities.CollegeMap.CollegeMap;
+import in.errorlabs.jbtransport.ui.activities.MapViewActivity;
 import in.errorlabs.jbtransport.ui.activities.HomeActivity;
 import in.errorlabs.jbtransport.ui.models.RouteSelectModel;
 import in.errorlabs.jbtransport.utils.SharedPrefs;
@@ -72,7 +72,7 @@ public class RouteSelectAdapter extends RecyclerView.Adapter<RouteSelectAdapter.
             @Override
             public void onClick(View v) {
                 String routeNumber = holder.routeNumber.getText().toString();
-                Intent intent = new Intent(context, CollegeMap.class);
+                Intent intent = new Intent(context, MapViewActivity.class);
                 intent.putExtra("Gmaps",routeNumber);
                 context.startActivity(intent);
             }

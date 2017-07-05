@@ -11,6 +11,7 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -31,10 +32,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activities.CollegeMap.CollegeMap"
+            android:name=".ui.activities.MapViewActivity"
             android:label="@string/title_activity_college_map"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".ui.activities.HomeActivity"/>
+            android:parentActivityName=".ui.activities.HomeActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activities.HomeActivity"
             android:screenOrientation="portrait"
@@ -66,13 +67,15 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".ui.activities.AllRoutes"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".ui.activities.HomeActivity"/>
+        <activity
+            android:name=".ui.activities.AllRoutes"
+            android:parentActivityName=".ui.activities.HomeActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activities.RouteFullDetails"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".ui.activities.AllRoutes" />
+            android:parentActivityName=".ui.activities.AllRoutes"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.activities.Scanner"></activity>
     </application>
 
 </manifest>

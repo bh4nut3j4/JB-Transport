@@ -63,15 +63,27 @@
     <string name="subjectemailqstn">\?subject=</string>
     <string name="reportingabug">Reporting A Bug/Feedback</string>
     <string name="bodymail"><![CDATA[&body=]]></string>
-    <string name="mailintro">Hello, Team Sync  I want to report a bug/give feedback corresponding to the app Sync-Jbiet...  -Your name</string>
+    <string name="mailintro">Hello, Team Sync  I want to report a bug/give feedback corresponding to the app JB Transport...  -Your name</string>
     <string name="sendemail">Send Email</string>
     <string name="opensource">Open Source Licenses</string>
-    <string name="licenses_text">\t\nThe following are third party software/api that are used in Sync-Jbiet app.\n\n
+    <string name="aboutmsg">This is developed by the ACM STUDENT CHAPTER JBIET</string>
+    <string name="licenses_text">\t\nThe following are third party software/api that are used in JB Transport app.\n\n
         \t<a href="https://github.com/amitshekhariitbhu/Fast-Android-Networking">Fast-Android-Networking</a>\n\n
 \t<a href="https://github.com/bumptech/glide">Glide</a>\n\n
         \t<a href="https://github.com/OneSignal">One Signal</a>\n\n
 \t<a href="https://github.com/code-mc/loadtoast">Load Toast</a>\n\n
         \t<a href="https://github.com/JakeWharton/butterknife">ButterKnife</a>\n\n
+    </string>
+    <string name="contributers">We thank the open source community for all their contributions.\n\n
+
+        <b>Developer :</b>\n\n
+\t<a href="https://github.com/bh4nut3j4">Bhanu Teja</a>\n\n
+        <b>Contributers :</b>\n\n
+        \t<a href="https://www.facebook.com/anishreddyravula/">Anish Reddy</a>\n\n
+        \t<a href="https://www.facebook.com/sarthak.kammari/">Sarthak</a>\n\n
+        \t<a href="https://www.facebook.com/rohit.dulam">Rohit Dulam</a>\n\n
+        \t<a href="https://github.com/sri-ker/">Sriker Reddy</a>\n\n
+        \t<a href="https://www.facebook.com/profile.php?id=100001236403045/">Vamshi krishna</a>\n\n
     </string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -87,6 +99,8 @@
     <string name="jbgrouppublic">JB-Public-Push</string>
     <string name="searcherror">No Details Found ! \nTry searching area name with exact keywords and spacing do not use dots or speacial characters.</string>
     <string name="searcherrorselecting">SearchErrorSelecting</string>
+    <string name="aboutus">About Us</string>
+    <string name="OK">OK</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

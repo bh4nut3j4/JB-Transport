@@ -21,10 +21,10 @@ import in.errorlabs.jbtransport.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeRouteFragment extends Fragment implements OnMapReadyCallback {
+public class CollegeMapFragment extends Fragment implements OnMapReadyCallback {
 
     FragmentManager fragmentManager;
-    public HomeRouteFragment() {
+    public CollegeMapFragment() {
     }
 
     @Override

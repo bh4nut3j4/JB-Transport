@@ -15,7 +15,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,7 +32,6 @@ import net.steamcrafted.loadtoast.LoadToast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import in.errorlabs.jbtransport.R;
-import in.errorlabs.jbtransport.ui.activities.CollegeMap.CollegeMap;
 import in.errorlabs.jbtransport.ui.fragments.HomeDataFragment;
 import in.errorlabs.jbtransport.ui.fragments.HomeMapFragment;
 import in.errorlabs.jbtransport.utils.Connection;
@@ -88,10 +86,8 @@ public class HomeActivity extends AppCompatActivity
 
     public void startMainActivity() {
         if (sharedPrefs.getRouteSelected()) {
-            Toast.makeText(getApplicationContext(),FirebaseInstanceId.getInstance().getToken().toString(),Toast.LENGTH_SHORT).show();
-            if (FirebaseInstanceId.getInstance().getToken() != null) {
+             if (FirebaseInstanceId.getInstance().getToken() != null) {
                 FirebaseMessaging.getInstance().subscribeToTopic(sharedPrefs.getSelectedRouteFcmID());
-                Log.d("MSG", "topic");
             }
             getSelectedRouteDetails(sharedPrefs.getSelectedRouteNumber());
         } else {
@@ -196,12 +192,21 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.nav_all_routes) {
             startActivity(new Intent(getApplicationContext(),AllRoutes.class));
         } else if (id == R.id.nav_complaints) {
-
+            startActivity(new Intent(getApplicationContext(),Scanner.class));
         } else if (id == R.id.nav_notifications) {
 
         } else if (id == R.id.nav_collegemap) {
-            startActivity(new Intent(getApplicationContext(), CollegeMap.class));
+            startActivity(new Intent(getApplicationContext(), MapViewActivity.class));
         } else if (id == R.id.nav_aboutus) {
+
+            AlertDialog.Builder alert = new AlertDialog.Builder(HomeActivity.this);
+            alert.setTitle(String.format("%1$s", getString(R.string.aboutus)));
+            alert.setMessage(getResources().getText(R.string.contributers));
+            alert.setIcon(R.drawable.aboutus);
+            alert.setPositiveButton(R.string.OK,null);
+            AlertDialog welcomeAlert = alert.create();
+            welcomeAlert.show();
+            ((TextView) welcomeAlert.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
 
         } else if (id == R.id.nav_reportabug) {
             Intent i = new Intent(Intent.ACTION_SENDTO);
@@ -215,6 +220,7 @@ public class HomeActivity extends AppCompatActivity
             builder.setTitle(String.format("%1$s", getString(R.string.opensource) + ":"));
             builder.setMessage(getResources().getText(R.string.licenses_text));
             builder.setPositiveButton("OK", null);
+            builder.setIcon(R.drawable.license);
             AlertDialog welcomeAlert = builder.create();
             welcomeAlert.show();
             ((TextView) welcomeAlert.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());

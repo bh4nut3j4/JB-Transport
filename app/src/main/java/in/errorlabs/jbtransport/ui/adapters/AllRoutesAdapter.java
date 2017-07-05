@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -69,8 +68,6 @@ public class AllRoutesAdapter extends RecyclerView.Adapter<AllRoutesAdapter.AllR
             @Override
             public void onClick(final View v) {
                 String number = holder.routeNumber.getText().toString();
-                String s = "DetailsView";
-                Toast.makeText(v.getContext(),number,Toast.LENGTH_SHORT).show();
                 Intent intent= new Intent(v.getContext(),RouteFullDetails.class);
                 intent.putExtra("DetailsView",number);
                 v.getContext().startActivity(intent);

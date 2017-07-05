@@ -1,4 +1,4 @@
-package in.errorlabs.jbtransport.ui.activities.CollegeMap;
+package in.errorlabs.jbtransport.ui.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -8,9 +8,9 @@ import com.google.android.gms.maps.GoogleMap;
 
 import in.errorlabs.jbtransport.R;
 import in.errorlabs.jbtransport.ui.fragments.HomeMapFragment;
-import in.errorlabs.jbtransport.ui.fragments.HomeRouteFragment;
+import in.errorlabs.jbtransport.ui.fragments.CollegeMapFragment;
 
-public class CollegeMap extends AppCompatActivity {
+public class MapViewActivity extends AppCompatActivity {
 
     private GoogleMap mMap;
     String route;
@@ -31,20 +31,9 @@ public class CollegeMap extends AppCompatActivity {
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.college_map_container,homeMapFragment).commit();
         }else {
-            HomeRouteFragment homeRouteFragment = new HomeRouteFragment();
+            CollegeMapFragment collegeMapFragment = new CollegeMapFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.college_map_container,homeRouteFragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.college_map_container, collegeMapFragment).commit();
         }
     }
-
-//    @Override
-//    public void onMapReady(GoogleMap googleMap) {
-//        mMap = googleMap;
-//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            return;
-//        }
-//        mMap.getUiSettings().setMyLocationButtonEnabled(false);
-//        mMap.setMyLocationEnabled(true);
-//
-//    }
 }
