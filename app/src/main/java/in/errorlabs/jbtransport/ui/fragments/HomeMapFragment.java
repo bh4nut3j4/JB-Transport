@@ -3,6 +3,7 @@ package in.errorlabs.jbtransport.ui.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
@@ -64,7 +65,6 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
     public HomeMapFragment() {
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -75,14 +75,6 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
         mapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.mapfragment);
         mapFragment.getMapAsync(this);
         return rootView;
-    }
-
-    public String getRouteNumber() {
-        return routeNumber;
-    }
-
-    public void setRouteNumber(String routeNumber) {
-        this.routeNumber = routeNumber;
     }
 
     @Override
@@ -97,41 +89,30 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
         }
     }
 
+    public String getRouteNumber() {
+        return routeNumber;
+    }
+
+    public void setRouteNumber(String routeNumber) {
+        this.routeNumber = routeNumber;
+    }
+
     @Override
     public Loader<List<LatLng>> onCreateLoader(int id, final Bundle args) {
         if (id==COORDINATES_LOADER_ID){
             return new AsyncTaskLoader<List<LatLng>>(getContext()) {
+                String bus_number;
                 @Override
                 protected void onStartLoading() {
-                    forceLoad();
+                    if (routeNumber!=null && routeNumber.length()>0){
+                        bus_number = routeNumber;
+                        forceLoad();
+                    }
                 }
                 @Override
                 public List<LatLng> loadInBackground() {
-                    String bus_number;
-                    if (routeNumber!=null && routeNumber.length()>0){
-                        bus_number = routeNumber;
-                    }else {
-                        bus_number=sharedPrefs.getSelectedRouteNumber();
-                    }
-                    AndroidNetworking.post(Constants.Coordinates)
-                            .setOkHttpClient(okHttpClient)
-                            .setPriority(Priority.HIGH)
-                            .addBodyParameter(Constants.AppKey, String.valueOf(R.string.transportAppKey))
-                            .addBodyParameter(Constants.RouteNumber, bus_number)
-                            .build()
-                            .getAsJSONObject(new JSONObjectRequestListener() {
-                                @Override
-                                public void onResponse(JSONObject response) {
-                                    list= generatePath(response);
-                                    if (list!=null&& list.size()>0){
-                                        generateURL(list);
-                                    }
-                                }
-                                @Override
-                                public void onError(ANError anError) {
-                                    Log.d("LOG", anError.toString());
-                                }
-                            });
+                    list = getData(bus_number);
+                    Log.d("LISTMAP",list.toString());
                     return list;
                 }
             };
@@ -163,6 +144,30 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
     @Override
     public void onLoaderReset(Loader<List<LatLng>> loader) {
 
+    }
+
+    public List<LatLng> getData(String busNumber){
+        AndroidNetworking.post(Constants.Coordinates)
+                .setOkHttpClient(okHttpClient)
+                .setPriority(Priority.HIGH)
+                .addBodyParameter(Constants.AppKey, String.valueOf(R.string.transportAppKey))
+                .addBodyParameter(Constants.RouteNumber, busNumber)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        list= generatePath(response);
+                        if (list!=null&& list.size()>0){
+                            generateURL(list);
+                        }
+                    }
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.d("LOG", anError.toString());
+                    }
+                });
+
+        return list;
     }
 
     public List<LatLng> generatePath(JSONObject response){
@@ -322,4 +327,36 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
         }
         return poly;
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString(CONSTANT_ROUTENUMBER,route_Number.getText().toString());
+        savedInstanceState.putString(CONSTANT_STARTING,startingPoint.getText().toString());
+        savedInstanceState.putString(CONSTANT_ENDING,endingPoint.getText().toString());
+        savedInstanceState.putString(CONSTANT_VIA,viaPoint.getText().toString());
+        savedInstanceState.putString(CONSTANT_BUSNUMBER,route_Number.getText().toString());
+        savedInstanceState.putString(CONSTANT_DEPARTURETIME,busNumber.getText().toString());
+        savedInstanceState.putString(CONSTANT_LASTUPDATED,lastUpdatedMain.getText().toString());
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState!=null){
+            try {
+                route_Number.setText(savedInstanceState.getString(CONSTANT_ROUTENUMBER));
+                startingPoint.setText(savedInstanceState.getString(CONSTANT_STARTING));
+                endingPoint.setText(savedInstanceState.getString(CONSTANT_ENDING));
+                viaPoint.setText(savedInstanceState.getString(CONSTANT_VIA));
+                busNumber.setText(savedInstanceState.getString(CONSTANT_BUSNUMBER));
+                departureTime.setText(savedInstanceState.getString(CONSTANT_DEPARTURETIME));
+                lastUpdatedMain.setText(savedInstanceState.getString(CONSTANT_LASTUPDATED));
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        }
+    }
+
 }

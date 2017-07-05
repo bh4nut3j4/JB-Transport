@@ -18,7 +18,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import in.errorlabs.jbtransport.R;
-import in.errorlabs.jbtransport.ui.activities.HomeActivity;
+import in.errorlabs.jbtransport.ui.activities.RouteFullDetails;
 import in.errorlabs.jbtransport.ui.models.RouteSelectModel;
 import in.errorlabs.jbtransport.utils.SharedPrefs;
 
@@ -71,7 +71,7 @@ public class AllRoutesAdapter extends RecyclerView.Adapter<AllRoutesAdapter.AllR
                 String number = holder.routeNumber.getText().toString();
                 String s = "DetailsView";
                 Toast.makeText(v.getContext(),number,Toast.LENGTH_SHORT).show();
-                Intent intent= new Intent(v.getContext(),HomeActivity.class);
+                Intent intent= new Intent(v.getContext(),RouteFullDetails.class);
                 intent.putExtra("DetailsView",number);
                 v.getContext().startActivity(intent);
             }

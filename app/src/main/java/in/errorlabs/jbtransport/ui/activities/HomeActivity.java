@@ -1,5 +1,6 @@
 package in.errorlabs.jbtransport.ui.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,8 +19,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -44,16 +47,7 @@ public class HomeActivity extends AppCompatActivity
     Connection connection;
     public static final int DETAILS_LOADER_ID = 11;
     public static final int COORDINATES_LOADER_ID = 12;
-    public static final int ALl_ROUTES_LOADER_ID = 13;
-    public static final String DATA_BUNDLE = "bundle";
-    public static final String LIST_CONSTANT = "list";
-    public static final String CONSTANT_ROUTENUMBER = "list";
-    public static final String CONSTANT_STARTING = "list";
-    public static final String CONSTANT_ENDING = "list";
-    public static final String CONSTANT_VIA = "list";
-    public static final String CONSTANT_BUSNUMBER = "list";
-    public static final String CONSTANT_DEPARTURETIME = "list";
-    public static final String CONSTANT_LASTUPDATED = "list";
+
     NavigationView navigationView;
     Menu menu;
     @BindView(R.id.relative_lay)RelativeLayout relativeLayout;
@@ -74,7 +68,6 @@ public class HomeActivity extends AppCompatActivity
         connection = new Connection(this);
         startMainActivity();
 
-
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -84,13 +77,6 @@ public class HomeActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         menu = navigationView.getMenu();
-
-        if (sharedPrefs.getAlreadySkipped()){
-            menu.findItem(R.id.nav_all_routes).setVisible(false);
-        }else {
-            menu.findItem(R.id.nav_select_primary).setVisible(false);
-        }
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,10 +87,7 @@ public class HomeActivity extends AppCompatActivity
     }
 
     public void startMainActivity() {
-        String s = getIntent().getStringExtra("DetailsView");
-        if (s != null && s.length() > 0) {
-            getSelectedRouteDetails(s);
-        } else if (sharedPrefs.getRouteSelected()) {
+        if (sharedPrefs.getRouteSelected()) {
             if (FirebaseInstanceId.getInstance().getToken() != null) {
                 FirebaseMessaging.getInstance().subscribeToTopic(sharedPrefs.getSelectedRouteFcmID());
                 Log.d("MSG", "topic");
@@ -115,16 +98,15 @@ public class HomeActivity extends AppCompatActivity
         }
     }
 
-
     public void getSelectedRouteDetails(String routeNumber) {
         HomeDataFragment homeDataFragment = new HomeDataFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         homeDataFragment.setRouteNumber(routeNumber);
-        fragmentManager.beginTransaction().add(R.id.main_data_fragment,homeDataFragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.main_data_fragment,homeDataFragment).commit();
 
         HomeMapFragment homeMapFragment = new HomeMapFragment();
-        homeDataFragment.setRouteNumber(routeNumber);
-        fragmentManager.beginTransaction().add(R.id.main_map_fragment,homeMapFragment).commit();
+        homeMapFragment.setRouteNumber(routeNumber);
+        fragmentManager.beginTransaction().replace(R.id.main_map_fragment,homeMapFragment).commit();
     }
 
     public void showError() {
@@ -159,11 +141,37 @@ public class HomeActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }else if(id == R.id.search) {
 
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle(R.string.searchtitle);
+        alert.setMessage(R.string.searchmessage);
+        final EditText input = new EditText(this);
+            input.setHint(R.string.searchhint);
+        alert.setView(input);
+        alert.setPositiveButton(getString(R.string.search), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String result = input.getText().toString();
+                Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
+                if (result.length()>0){
+                    Intent intent = new Intent(getApplicationContext(),AllRoutes.class);
+                    intent.putExtra(getString(R.string.AreaName),result);
+                    startActivity(intent);
+                }else {
+                    Snackbar.make(relativeLayout,getString(R.string.invalidinput),Snackbar.LENGTH_SHORT).show();
+                }
 
+            }
+        });
+        alert.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
+        alert.show();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -173,10 +181,7 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_all_routes) {
-            menu.findItem(R.id.nav_all_routes).setVisible(false);
-            menu.findItem(R.id.nav_back_to_primary).setVisible(true);
-        } else if (id == R.id.nav_back_to_primary) {
-
+            startActivity(new Intent(getApplicationContext(),AllRoutes.class));
         } else if (id == R.id.nav_complaints) {
 
         } else if (id == R.id.nav_notifications) {

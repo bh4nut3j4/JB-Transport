@@ -42,8 +42,6 @@ dependencies {
     compile 'com.onesignal:OneSignal:[3.5.3,4.0.0)'
     compile 'com.google.android.gms:play-services-maps:10.0.1'
     compile 'jp.wasabeef:recyclerview-animators:2.2.7'
-    compile 'com.nineoldandroids:library:2.4.0'
-    compile 'com.github.sd6352051.niftydialogeffects:niftydialogeffects:1.0.0@aar'
     compile 'com.android.support:support-core-utils:25.4.0'
     compile 'com.android.support:support-v4:25.3.1'
     testCompile 'junit:junit:4.12'

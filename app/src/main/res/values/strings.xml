@@ -50,7 +50,7 @@
     <string name="areyousuretoskip">Are you sure you want to skip this step ?</string>
     <string name="nointernet">No Internet Connection</string>
     <string name="skip">Skip</string>
-    <string name="search">Search</string>
+    <string name="search">SEARCH</string>
     <string name="proceed">PROCEED</string>
     <string name="cancel">CANCEL</string>
     <string name="tryagainlater">Try Again Later</string>
@@ -84,6 +84,12 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="searchtitle">Search</string>
+    <string name="searchmessage">Enter the area name</string>
+    <string name="searchhint">E.g: Punjagutta</string>
+    <string name="invalidinput">Invalid Input</string>
+    <string name="AreaName">AreaName</string>
+    <string name="searcherror">No Details Found ! \nTry searching area name with exact keywords and spacing do not use dots or speacial characters.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

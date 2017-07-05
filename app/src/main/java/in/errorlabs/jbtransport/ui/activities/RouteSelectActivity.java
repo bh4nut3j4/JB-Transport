@@ -17,7 +17,6 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 
 import net.steamcrafted.loadtoast.LoadToast;
 
@@ -56,7 +55,6 @@ public class RouteSelectActivity extends AppCompatActivity {
     Connection connection;
     SharedPrefs sharedPrefs;
     LoadToast loadToast;
-    NiftyDialogBuilder dialogBuilder;
     public static final String LIST_CONSTANT = "list";
     Parcelable listState;
     LinearLayoutManager layoutManager;
@@ -73,7 +71,6 @@ public class RouteSelectActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(animator);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        dialogBuilder = NiftyDialogBuilder.getInstance(this);
         if (connection.isInternet()) {
             loadToast.show();
             getRouteSelectData();
@@ -161,23 +158,6 @@ public class RouteSelectActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-//        if (id == R.id.skip) {
-//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//            builder.setTitle(R.string.warning);
-//            builder.setMessage(getString(R.string.skipwarningmessage) + "\n\n"
-//                    + getString(R.string.areyousuretoskip));
-//            builder.setPositiveButton(R.string.proceed, new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//                    sharedPrefs.setAlreadySkipped();
-//                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-//                    startActivity(intent);
-//                    finish();
-//                }
-//            });
-//            builder.setNegativeButton(R.string.cancel, null);
-//            builder.show();
-//        }
         return super.onOptionsItemSelected(item);
     }
 

@@ -2,6 +2,7 @@ package in.errorlabs.jbtransport.ui.fragments;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -58,6 +59,13 @@ public class HomeDataFragment extends Fragment implements LoaderManager.LoaderCa
     @BindView(R.id.noticebard_text) TextView notice_text;
     @BindView(R.id.notice_last_updated_text) TextView notice_last_updated_text;
     @BindView(R.id.data_l1) LinearLayout rootView;
+    public static final String CONSTANT_ROUTENUMBER = "Rnumber";
+    public static final String CONSTANT_STARTING = "Straring";
+    public static final String CONSTANT_ENDING = "ending";
+    public static final String CONSTANT_VIA = "via";
+    public static final String CONSTANT_BUSNUMBER = "bus";
+    public static final String CONSTANT_DEPARTURETIME = "deptime";
+    public static final String CONSTANT_LASTUPDATED = "lastupdate";
     LoadToast loadToast;
     Connection connection;
     public String routeNumber;
@@ -71,7 +79,22 @@ public class HomeDataFragment extends Fragment implements LoaderManager.LoaderCa
         View rootView = inflater.inflate(R.layout.fragment_home_data, container, false);
         ButterKnife.bind(this,rootView);
         loadToast = new LoadToast(getContext());
-        getData();
+        if (savedInstanceState==null){
+            getData();
+        }else {
+            try {
+                route_Number.setText(savedInstanceState.getString(CONSTANT_ROUTENUMBER));
+                startingPoint.setText(savedInstanceState.getString(CONSTANT_STARTING));
+                endingPoint.setText(savedInstanceState.getString(CONSTANT_ENDING));
+                viaPoint.setText(savedInstanceState.getString(CONSTANT_VIA));
+                busNumber.setText(savedInstanceState.getString(CONSTANT_BUSNUMBER));
+                departureTime.setText(savedInstanceState.getString(CONSTANT_DEPARTURETIME));
+                lastUpdatedMain.setText(savedInstanceState.getString(CONSTANT_LASTUPDATED));
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
         return rootView;
     }
 
@@ -100,8 +123,8 @@ public class HomeDataFragment extends Fragment implements LoaderManager.LoaderCa
                 String RouteNumber;
                 @Override
                 protected void onStartLoading(){
-                    loadToast.show();
                     if (routeNumber!=null && routeNumber.length()>0){
+                        loadToast.show();
                         RouteNumber = routeNumber;
                         forceLoad();
                     }
@@ -166,7 +189,7 @@ public class HomeDataFragment extends Fragment implements LoaderManager.LoaderCa
                     }
                     @Override
                     public void onError(ANError anError) {
-                        showDataError();
+                        showError();
                     }
                 });
     }
@@ -186,4 +209,36 @@ public class HomeDataFragment extends Fragment implements LoaderManager.LoaderCa
         loadToast.error();
         Snackbar.make(rootView, getString(R.string.tryagainlater), Snackbar.LENGTH_INDEFINITE).show();
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString(CONSTANT_ROUTENUMBER,route_Number.getText().toString());
+        savedInstanceState.putString(CONSTANT_STARTING,startingPoint.getText().toString());
+        savedInstanceState.putString(CONSTANT_ENDING,endingPoint.getText().toString());
+        savedInstanceState.putString(CONSTANT_VIA,viaPoint.getText().toString());
+        savedInstanceState.putString(CONSTANT_BUSNUMBER,route_Number.getText().toString());
+        savedInstanceState.putString(CONSTANT_DEPARTURETIME,busNumber.getText().toString());
+        savedInstanceState.putString(CONSTANT_LASTUPDATED,lastUpdatedMain.getText().toString());
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState!=null){
+            try {
+                route_Number.setText(savedInstanceState.getString(CONSTANT_ROUTENUMBER));
+                startingPoint.setText(savedInstanceState.getString(CONSTANT_STARTING));
+                endingPoint.setText(savedInstanceState.getString(CONSTANT_ENDING));
+                viaPoint.setText(savedInstanceState.getString(CONSTANT_VIA));
+                busNumber.setText(savedInstanceState.getString(CONSTANT_BUSNUMBER));
+                departureTime.setText(savedInstanceState.getString(CONSTANT_DEPARTURETIME));
+                lastUpdatedMain.setText(savedInstanceState.getString(CONSTANT_LASTUPDATED));
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        }
+    }
+
 }
