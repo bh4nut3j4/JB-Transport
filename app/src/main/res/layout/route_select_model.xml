@@ -118,7 +118,7 @@
                         android:layout_marginRight="5dp"
                         android:layout_marginEnd="5dp"
                         android:id="@+id/routeimage"
-                        android:src="@drawable/routecon"/>
+                        android:src="@drawable/route"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -131,23 +131,70 @@
                     android:layout_margin="10dp"
                     android:id="@+id/r2"
                     android:visibility="gone">
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/fullroute"
-                        android:textSize="15sp"
-                        android:textColor="@color/blue"
-                        android:textAllCaps="true"
-                        android:id="@+id/fullroutetext" />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/fullroutetext"
-                        android:id="@+id/fullroute"
-                        android:layout_marginTop="10dp"
-                        android:textSize="15sp"
-                        android:textColor="@color/red"
-                        tools:text="full route here"/>
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/fullroute"
+                            android:textSize="15sp"
+                            android:textColor="@color/blue"
+                            android:textAllCaps="true"
+                            android:id="@+id/fullroutetext" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:background="@color/blacklow"
+                            android:layout_marginRight="30dp"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/fullroute"
+                            android:textSize="15sp"
+                            android:textColor="@color/red"
+                            tools:text="full route here"/>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:background="@color/blacklow"
+                            android:layout_marginRight="30dp"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_gravity="end"
+                            android:gravity="center"
+                            android:id="@+id/googlemaps">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:textSize="15sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/blue"
+                                    android:text="View On"/>
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginStart="10dp"
+                                    android:src="@drawable/google"/>
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
                 </RelativeLayout>
                 <Button
                     android:layout_width="match_parent"

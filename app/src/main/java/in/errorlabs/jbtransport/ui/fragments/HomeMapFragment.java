@@ -3,7 +3,6 @@ package in.errorlabs.jbtransport.ui.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
@@ -66,6 +65,12 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home_map, container, false);
@@ -73,7 +78,9 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
         sharedPrefs = new SharedPrefs(getContext());
         FragmentManager fragmentManager = getChildFragmentManager();
         mapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.mapfragment);
-        mapFragment.getMapAsync(this);
+        if (savedInstanceState==null){
+            mapFragment.getMapAsync(this);
+        }
         return rootView;
     }
 
@@ -327,36 +334,4 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
         }
         return poly;
     }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putString(CONSTANT_ROUTENUMBER,route_Number.getText().toString());
-        savedInstanceState.putString(CONSTANT_STARTING,startingPoint.getText().toString());
-        savedInstanceState.putString(CONSTANT_ENDING,endingPoint.getText().toString());
-        savedInstanceState.putString(CONSTANT_VIA,viaPoint.getText().toString());
-        savedInstanceState.putString(CONSTANT_BUSNUMBER,route_Number.getText().toString());
-        savedInstanceState.putString(CONSTANT_DEPARTURETIME,busNumber.getText().toString());
-        savedInstanceState.putString(CONSTANT_LASTUPDATED,lastUpdatedMain.getText().toString());
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        if (savedInstanceState!=null){
-            try {
-                route_Number.setText(savedInstanceState.getString(CONSTANT_ROUTENUMBER));
-                startingPoint.setText(savedInstanceState.getString(CONSTANT_STARTING));
-                endingPoint.setText(savedInstanceState.getString(CONSTANT_ENDING));
-                viaPoint.setText(savedInstanceState.getString(CONSTANT_VIA));
-                busNumber.setText(savedInstanceState.getString(CONSTANT_BUSNUMBER));
-                departureTime.setText(savedInstanceState.getString(CONSTANT_DEPARTURETIME));
-                lastUpdatedMain.setText(savedInstanceState.getString(CONSTANT_LASTUPDATED));
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-
-        }
-    }
-
 }

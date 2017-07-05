@@ -1,15 +1,20 @@
 package in.errorlabs.jbtransport.ui.activities;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -70,7 +75,6 @@ public class AllRoutes extends AppCompatActivity {
             try{
                 Bundle bundle = getIntent().getExtras();
                 areaName= bundle.getString("AreaName");
-                Toast.makeText(getApplicationContext(),areaName,Toast.LENGTH_SHORT).show();
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -94,7 +98,6 @@ public class AllRoutes extends AppCompatActivity {
         }else {
             Url= Constants.SearchByName;
         }
-        Toast.makeText(getApplicationContext(),Url,Toast.LENGTH_SHORT).show();
         AndroidNetworking.post(Url)
                 .setPriority(Priority.HIGH)
                 .addBodyParameter(Constants.AppKey, String.valueOf(R.string.transportAppKey))
@@ -106,7 +109,7 @@ public class AllRoutes extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         loadToast.success();
                         Log.d("TAG", response.toString());
-                        if (!response.has(getString(R.string.AuthError)) && !response.has("SearchErrorSelecting")) {
+                        if (!response.has(getString(R.string.AuthError)) && !response.has(getString(R.string.searcherrorselecting))) {
                             try {
                                 JSONArray jsonArray = response.getJSONArray(getString(R.string.RoutesSelectJsonArrayName));
                                 if (jsonArray.length() > 0) {
@@ -134,28 +137,24 @@ public class AllRoutes extends AppCompatActivity {
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                Log.d("ERR","222");
                                 showError();
                             }
-                        } else if (response.has("SearchErrorSelecting")){
+                        } else if (response.has(getString(R.string.searcherrorselecting))){
                             recyclerView.setVisibility(View.INVISIBLE);
                             searcherror.setVisibility(View.VISIBLE);
                         }else {
-                            Log.d("ERR","1");
                             showError();
                         }
                     }
                     @Override
                     public void onError(ANError anError) {
                         loadToast.error();
-                        Log.d("ERR",anError.toString());
                         showError();
                     }
                 });
     }
 
     public void showError() {
-        Log.d("ERR","in");
         loadToast.error();
         Snackbar.make(rootView, getString(R.string.tryagainlater), Snackbar.LENGTH_INDEFINITE).setAction("Retry", new View.OnClickListener() {
             @Override
@@ -165,5 +164,47 @@ public class AllRoutes extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.home, menu);
+        menu.findItem(R.id.action_settings).setVisible(false);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }else if(id == R.id.search) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle(R.string.searchtitle);
+            alert.setMessage(R.string.searchmessage);
+            final EditText input = new EditText(this);
+            input.setHint(R.string.searchhint);
+            alert.setView(input);
+            alert.setPositiveButton(getString(R.string.search), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    String result = input.getText().toString();
+                    if (result.length()>0){
+                        Intent intent = new Intent(getApplicationContext(),AllRoutes.class);
+                        intent.putExtra(getString(R.string.AreaName),result);
+                        startActivity(intent);
+                    }else {
+                        Snackbar.make(rootView,getString(R.string.invalidinput),Snackbar.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            alert.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                }
+            });
+            alert.show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

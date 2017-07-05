@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import in.errorlabs.jbtransport.R;
+import in.errorlabs.jbtransport.ui.activities.CollegeMap.CollegeMap;
 import in.errorlabs.jbtransport.ui.activities.HomeActivity;
 import in.errorlabs.jbtransport.ui.models.RouteSelectModel;
 import in.errorlabs.jbtransport.utils.SharedPrefs;
@@ -66,6 +68,15 @@ public class RouteSelectAdapter extends RecyclerView.Adapter<RouteSelectAdapter.
                 }
             }
         });
+        holder.viewongooglemap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String routeNumber = holder.routeNumber.getText().toString();
+                Intent intent = new Intent(context, CollegeMap.class);
+                intent.putExtra("Gmaps",routeNumber);
+                context.startActivity(intent);
+            }
+        });
         holder.setRouteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -75,6 +86,7 @@ public class RouteSelectAdapter extends RecyclerView.Adapter<RouteSelectAdapter.
                 f=holder.fullRoute.getText().toString();
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                 builder.setTitle(s+"<-->"+e);
+                builder.setIcon(R.drawable.route);
                 builder.setMessage(context.getString(R.string.fullroute)+"\n\n"
                         +f+"\n\n\n"+context.getString(R.string.areyousure));
                 builder.setPositiveButton(R.string.proceed, new DialogInterface.OnClickListener() {
@@ -117,6 +129,7 @@ public class RouteSelectAdapter extends RecyclerView.Adapter<RouteSelectAdapter.
         @BindView(R.id.routeimage)ImageView routeImg;
         @BindView(R.id.r2)RelativeLayout rel;
         @BindView(R.id.setroutebutton)Button setRouteBtn;
+        @BindView(R.id.googlemaps)LinearLayout viewongooglemap;
 
 
         public RouteSelectViewHolder(View itemView) {

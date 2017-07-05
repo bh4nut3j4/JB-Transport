@@ -4,31 +4,31 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_all_routes"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/allbuses"
             android:title="All Routes" />
         <item
             android:id="@+id/nav_complaints"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/complaints"
             android:title="Complaints" />
         <item
             android:id="@+id/nav_notifications"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/notifications"
             android:title="Notifications" />
         <item
             android:id="@+id/nav_collegemap"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/maps"
             android:title="College Map" />
         <item
             android:id="@+id/nav_aboutus"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/aboutus"
             android:title="About Us" />
         <item
             android:id="@+id/nav_reportabug"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/bugreport"
             android:title="Report A Bug" />
         <item
             android:id="@+id/nav_opensourcelicenses"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/license"
             android:title="Open Source License" />
     </group>
 </menu>

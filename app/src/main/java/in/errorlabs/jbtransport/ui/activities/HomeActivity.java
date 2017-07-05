@@ -88,6 +88,7 @@ public class HomeActivity extends AppCompatActivity
 
     public void startMainActivity() {
         if (sharedPrefs.getRouteSelected()) {
+            Toast.makeText(getApplicationContext(),FirebaseInstanceId.getInstance().getToken().toString(),Toast.LENGTH_SHORT).show();
             if (FirebaseInstanceId.getInstance().getToken() != null) {
                 FirebaseMessaging.getInstance().subscribeToTopic(sharedPrefs.getSelectedRouteFcmID());
                 Log.d("MSG", "topic");
@@ -141,13 +142,29 @@ public class HomeActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.reset) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle(R.string.warning);
+            alert.setMessage(R.string.resetwarning);
+            alert.setIcon(R.drawable.warning);
+            alert.setPositiveButton(getString(R.string.proceed), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic(sharedPrefs.getSelectedRouteFcmID());
+                    sharedPrefs.setSelectedRouteNumber(null);
+                    sharedPrefs.setSelectedRouteFcmID(null);
+                    sharedPrefs.setRouteSelectedAsFalse();
+                    startActivity(new Intent(getApplicationContext(),Splash.class));
+                    finish();
+                }
+            });
+            alert.setNegativeButton(getString(R.string.cancel),null);
+            alert.show();
             return true;
         }else if(id == R.id.search) {
-
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle(R.string.searchtitle);
         alert.setMessage(R.string.searchmessage);
+            alert.setIcon(R.drawable.searchalert);
         final EditText input = new EditText(this);
             input.setHint(R.string.searchhint);
         alert.setView(input);
@@ -162,13 +179,9 @@ public class HomeActivity extends AppCompatActivity
                 }else {
                     Snackbar.make(relativeLayout,getString(R.string.invalidinput),Snackbar.LENGTH_SHORT).show();
                 }
-
             }
         });
-        alert.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-            }
-        });
+        alert.setNegativeButton(getString(R.string.cancel),null);
         alert.show();
             return true;
         }

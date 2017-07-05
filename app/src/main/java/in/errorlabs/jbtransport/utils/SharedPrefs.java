@@ -57,6 +57,12 @@ public class SharedPrefs{
         editor.commit();
     }
 
+    public void setRouteSelectedAsFalse(){
+        editor = sharedPreferences.edit();
+        editor.putBoolean(RouteSelected,false);
+        editor.commit();
+    }
+
     public boolean getRouteSelected(){
         return sharedPreferences.getBoolean(RouteSelected,false);
     }

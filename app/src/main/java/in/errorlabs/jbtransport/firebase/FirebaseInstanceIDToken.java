@@ -6,6 +6,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import in.errorlabs.jbtransport.R;
 import in.errorlabs.jbtransport.utils.SharedPrefs;
 
 /**
@@ -34,7 +35,7 @@ public class FirebaseInstanceIDToken extends FirebaseInstanceIdService {
     }
 
     private void addToTopic() {
-        FirebaseMessaging.getInstance().subscribeToTopic("Testing");
+        FirebaseMessaging.getInstance().subscribeToTopic(getString(R.string.jbgrouppublic));
         Log.d("MSG11","topic");
     }
 

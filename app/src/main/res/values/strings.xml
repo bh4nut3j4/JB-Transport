@@ -6,7 +6,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="transportAppKey">SkJUcmFzcG9ydEFwcEFwcEtleQ==</string>
-    <string name="action_settings">Settings</string>
+    <string name="reset">Change Primary Route</string>
     <string name="last_updated">Last Updated :</string>
     <string name="noticefaketext">Fake notice text demo text</string>
     <string name="primaryroute">PRIMARY ROUTE</string>
@@ -46,10 +46,8 @@
     <string name="admin">Administration Block</string>
     <string name="mba">MBA Block</string>
     <string name="fullroute">Full Route :</string>
-    <string name="areyousure"><b>Are you sure you want to set this route as your primary route ?</b> \n\nDont worry you can change your route later if needed.</string>
-    <string name="areyousuretoskip">Are you sure you want to skip this step ?</string>
+    <string name="areyousure">By setting this as your primary route, you will be able to receive update notifications if any bus changes are for this route.\n\nYou can change your primary route later if needed.</string>
     <string name="nointernet">No Internet Connection</string>
-    <string name="skip">Skip</string>
     <string name="search">SEARCH</string>
     <string name="proceed">PROCEED</string>
     <string name="cancel">CANCEL</string>
@@ -73,23 +71,22 @@
 \t<a href="https://github.com/bumptech/glide">Glide</a>\n\n
         \t<a href="https://github.com/OneSignal">One Signal</a>\n\n
 \t<a href="https://github.com/code-mc/loadtoast">Load Toast</a>\n\n
-        \t<a href="https://github.com/lopspower/CircularImageView">CircularImageView</a>\n\n
         \t<a href="https://github.com/JakeWharton/butterknife">ButterKnife</a>\n\n
-        \t<a href="https://github.com/jeremiemartinez/ZoomableImageView">ZoomableImageView</a>
     </string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="warning">Warning</string>
-    <string name="skipwarningmessage">If you skip this step, You wont be able to receive any notification updates regarding changes made in buses.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="searchtitle">Search</string>
     <string name="searchmessage">Enter the area name</string>
+    <string name="resetwarning">You wont be able to receive notification updates regarding this route.\n\nAre you sure to change your Primary Route ?</string>
     <string name="searchhint">E.g: Punjagutta</string>
     <string name="invalidinput">Invalid Input</string>
     <string name="AreaName">AreaName</string>
+    <string name="jbgrouppublic">JB-Public-Push</string>
     <string name="searcherror">No Details Found ! \nTry searching area name with exact keywords and spacing do not use dots or speacial characters.</string>
+    <string name="searcherrorselecting">SearchErrorSelecting</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>
