@@ -1,8 +1,10 @@
 package in.errorlabs.jbtransport.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.zxing.Result;
 
@@ -26,19 +28,17 @@ public class Scanner extends AppCompatActivity implements ZXingScannerView.Resul
         String ps4 = String.valueOf(data.charAt(3));
         String code = ps3+ps4;
         String[] codes = {"67","J2","GE"};
-
         Log.v("TAG", ps3+ps4);
         if (Arrays.asList(codes).contains(code)){
-            Log.v("TAG", "TRUEE");
+            Intent intent = new Intent(getApplicationContext(),Complaints.class);
+            intent.putExtra("ScannerCode",data);
+            startActivity(intent);
+            finish();
         }else {
-            Log.v("TAG", "FALSE");
+            Toast.makeText(getApplicationContext(),"Invalid Identity",Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getApplicationContext(),HomeActivity.class));
+            finish();
         }
-
-
-        Log.v("TAG", result.getText()); // Prints scan results
-        //Log.v("TAG", result.getResultMetadata().toString());
-        Log.v("TAG", String.valueOf(result.getTimestamp()));
-        Log.v("TAG", result.getBarcodeFormat().toString()); // Prints the scan format (qrcode, pdf417 etc.)
     }
 
     @Override

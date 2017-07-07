@@ -14,6 +14,7 @@ public class Constants {
     public static final String RouteGetDetailsById=BaseURL+"getDetailsByRoute.php";
     public static final String Coordinates=BaseURL+"getCoordinatesById.php";
     public static final String SearchByName=BaseURL+"searchByName.php";
+    public static final String NotificationURL=BaseURL+"notifications.php";
     public static final String AreaName="AreaName";
     public static final String RouteAllDetails=BaseURL+"getAllRoutes.php";
     public static final String GmapsDirectionsBaseURL="https://maps.googleapis.com/maps/api/directions/";

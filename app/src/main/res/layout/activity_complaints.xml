@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="in.errorlabs.jbtransport.ui.activities.Scanner">
+    tools:context="in.errorlabs.jbtransport.ui.activities.Complaints">
 
 </android.support.constraint.ConstraintLayout>

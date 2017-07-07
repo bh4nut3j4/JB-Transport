@@ -94,7 +94,6 @@ public class RouteSelectAdapter extends RecyclerView.Adapter<RouteSelectAdapter.
                     public void onClick(DialogInterface dialog, int which) {
                         String routeNumber = holder.routeNumber.getText().toString();
                         String fcmRouteId = holder.fcmRouteID.getText().toString();
-                        Toast.makeText(context,routeNumber+fcmRouteId,Toast.LENGTH_SHORT).show();
                         if (routeNumber.length()>0&&fcmRouteId.length()>0){
                             sharedPrefs.setSelectedRouteNumber(routeNumber);
                             sharedPrefs.setSelectedRouteFcmID(fcmRouteId);

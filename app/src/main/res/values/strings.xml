@@ -101,6 +101,10 @@
     <string name="searcherrorselecting">SearchErrorSelecting</string>
     <string name="aboutus">About Us</string>
     <string name="OK">OK</string>
+    <string name="retry">Retry</string>
+    <string name="Notifications">Notifications</string>
+    <string name="heading">Heading</string>
+    <string name="message">Message</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

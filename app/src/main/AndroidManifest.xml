@@ -75,7 +75,9 @@
             android:name=".ui.activities.RouteFullDetails"
             android:parentActivityName=".ui.activities.AllRoutes"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activities.Scanner"></activity>
+        <activity android:name=".ui.activities.Scanner" />
+        <activity android:name=".ui.activities.Complaints" />
+        <activity android:name=".ui.activities.Notifications"></activity>
     </application>
 
 </manifest>
