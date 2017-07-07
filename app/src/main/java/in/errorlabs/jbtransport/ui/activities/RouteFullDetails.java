@@ -1,8 +1,8 @@
 package in.errorlabs.jbtransport.ui.activities;
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import in.errorlabs.jbtransport.R;
 import in.errorlabs.jbtransport.ui.fragments.HomeDataFragment;
@@ -25,5 +25,11 @@ public class RouteFullDetails extends AppCompatActivity {
             homeMapFragment.setRouteNumber(number);
             fragmentManager.beginTransaction().add(R.id.main_map_fragment,homeMapFragment).commit();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slidebackin, R.anim.slidebackout);
     }
 }

@@ -3,6 +3,7 @@ package in.errorlabs.jbtransport.ui.activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -15,6 +16,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.method.LinkMovementMethod;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -55,6 +58,7 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
+        setupWindowAnimations();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         OneSignal.startInit(this)
@@ -83,6 +87,17 @@ public class HomeActivity extends AppCompatActivity
             }
         });
     }
+
+    private void setupWindowAnimations() {
+        Transition fade = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+            fade = TransitionInflater.from(this).inflateTransition(R.transition.fadein);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setEnterTransition(fade);
+        }
+    }
+
 
     public void startMainActivity() {
         if (sharedPrefs.getRouteSelected()) {
@@ -191,6 +206,7 @@ public class HomeActivity extends AppCompatActivity
 
         if (id == R.id.nav_all_routes) {
             startActivity(new Intent(getApplicationContext(),AllRoutes.class));
+            overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
         } else if (id == R.id.nav_complaints) {
             startActivity(new Intent(getApplicationContext(),Scanner.class));
         } else if (id == R.id.nav_notifications) {

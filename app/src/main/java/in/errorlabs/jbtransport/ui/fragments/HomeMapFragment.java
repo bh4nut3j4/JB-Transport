@@ -1,7 +1,9 @@
 package in.errorlabs.jbtransport.ui.fragments;
 
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,6 +23,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -196,8 +199,24 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
                             MarkerOptions markerOptions = new MarkerOptions();
                             markerOptions.position(latLng);
                             markerOptions.title(name);
+                            if (i==0){
+                                BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.start);
+                                Bitmap b=bitmapdraw.getBitmap();
+                                Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 100, false);
+                                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+                            }else if (i==coOrdinatesArray.length()){
+                                BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.end);
+                                Bitmap b=bitmapdraw.getBitmap();
+                                Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 100, false);
+                                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+                            }else {
+                                BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.updown);
+                                Bitmap b=bitmapdraw.getBitmap();
+                                Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 100, false);
+                                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+                            }
                             mMap.addMarker(markerOptions);
-                            if (i == middle) {
+                            if (i == 0) {
                                 CameraPosition cameraPosition = new CameraPosition.Builder()
                                         .target(latLng)
                                         .zoom(13)

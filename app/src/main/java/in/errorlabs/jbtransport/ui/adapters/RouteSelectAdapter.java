@@ -100,6 +100,7 @@ public class RouteSelectAdapter extends RecyclerView.Adapter<RouteSelectAdapter.
                             sharedPrefs.setRouteSelected();
                             Intent intent= new Intent(context,HomeActivity.class);
                             v.getContext().startActivity(intent);
+                            ((Activity)context).overridePendingTransition(R.anim.slidein, R.anim.slideout);
                             ((Activity)context).finish();
                         }else {
                             Toast.makeText(context,R.string.tryagainlater,Toast.LENGTH_SHORT).show();

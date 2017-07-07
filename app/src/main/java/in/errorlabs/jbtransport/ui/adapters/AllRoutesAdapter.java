@@ -1,5 +1,6 @@
 package in.errorlabs.jbtransport.ui.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -71,6 +72,7 @@ public class AllRoutesAdapter extends RecyclerView.Adapter<AllRoutesAdapter.AllR
                 Intent intent= new Intent(v.getContext(),RouteFullDetails.class);
                 intent.putExtra("DetailsView",number);
                 v.getContext().startActivity(intent);
+                ((Activity)context).overridePendingTransition(R.anim.slidein, R.anim.slideout);
             }
         });
     }
