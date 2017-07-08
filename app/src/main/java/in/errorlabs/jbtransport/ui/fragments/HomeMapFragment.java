@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -38,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import in.errorlabs.jbtransport.R;
 import in.errorlabs.jbtransport.ui.constants.HomeConstants;
@@ -64,6 +66,7 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
     public static final int POLYLINE_LOADER_ID = 100;
     public static final String STRING_CONSTANT = "CONSTANT";
     public static final String LIST_CONSTANT = "list";
+    @BindView(R.id.mapFrame)FrameLayout frameLayout;
     public HomeMapFragment() {
     }
 
@@ -122,7 +125,6 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
                 @Override
                 public List<LatLng> loadInBackground() {
                     list = getData(bus_number);
-                    Log.d("LISTMAP",list.toString());
                     return list;
                 }
             };
@@ -173,7 +175,6 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
                     }
                     @Override
                     public void onError(ANError anError) {
-                        Log.d("LOG", anError.toString());
                     }
                 });
 
@@ -251,7 +252,6 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("MAP", response.toString());
                         if (response.length() > 0) {
                             drawPath(response.toString());
                         }

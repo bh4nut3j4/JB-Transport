@@ -10,6 +10,7 @@ import com.google.zxing.Result;
 
 import java.util.Arrays;
 
+import in.errorlabs.jbtransport.R;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class Scanner extends AppCompatActivity implements ZXingScannerView.ResultHandler{
@@ -35,7 +36,7 @@ public class Scanner extends AppCompatActivity implements ZXingScannerView.Resul
             startActivity(intent);
             finish();
         }else {
-            Toast.makeText(getApplicationContext(),"Invalid Identity",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.invalid_identity,Toast.LENGTH_SHORT).show();
             startActivity(new Intent(getApplicationContext(),HomeActivity.class));
             finish();
         }

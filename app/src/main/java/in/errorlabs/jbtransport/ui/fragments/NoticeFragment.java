@@ -2,6 +2,7 @@ package in.errorlabs.jbtransport.ui.fragments;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
@@ -43,7 +44,9 @@ public class NoticeFragment extends Fragment implements LoaderManager.LoaderCall
     @BindView(R.id.notice_card_view)CardView noticecard;
     @BindView(R.id.noticebard_text)TextView notice_text;
     @BindView(R.id.notice_last_updated_text)TextView notice_timestamp;
-    public static final String STRING_LOADER="loader";
+    public static final String NOTICE_TITLE="title";
+    public static final String NOTICE_MESSAGE="msg";
+    public static final String NOTICE_LAST_UPDATED="last";
     public static final int STRING_LOADER_ID=99;
 
     @Override
@@ -137,6 +140,27 @@ public class NoticeFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public void onLoaderReset(Loader<Void> loader) {
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString(NOTICE_TITLE,notice_text.getText().toString());
+        savedInstanceState.putString(NOTICE_MESSAGE,notice_timestamp.getText().toString());
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        try {
+            notice_text.setText(savedInstanceState.getString(NOTICE_TITLE));
+            notice_timestamp.setText(savedInstanceState.getString(NOTICE_MESSAGE));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
+
+
 }

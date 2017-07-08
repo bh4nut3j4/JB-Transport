@@ -54,9 +54,6 @@ public class HomeDataFragment extends Fragment implements LoaderManager.LoaderCa
     @BindView(R.id.busumber_end) TextView busNumber;
     @BindView(R.id.departuretime) TextView departureTime;
     @BindView(R.id.main_last_updated) TextView lastUpdatedMain;
-//    @BindView(R.id.notice_card_view) CardView notice_card_view;
-//    @BindView(R.id.noticebard_text) TextView notice_text;
-//    @BindView(R.id.notice_last_updated_text) TextView notice_last_updated_text;
     @BindView(R.id.data_l1) LinearLayout rootView;
     public static final String CONSTANT_ROUTENUMBER = "Rnumber";
     public static final String CONSTANT_STARTING = "Straring";
@@ -93,7 +90,6 @@ public class HomeDataFragment extends Fragment implements LoaderManager.LoaderCa
                 e.printStackTrace();
             }
         }
-
         return rootView;
     }
 
@@ -141,13 +137,11 @@ public class HomeDataFragment extends Fragment implements LoaderManager.LoaderCa
     public void onLoadFinished(Loader<Void> loader, Void data) {
         int id = loader.getId();
         if (id==DETAILS_LOADER_ID){
-            loadToast.success();
         }
     }
 
     @Override
     public void onLoaderReset(Loader<Void> loader) {
-
     }
 
     public void fetchData(String RNumber){
@@ -160,7 +154,6 @@ public class HomeDataFragment extends Fragment implements LoaderManager.LoaderCa
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        loadToast.success();
                         if (response.length()>0){
                             if (response.has(Constants.HomeRouteObjectName)){
                                 try {
@@ -177,7 +170,7 @@ public class HomeDataFragment extends Fragment implements LoaderManager.LoaderCa
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
-                                }
+                                }loadToast.success();
                             }else {
                                 showDataError();
                             }
@@ -223,20 +216,18 @@ public class HomeDataFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (savedInstanceState!=null){
-            try {
-                route_Number.setText(savedInstanceState.getString(CONSTANT_ROUTENUMBER));
-                startingPoint.setText(savedInstanceState.getString(CONSTANT_STARTING));
-                endingPoint.setText(savedInstanceState.getString(CONSTANT_ENDING));
-                viaPoint.setText(savedInstanceState.getString(CONSTANT_VIA));
-                busNumber.setText(savedInstanceState.getString(CONSTANT_BUSNUMBER));
-                departureTime.setText(savedInstanceState.getString(CONSTANT_DEPARTURETIME));
-                lastUpdatedMain.setText(savedInstanceState.getString(CONSTANT_LASTUPDATED));
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-
+        try {
+            route_Number.setText(savedInstanceState.getString(CONSTANT_ROUTENUMBER));
+            startingPoint.setText(savedInstanceState.getString(CONSTANT_STARTING));
+            endingPoint.setText(savedInstanceState.getString(CONSTANT_ENDING));
+            viaPoint.setText(savedInstanceState.getString(CONSTANT_VIA));
+            busNumber.setText(savedInstanceState.getString(CONSTANT_BUSNUMBER));
+            departureTime.setText(savedInstanceState.getString(CONSTANT_DEPARTURETIME));
+            lastUpdatedMain.setText(savedInstanceState.getString(CONSTANT_LASTUPDATED));
+        }catch (Exception e){
+            e.printStackTrace();
         }
+
     }
 
 }

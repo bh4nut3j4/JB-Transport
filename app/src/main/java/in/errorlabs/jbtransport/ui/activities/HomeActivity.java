@@ -227,6 +227,7 @@ public class HomeActivity extends AppCompatActivity
             overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
         } else if (id == R.id.nav_collegemap) {
             startActivity(new Intent(getApplicationContext(), MapViewActivity.class));
+            overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
         } else if (id == R.id.nav_aboutus) {
 
             AlertDialog.Builder alert = new AlertDialog.Builder(HomeActivity.this);

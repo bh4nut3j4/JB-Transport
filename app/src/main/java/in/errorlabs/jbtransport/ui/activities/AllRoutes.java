@@ -176,12 +176,7 @@ public class AllRoutes extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id ==android.R.id.home){
-            onBackPressed();
-        }
-        if (id == R.id.reset) {
-            return true;
-        }else if(id == R.id.search) {
+        if(id == R.id.search) {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle(R.string.searchtitle);
             alert.setMessage(R.string.searchmessage);
@@ -202,7 +197,9 @@ public class AllRoutes extends AppCompatActivity {
                 }
             });
             alert.setNegativeButton(getString(R.string.cancel),null);
-            return true;
+            alert.show();
+        }else if (id ==android.R.id.home){
+            onBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -210,7 +207,7 @@ public class AllRoutes extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+        overridePendingTransition(R.anim.push_back_up_in, R.anim.push_back_up_out);
     }
 
 }

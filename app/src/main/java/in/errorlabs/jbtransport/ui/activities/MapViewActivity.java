@@ -48,7 +48,7 @@ public class MapViewActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
         super.onBackPressed();
+        overridePendingTransition(R.anim.push_back_up_in, R.anim.push_back_up_out);
     }
 }

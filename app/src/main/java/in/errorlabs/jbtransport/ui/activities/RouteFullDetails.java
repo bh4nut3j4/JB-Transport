@@ -3,6 +3,7 @@ package in.errorlabs.jbtransport.ui.activities;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import in.errorlabs.jbtransport.R;
 import in.errorlabs.jbtransport.ui.fragments.HomeDataFragment;
@@ -25,6 +26,14 @@ public class RouteFullDetails extends AppCompatActivity {
             homeMapFragment.setRouteNumber(number);
             fragmentManager.beginTransaction().add(R.id.main_map_fragment,homeMapFragment).commit();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==android.R.id.home){
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
