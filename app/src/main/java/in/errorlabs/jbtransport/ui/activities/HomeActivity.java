@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.method.LinkMovementMethod;
 import android.transition.Transition;
@@ -37,6 +38,7 @@ import butterknife.ButterKnife;
 import in.errorlabs.jbtransport.R;
 import in.errorlabs.jbtransport.ui.fragments.HomeDataFragment;
 import in.errorlabs.jbtransport.ui.fragments.HomeMapFragment;
+import in.errorlabs.jbtransport.ui.fragments.NoticeFragment;
 import in.errorlabs.jbtransport.utils.Connection;
 import in.errorlabs.jbtransport.utils.SharedPrefs;
 
@@ -52,6 +54,9 @@ public class HomeActivity extends AppCompatActivity
     NavigationView navigationView;
     Menu menu;
     @BindView(R.id.relative_lay)RelativeLayout relativeLayout;
+    @BindView(R.id.notice_card_view)CardView noticecard;
+    @BindView(R.id.noticebard_text)TextView notice_text;
+    @BindView(R.id.notice_last_updated_text)TextView notice_timestamp;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -65,6 +70,7 @@ public class HomeActivity extends AppCompatActivity
                 .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
                 .unsubscribeWhenNotificationsAreDisabled(true)
                 .init();
+
         sharedPrefs = new SharedPrefs(this);
         loadToast = new LoadToast(this);
         connection = new Connection(this);
@@ -83,7 +89,7 @@ public class HomeActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startMainActivity();
+                searchPopUp();
             }
         });
     }
@@ -96,6 +102,31 @@ public class HomeActivity extends AppCompatActivity
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setEnterTransition(fade);
         }
+    }
+
+    public void searchPopUp(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle(R.string.searchtitle);
+        alert.setMessage(R.string.searchmessage);
+        alert.setIcon(R.drawable.searchalert);
+        final EditText input = new EditText(this);
+        input.setHint(R.string.searchhint);
+        alert.setView(input);
+        alert.setPositiveButton(getString(R.string.search), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String result = input.getText().toString();
+                Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
+                if (result.length()>0){
+                    Intent intent = new Intent(getApplicationContext(),AllRoutes.class);
+                    intent.putExtra(getString(R.string.AreaName),result);
+                    startActivity(intent);
+                }else {
+                    Snackbar.make(relativeLayout,getString(R.string.invalidinput),Snackbar.LENGTH_SHORT).show();
+                }
+            }
+        });
+        alert.setNegativeButton(getString(R.string.cancel),null);
+        alert.show();
     }
 
 
@@ -119,6 +150,9 @@ public class HomeActivity extends AppCompatActivity
         HomeMapFragment homeMapFragment = new HomeMapFragment();
         homeMapFragment.setRouteNumber(routeNumber);
         fragmentManager.beginTransaction().replace(R.id.main_map_fragment,homeMapFragment).commit();
+
+        NoticeFragment noticeFragment = new NoticeFragment();
+        fragmentManager.beginTransaction().replace(R.id.notice_frag,noticeFragment).commit();
     }
 
     public void showError() {
@@ -130,7 +164,7 @@ public class HomeActivity extends AppCompatActivity
                     startMainActivity();
                 }
             }
-        });
+        }).show();
     }
 
     @Override
@@ -171,29 +205,8 @@ public class HomeActivity extends AppCompatActivity
             alert.setNegativeButton(getString(R.string.cancel),null);
             alert.show();
             return true;
-        }else if(id == R.id.search) {
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle(R.string.searchtitle);
-        alert.setMessage(R.string.searchmessage);
-            alert.setIcon(R.drawable.searchalert);
-        final EditText input = new EditText(this);
-            input.setHint(R.string.searchhint);
-        alert.setView(input);
-        alert.setPositiveButton(getString(R.string.search), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                String result = input.getText().toString();
-                Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
-                if (result.length()>0){
-                    Intent intent = new Intent(getApplicationContext(),AllRoutes.class);
-                    intent.putExtra(getString(R.string.AreaName),result);
-                    startActivity(intent);
-                }else {
-                    Snackbar.make(relativeLayout,getString(R.string.invalidinput),Snackbar.LENGTH_SHORT).show();
-                }
-            }
-        });
-        alert.setNegativeButton(getString(R.string.cancel),null);
-        alert.show();
+        }else if(id == R.id.refresh) {
+            startMainActivity();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -210,7 +223,8 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_complaints) {
             startActivity(new Intent(getApplicationContext(),Scanner.class));
         } else if (id == R.id.nav_notifications) {
-
+            startActivity(new Intent(getApplicationContext(),Notifications.class));
+            overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
         } else if (id == R.id.nav_collegemap) {
             startActivity(new Intent(getApplicationContext(), MapViewActivity.class));
         } else if (id == R.id.nav_aboutus) {

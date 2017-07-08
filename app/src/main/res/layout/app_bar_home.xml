@@ -29,6 +29,6 @@
         android:layout_gravity="bottom|end"
         android:background="@color/blue"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/refresh" />
+        app:srcCompat="@drawable/roundsearch" />
 
 </android.support.design.widget.CoordinatorLayout>

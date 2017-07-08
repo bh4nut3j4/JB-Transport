@@ -8,10 +8,13 @@ public class Constants {
     public static final String AppKey="TransportAppKey";
     public static final String RouteNumber="RouteNumber";
     public static final String HomeRouteObjectName="Routes";
+    public static final String NoticeName="Notice";
+    public static final String ErrorSelecting="ErrorSelecting";
     public static final String HomeRouteCoordinatesObjectName="Coordinates";
     private static final String BaseURL="https://jbgroup.org.in/sync/sync_mapp/transport_php/";
     public static final String RouteSelectDataUrl=BaseURL+"routeregister.php";
     public static final String RouteGetDetailsById=BaseURL+"getDetailsByRoute.php";
+    public static final String NoticeUrl=BaseURL+"notice.php";
     public static final String Coordinates=BaseURL+"getCoordinatesById.php";
     public static final String SearchByName=BaseURL+"searchByName.php";
     public static final String NotificationURL=BaseURL+"notifications.php";

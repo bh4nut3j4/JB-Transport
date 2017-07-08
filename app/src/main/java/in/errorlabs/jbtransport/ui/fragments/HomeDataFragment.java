@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
-import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,9 +54,9 @@ public class HomeDataFragment extends Fragment implements LoaderManager.LoaderCa
     @BindView(R.id.busumber_end) TextView busNumber;
     @BindView(R.id.departuretime) TextView departureTime;
     @BindView(R.id.main_last_updated) TextView lastUpdatedMain;
-    @BindView(R.id.notice_card_view) CardView notice_card_view;
-    @BindView(R.id.noticebard_text) TextView notice_text;
-    @BindView(R.id.notice_last_updated_text) TextView notice_last_updated_text;
+//    @BindView(R.id.notice_card_view) CardView notice_card_view;
+//    @BindView(R.id.noticebard_text) TextView notice_text;
+//    @BindView(R.id.notice_last_updated_text) TextView notice_last_updated_text;
     @BindView(R.id.data_l1) LinearLayout rootView;
     public static final String CONSTANT_ROUTENUMBER = "Rnumber";
     public static final String CONSTANT_STARTING = "Straring";
@@ -182,7 +181,6 @@ public class HomeDataFragment extends Fragment implements LoaderManager.LoaderCa
                             }else {
                                 showDataError();
                             }
-
                         }else {
                             showDataError();
                         }
@@ -203,7 +201,7 @@ public class HomeDataFragment extends Fragment implements LoaderManager.LoaderCa
                     getData();
                 }
             }
-        });
+        }).show();
     }
     public void showDataError() {
         loadToast.error();

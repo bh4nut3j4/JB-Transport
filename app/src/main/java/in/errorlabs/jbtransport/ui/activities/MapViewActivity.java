@@ -3,6 +3,7 @@ package in.errorlabs.jbtransport.ui.activities;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import com.google.android.gms.maps.GoogleMap;
 
@@ -35,5 +36,19 @@ public class MapViewActivity extends AppCompatActivity {
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.college_map_container, collegeMapFragment).commit();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==android.R.id.home){
+                onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+        super.onBackPressed();
     }
 }

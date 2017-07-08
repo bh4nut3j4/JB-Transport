@@ -168,15 +168,17 @@ public class AllRoutes extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.home, menu);
+        getMenuInflater().inflate(R.menu.searchmenu, menu);
         menu.findItem(R.id.reset).setVisible(false);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         int id = item.getItemId();
+        if (id ==android.R.id.home){
+            onBackPressed();
+        }
         if (id == R.id.reset) {
             return true;
         }else if(id == R.id.search) {
@@ -208,6 +210,7 @@ public class AllRoutes extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.push_back_up_in, R.anim.push_back_up_out);
+        overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
     }
+
 }

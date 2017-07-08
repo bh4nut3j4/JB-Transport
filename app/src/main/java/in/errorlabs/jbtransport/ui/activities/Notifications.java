@@ -4,8 +4,11 @@ import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -38,8 +41,9 @@ public class Notifications extends AppCompatActivity {
             .writeTimeout(120, TimeUnit.SECONDS)
             .build();
     @BindView(R.id.notification_recyclerview)RecyclerView recyclerView;
+    @BindView(R.id.no_notifications)TextView nonotifications;
     NotificationAdapter adapter;
-    List<NotificationModel> list;
+    List<NotificationModel> list = new ArrayList<>();
     Connection connection;
     LoadToast loadToast;
     public static final String LIST_CONSTANT = "list";
@@ -50,6 +54,7 @@ public class Notifications extends AppCompatActivity {
         ButterKnife.bind(this);
         connection = new Connection(this);
         loadToast = new LoadToast(this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         if (savedInstanceState!=null){
             list = savedInstanceState.getParcelableArrayList(LIST_CONSTANT);
             adapter = new NotificationAdapter(this,list);
@@ -68,6 +73,20 @@ public class Notifications extends AppCompatActivity {
                 });
             }
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==android.R.id.home){
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+        super.onBackPressed();
     }
 
     private void getNotificationData() {
@@ -100,26 +119,36 @@ public class Notifications extends AppCompatActivity {
                     getNotificationData();
                 }
             }
-        });
+        }).show();
     }
 
     private void parseJSON(JSONObject response) {
         loadToast.success();
         list.clear();
-        if (!response.has(getString(R.string.Notifications)) || response.has(getString(R.string.AuthError)) || response.has(getString(R.string.ErrorSelecting))){
+        if (response.has(getString(R.string.Notifications)) && !response.has(getString(R.string.AuthError))){
             try {
-                JSONArray jsonArray = response.getJSONArray(String.valueOf(R.string.Notifications));
-                for (int i=0;i<=jsonArray.length();i++){
-                    JSONObject object = jsonArray.getJSONObject(i);
-                    NotificationModel model = new NotificationModel();
-                    model.setHeading(object.getString(getString(R.string.heading)));
-                    model.setMessage(object.getString(getString(R.string.message)));
+                JSONArray jsonArray = response.getJSONArray(getString(R.string.Notifications));
+                if (jsonArray.length()>0){
+                    for (int i=0;i<=jsonArray.length();i++){
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        NotificationModel model = new NotificationModel();
+                        model.setHeading(object.getString(getString(R.string.heading)));
+                        model.setMessage(object.getString(getString(R.string.message)));
+                        model.setTimeStamp(object.getString(getString(R.string.timestamp)));
+                        list.add(model);
+                    }
+                }else {
+                    recyclerView.setVisibility(View.GONE);
+                    nonotifications.setVisibility(View.VISIBLE);
                 }
+
             } catch (JSONException e) {
                 e.printStackTrace();
-            }
-            adapter = new NotificationAdapter(Notifications.this,list);
+            }adapter = new NotificationAdapter(Notifications.this,list);
             recyclerView.setAdapter(adapter);
+        }else if (response.has(getString(R.string.ErrorSelecting))){
+            recyclerView.setVisibility(View.GONE);
+            nonotifications.setVisibility(View.VISIBLE);
         }else {
             showError();
         }

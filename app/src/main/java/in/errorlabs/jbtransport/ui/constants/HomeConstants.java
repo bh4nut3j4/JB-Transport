@@ -15,4 +15,6 @@ public class HomeConstants {
     public static final String latitude ="Latitude";
     public static final String longitude ="Longitude";
     public static final String stopID ="StopID";
+    public static final String noticemessage ="NoticeMessage";
+    public static final String noticetimestamp ="NoticeTimeStamp";
 }

@@ -66,7 +66,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
         <activity
             android:name=".ui.activities.AllRoutes"
             android:parentActivityName=".ui.activities.HomeActivity"
@@ -75,9 +74,16 @@
             android:name=".ui.activities.RouteFullDetails"
             android:parentActivityName=".ui.activities.AllRoutes"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activities.Scanner" />
-        <activity android:name=".ui.activities.Complaints" />
-        <activity android:name=".ui.activities.Notifications"></activity>
+        <activity android:name=".ui.activities.Scanner"
+            android:parentActivityName=".ui.activities.HomeActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.Complaints"
+            android:parentActivityName=".ui.activities.HomeActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activities.Notifications"
+            android:parentActivityName=".ui.activities.HomeActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

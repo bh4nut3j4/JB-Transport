@@ -7,8 +7,8 @@
         android:title="@string/reset"
         app:showAsAction="never" />
     <item
-        android:id="@+id/refresh"
-        android:title="@string/refresh"
-        android:icon="@drawable/refresh"
+        android:id="@+id/search"
+        android:title="@string/search"
+        android:icon="@drawable/roundsearch"
         app:showAsAction="ifRoom" />
 </menu>

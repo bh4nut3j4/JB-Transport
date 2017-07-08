@@ -18,10 +18,14 @@ public class NotificationModel implements Parcelable{
     @SerializedName("Meassage")
     @Expose
     public String Message;
+    @SerializedName("TimeStamp")
+    @Expose
+    public String TimeStamp;
 
     public NotificationModel(Parcel in) {
         Heading = in.readString();
         Message = in.readString();
+        TimeStamp = in.readString();
     }
 
     public static final Creator<NotificationModel> CREATOR = new Creator<NotificationModel>() {
@@ -61,9 +65,18 @@ public class NotificationModel implements Parcelable{
         return 0;
     }
 
+    public String getTimeStamp() {
+        return TimeStamp;
+    }
+
+    public void setTimeStamp(String timeStamp) {
+        TimeStamp = timeStamp;
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(Heading);
         dest.writeString(Message);
+        dest.writeString(TimeStamp);
     }
 }

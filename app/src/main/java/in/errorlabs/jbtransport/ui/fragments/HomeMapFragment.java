@@ -188,43 +188,49 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
                     JSONArray coOrdinatesArray = response.getJSONArray(Constants.HomeRouteCoordinatesObjectName);
                     if (coOrdinatesArray.length() > 0) {
                         list.clear();
-                        for (int i = 0; i <= coOrdinatesArray.length(); i++) {
-                            int middle = coOrdinatesArray.length() / 4;
-                            JSONObject ordinates = coOrdinatesArray.getJSONObject(i);
-                            Double lat = Double.valueOf(ordinates.getString(HomeConstants.latitude));
-                            Double lng = Double.valueOf(ordinates.getString(HomeConstants.longitude));
-                            LatLng latLng = new LatLng(lat, lng);
-                            String name = ordinates.getString(HomeConstants.stopID);
-                            list.add(latLng);
-                            MarkerOptions markerOptions = new MarkerOptions();
-                            markerOptions.position(latLng);
-                            markerOptions.title(name);
-                            if (i==0){
-                                BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.start);
-                                Bitmap b=bitmapdraw.getBitmap();
-                                Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 100, false);
-                                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
-                            }else if (i==coOrdinatesArray.length()){
-                                BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.end);
-                                Bitmap b=bitmapdraw.getBitmap();
-                                Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 100, false);
-                                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
-                            }else {
-                                BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.updown);
-                                Bitmap b=bitmapdraw.getBitmap();
-                                Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 100, false);
-                                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+                        try {
+                            for (int i = 0; i <= coOrdinatesArray.length(); i++) {
+                                int middle = coOrdinatesArray.length() / 4;
+                                JSONObject ordinates = coOrdinatesArray.getJSONObject(i);
+                                Double lat = Double.valueOf(ordinates.getString(HomeConstants.latitude));
+                                Double lng = Double.valueOf(ordinates.getString(HomeConstants.longitude));
+                                LatLng latLng = new LatLng(lat, lng);
+                                String name = ordinates.getString(HomeConstants.stopID);
+                                list.add(latLng);
+                                MarkerOptions markerOptions = new MarkerOptions();
+                                markerOptions.position(latLng);
+                                markerOptions.title(name);
+                                if (i==0){
+                                    BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.start);
+                                    Bitmap b=bitmapdraw.getBitmap();
+                                    Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 100, false);
+                                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+                                }else if (i==coOrdinatesArray.length()){
+                                    BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.end);
+                                    Bitmap b=bitmapdraw.getBitmap();
+                                    Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 100, false);
+                                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+                                }else {
+                                    BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.updown);
+                                    Bitmap b=bitmapdraw.getBitmap();
+                                    Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 100, false);
+                                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+                                }
+                                mMap.addMarker(markerOptions);
+                                if (i == 0) {
+                                    CameraPosition cameraPosition = new CameraPosition.Builder()
+                                            .target(latLng)
+                                            .zoom(13)
+                                            .bearing(180)
+                                            .tilt(30)
+                                            .build();
+                                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                                }
                             }
-                            mMap.addMarker(markerOptions);
-                            if (i == 0) {
-                                CameraPosition cameraPosition = new CameraPosition.Builder()
-                                        .target(latLng)
-                                        .zoom(13)
-                                        .bearing(180)
-                                        .tilt(30)
-                                        .build();
-                                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-                            }
+
+
+                        }catch (Exception e){
+                            e.printStackTrace();
                         }
                     }
                 } catch (JSONException e) {
