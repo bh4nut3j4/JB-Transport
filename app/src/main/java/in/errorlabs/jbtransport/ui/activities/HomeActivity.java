@@ -50,14 +50,18 @@ public class HomeActivity extends AppCompatActivity
     Connection connection;
     public static final int DETAILS_LOADER_ID = 11;
     public static final int COORDINATES_LOADER_ID = 12;
-
     NavigationView navigationView;
     Menu menu;
     @BindView(R.id.relative_lay)RelativeLayout relativeLayout;
     @BindView(R.id.notice_card_view)CardView noticecard;
     @BindView(R.id.noticebard_text)TextView notice_text;
     @BindView(R.id.notice_last_updated_text)TextView notice_timestamp;
-
+    HomeDataFragment homeDataFragment;
+    HomeMapFragment homeMapFragment;
+    NoticeFragment noticeFragment;
+    public static final String HOMEDATA_FRAG = "homedata";
+    public static final String MAP_FRAG = "mapdata";
+    public static final String NOTICE_FRAG = "noticedata";
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,12 +74,17 @@ public class HomeActivity extends AppCompatActivity
                 .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
                 .unsubscribeWhenNotificationsAreDisabled(true)
                 .init();
-
         sharedPrefs = new SharedPrefs(this);
         loadToast = new LoadToast(this);
         connection = new Connection(this);
-        startMainActivity();
+        if (savedInstanceState==null){
+            startMainActivity();
+        }else {
+            homeDataFragment = (HomeDataFragment) getSupportFragmentManager().getFragment(savedInstanceState,HOMEDATA_FRAG);
+            homeMapFragment = (HomeMapFragment) getSupportFragmentManager().getFragment(savedInstanceState,MAP_FRAG);
+            noticeFragment = (NoticeFragment) getSupportFragmentManager().getFragment(savedInstanceState,NOTICE_FRAG);
 
+        }
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -142,16 +151,16 @@ public class HomeActivity extends AppCompatActivity
     }
 
     public void getSelectedRouteDetails(String routeNumber) {
-        HomeDataFragment homeDataFragment = new HomeDataFragment();
+        homeDataFragment = new HomeDataFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         homeDataFragment.setRouteNumber(routeNumber);
         fragmentManager.beginTransaction().replace(R.id.main_data_fragment,homeDataFragment).commit();
 
-        HomeMapFragment homeMapFragment = new HomeMapFragment();
+        homeMapFragment = new HomeMapFragment();
         homeMapFragment.setRouteNumber(routeNumber);
         fragmentManager.beginTransaction().replace(R.id.main_map_fragment,homeMapFragment).commit();
 
-        NoticeFragment noticeFragment = new NoticeFragment();
+        noticeFragment = new NoticeFragment();
         fragmentManager.beginTransaction().replace(R.id.notice_frag,noticeFragment).commit();
     }
 
@@ -265,17 +274,19 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
+        getSupportFragmentManager().putFragment(outState,HOMEDATA_FRAG,homeDataFragment);
+        getSupportFragmentManager().putFragment(outState,MAP_FRAG,homeMapFragment);
+        getSupportFragmentManager().putFragment(outState,NOTICE_FRAG,noticeFragment);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-
+        if (savedInstanceState!=null){
+            homeDataFragment = (HomeDataFragment) getSupportFragmentManager().getFragment(savedInstanceState,HOMEDATA_FRAG);
+            homeMapFragment = (HomeMapFragment) getSupportFragmentManager().getFragment(savedInstanceState,MAP_FRAG);
+            noticeFragment = (NoticeFragment) getSupportFragmentManager().getFragment(savedInstanceState,NOTICE_FRAG);
+        }
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-    }
 }

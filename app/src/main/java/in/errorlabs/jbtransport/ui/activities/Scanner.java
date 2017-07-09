@@ -2,8 +2,10 @@ package in.errorlabs.jbtransport.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.zxing.Result;
@@ -20,6 +22,7 @@ public class Scanner extends AppCompatActivity implements ZXingScannerView.Resul
         super.onCreate(savedInstanceState);
         mScannerView = new ZXingScannerView(this);
         setContentView(mScannerView);
+        Snackbar.make(mScannerView,"Please Scan the BarCode present at backside of your ID card",Snackbar.LENGTH_INDEFINITE).show();
     }
 
     @Override
@@ -31,6 +34,7 @@ public class Scanner extends AppCompatActivity implements ZXingScannerView.Resul
         String[] codes = {"67","J2","GE"};
         Log.v("TAG", ps3+ps4);
         if (Arrays.asList(codes).contains(code)){
+            mScannerView.stopCamera();
             Intent intent = new Intent(getApplicationContext(),Complaints.class);
             intent.putExtra("ScannerCode",data);
             startActivity(intent);
@@ -53,6 +57,20 @@ public class Scanner extends AppCompatActivity implements ZXingScannerView.Resul
     public void onPause() {
         super.onPause();
         mScannerView.stopCamera();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==android.R.id.home){
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.push_back_up_in, R.anim.push_back_up_out);
     }
 
 }

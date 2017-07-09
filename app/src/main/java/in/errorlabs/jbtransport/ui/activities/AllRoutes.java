@@ -3,6 +3,7 @@ package in.errorlabs.jbtransport.ui.activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -58,6 +59,8 @@ public class AllRoutes extends AppCompatActivity {
     LinearLayoutManager layoutManager;
     List<RouteSelectModel> list = new ArrayList<>();
     String areaName;
+    Parcelable listState;
+    public static final String LIST_CONSTANT = "Rlist";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,6 +135,7 @@ public class AllRoutes extends AppCompatActivity {
                                     }
                                     adapter = new AllRoutesAdapter(list, AllRoutes.this);
                                     recyclerView.setAdapter(adapter);
+                                    layoutManager.onRestoreInstanceState(listState);
                                 } else {
                                    showError();
                                 }
@@ -208,6 +212,30 @@ public class AllRoutes extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.push_back_up_in, R.anim.push_back_up_out);
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        listState = layoutManager.onSaveInstanceState();
+        outState.putParcelable(LIST_CONSTANT, listState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null) {
+            listState = savedInstanceState.getParcelable(LIST_CONSTANT);
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (listState != null) {
+            layoutManager.onRestoreInstanceState(listState);
+        }
     }
 
 }

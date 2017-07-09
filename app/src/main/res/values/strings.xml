@@ -10,6 +10,7 @@
     <string name="last_updated">Last Updated :</string>
     <string name="noticefaketext">Fake notice text demo text</string>
     <string name="primaryroute">PRIMARY ROUTE</string>
+    <string name="submit">Submit complaint</string>
     <string name="MapView">Full Route on Map</string>
     <string name="routenumbertext">Route Number :</string>
     <string name="routenumbervalue">Route 1232</string>
@@ -112,6 +113,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="no_notifications">No Notifications</string>
     <string name="invalid_identity">Invalid Identity</string>
+    <string name="please_tell_us_your_concern">Please Tell Us Your Concern</string>
+    <string name="complaint_subject">Complaint Subject</string>
+    <string name="complaint_description">Complaint Description</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

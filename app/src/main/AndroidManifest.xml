@@ -39,7 +39,8 @@
         <activity
             android:name=".ui.activities.HomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".ui.activities.RouteSelectActivity"
             android:label="@string/select_route"

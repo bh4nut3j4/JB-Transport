@@ -14,11 +14,15 @@ public class Constants {
     private static final String BaseURL="https://jbgroup.org.in/sync/sync_mapp/transport_php/";
     public static final String RouteSelectDataUrl=BaseURL+"routeregister.php";
     public static final String RouteGetDetailsById=BaseURL+"getDetailsByRoute.php";
+    public static final String ComplaintsURL=BaseURL+"complaints.php";
     public static final String NoticeUrl=BaseURL+"notice.php";
     public static final String Coordinates=BaseURL+"getCoordinatesById.php";
     public static final String SearchByName=BaseURL+"searchByName.php";
     public static final String NotificationURL=BaseURL+"notifications.php";
     public static final String AreaName="AreaName";
+    public static final String ComplaintSubject="ComplaintTitle";
+    public static final String ComplaintDesc="ComplaintDescription";
+    public static final String ComplaintID="ComplaintRollNumber";
     public static final String RouteAllDetails=BaseURL+"getAllRoutes.php";
     public static final String GmapsDirectionsBaseURL="https://maps.googleapis.com/maps/api/directions/";
     public static final String GmapsResultType="json?";
