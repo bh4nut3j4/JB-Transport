@@ -38,9 +38,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activities.HomeActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleTop"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activities.RouteSelectActivity"
             android:label="@string/select_route"
@@ -67,6 +67,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
         <activity
             android:name=".ui.activities.AllRoutes"
             android:parentActivityName=".ui.activities.HomeActivity"
@@ -75,14 +76,20 @@
             android:name=".ui.activities.RouteFullDetails"
             android:parentActivityName=".ui.activities.AllRoutes"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activities.Scanner"
+        <activity
+            android:name=".ui.activities.Scanner"
             android:parentActivityName=".ui.activities.HomeActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.activities.Complaints"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activities.Complaints"
             android:parentActivityName=".ui.activities.HomeActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activities.Notifications"
+            android:parentActivityName=".ui.activities.HomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activities.Sos"
             android:parentActivityName=".ui.activities.HomeActivity"
             android:screenOrientation="portrait" />
     </application>

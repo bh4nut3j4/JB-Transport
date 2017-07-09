@@ -8,7 +8,7 @@ android {
         manifestPlaceholders = [onesignal_app_id               : "a9f592f2-e9ac-43f0-8bcd-39c855737ace",
                                 // Project number pulled from dashboard, local value is ignored.
                                 onesignal_google_project_number: "REMOTE"]
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -44,8 +44,10 @@ dependencies {
     compile 'com.android.support:support-core-utils:25.3.1'
     compile 'com.android.support:support-v4:25.3.1'
     compile 'me.dm7.barcodescanner:zxing:1.9.3'
+    compile 'com.google.firebase:firebase-crash:10.0.1'
+    compile 'com.google.firebase:firebase-auth:10.0.1'
+    compile 'com.firebaseui:firebase-ui-auth:1.0.1'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
-    compile 'com.google.firebase:firebase-crash:10.0.1'
 }
 apply plugin: 'com.google.gms.google-services'

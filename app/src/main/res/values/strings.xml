@@ -51,6 +51,7 @@
     <string name="nointernet">No Internet Connection</string>
     <string name="search">SEARCH</string>
     <string name="refresh">REFRESH</string>
+    <string name="logout">Logout</string>
     <string name="proceed">PROCEED</string>
     <string name="cancel">CANCEL</string>
     <string name="tryagainlater">Try Again Later</string>
@@ -116,6 +117,12 @@
     <string name="please_tell_us_your_concern">Please Tell Us Your Concern</string>
     <string name="complaint_subject">Complaint Subject</string>
     <string name="complaint_description">Complaint Description</string>
+    <string name="descrription_required">Description Required !</string>
+    <string name="subject_required">Subject Required !</string>
+    <string name="submitted_successdull">Complaint Submitted Successfully</string>
+    <string name="nameurlpic">profileimage</string>
+    <string name="signincancelled">Sign In Cancelled</string>
+    <string name="helloname">Hello </string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

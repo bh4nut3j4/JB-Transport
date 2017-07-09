@@ -15,6 +15,10 @@
             android:icon="@drawable/notifications"
             android:title="Notifications" />
         <item
+            android:id="@+id/nav_sos"
+            android:icon="@drawable/notifications"
+            android:title="SOS Request Bus Location" />
+        <item
             android:id="@+id/nav_collegemap"
             android:icon="@drawable/maps"
             android:title="College Map" />

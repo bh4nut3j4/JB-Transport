@@ -61,10 +61,10 @@ public class Complaints extends AppCompatActivity {
                     if (desc.length() > 0) {
                         submitComplaint(subject, desc, idData);
                     } else {
-                        Snackbar.make(title, "Description Required !", Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(title, R.string.descrription_required, Snackbar.LENGTH_LONG).show();
                     }
                 } else {
-                    Snackbar.make(title, "Subject Required !", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(title, R.string.subject_required, Snackbar.LENGTH_LONG).show();
                 }
             }
         });
@@ -86,7 +86,7 @@ public class Complaints extends AppCompatActivity {
                         if (response.length() > 0) {
                             loadToast.success();
                             if (!response.has(getString(R.string.AuthError)) && !response.has(getString(R.string.ErrorSelecting))) {
-                                Toast.makeText(getApplicationContext(), "Complaint Submitted Successfully", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), R.string.submitted_successdull, Toast.LENGTH_LONG).show();
                                 startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                                 finish();
                             } else {
@@ -113,7 +113,7 @@ public class Complaints extends AppCompatActivity {
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             if (count < 0) {
-                Snackbar.make(title, "Subject Required !", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(title, R.string.subject_required, Snackbar.LENGTH_LONG).show();
             }
         }
 

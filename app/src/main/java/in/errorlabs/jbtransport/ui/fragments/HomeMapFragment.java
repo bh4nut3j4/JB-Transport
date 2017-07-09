@@ -170,7 +170,7 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
                     public void onResponse(JSONObject response) {
                         list= generatePath(response);
                         if (list!=null&& list.size()>0){
-                            generateURL(list);
+                            //generateURL(list);
                         }
                     }
                     @Override
@@ -292,39 +292,39 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
 //        String DataURL = BaseUrl+ReslutType+OriginName+Origin+And+WayPoints+Optimize+True;
         String DataURL = null;
 
-        ArrayList<List> DivideArray = new ArrayList<>();
-        int j=1;
-        while (j<=list.size()){
-            DivideArray.add(j,list.subList(1, 8));
-            j=j+8;
-        }
-
-        for (int k=0;k<=DivideArray.size();k++){
-            List single = DivideArray.get(0);
-            latLng= (LatLng) single.get(0);
-            Origin = latLng.latitude+","+latLng.longitude;
-            latLng= (LatLng) single.get(list.size()-1);
-            Destination = latLng.latitude+","+latLng.longitude;
-            DataURL = BaseUrl+ReslutType+OriginName+Origin+And+WayPoints+Optimize+True;
-            for (int i = k; i<=single.size(); i++){
-                DataURL=DataURL+Seperator;
-                latLng=list.get(i);
-                String value = latLng.latitude+","+latLng.longitude;
-                DataURL=DataURL+value;
-            }
-            DataURL=DataURL+Seperator;
-            DataURL=DataURL+And+DestinationName+Destination+And+Sensor+False+And+Mode+ModeStyle+And+Alternatives+True+And+Key;
-            Log.d("KEYURL",DataURL);
-            Bundle bundle = new Bundle();
-            bundle.putString(STRING_CONSTANT,DataURL);
-            LoaderManager loaderManager = getLoaderManager();
-            Loader<Object> details = loaderManager.getLoader(k);
-            if (details == null) {
-                loaderManager.initLoader(k, bundle, this);
-            } else {
-                loaderManager.restartLoader(k, bundle, this);
-            }
-        }
+//        ArrayList<List> DivideArray = new ArrayList<>();
+//        int j=1;
+//        while (j<=list.size()){
+//            DivideArray.add(j,list.subList(1, 8));
+//            j=j+8;
+//        }
+//
+//        for (int k=0;k<=DivideArray.size();k++){
+//            List single = DivideArray.get(0);
+//            latLng= (LatLng) single.get(0);
+//            Origin = latLng.latitude+","+latLng.longitude;
+//            latLng= (LatLng) single.get(list.size()-1);
+//            Destination = latLng.latitude+","+latLng.longitude;
+//            DataURL = BaseUrl+ReslutType+OriginName+Origin+And+WayPoints+Optimize+True;
+//            for (int i = k; i<=single.size(); i++){
+//                DataURL=DataURL+Seperator;
+//                latLng=list.get(i);
+//                String value = latLng.latitude+","+latLng.longitude;
+//                DataURL=DataURL+value;
+//            }
+//            DataURL=DataURL+Seperator;
+//            DataURL=DataURL+And+DestinationName+Destination+And+Sensor+False+And+Mode+ModeStyle+And+Alternatives+True+And+Key;
+//            Log.d("KEYURL",DataURL);
+//            Bundle bundle = new Bundle();
+//            bundle.putString(STRING_CONSTANT,DataURL);
+//            LoaderManager loaderManager = getLoaderManager();
+//            Loader<Object> details = loaderManager.getLoader(k);
+//            if (details == null) {
+//                loaderManager.initLoader(k, bundle, this);
+//            } else {
+//                loaderManager.restartLoader(k, bundle, this);
+//            }
+//        }
 
 
 //        for (int i = 1; i<list.size(); i++){
