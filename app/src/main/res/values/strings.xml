@@ -123,6 +123,7 @@
     <string name="nameurlpic">profileimage</string>
     <string name="signincancelled">Sign In Cancelled</string>
     <string name="helloname">Hello </string>
+    <string name="nogmaps">You dont have google maps installed</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

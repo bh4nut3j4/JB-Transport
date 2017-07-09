@@ -87,11 +87,25 @@
         <activity
             android:name=".ui.activities.Notifications"
             android:parentActivityName=".ui.activities.HomeActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="in.errorlabs.jbtransport.ui.activities.Notifications_TARGET_NOTIFICATION" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.activities.Sos"
             android:parentActivityName=".ui.activities.HomeActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.activities.SosRedirection">
+            <intent-filter>
+                <action android:name="in.errorlabs.jbtransport.ui.activities.MAP_REDIRECTION" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.activities.SosLocationShare"></activity>
     </application>
 
 </manifest>

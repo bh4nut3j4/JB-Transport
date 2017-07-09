@@ -30,7 +30,6 @@ public class Sos extends AppCompatActivity {
         ButterKnife.bind(this);
         firebaseAuth = FirebaseAuth.getInstance();
 
-
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
