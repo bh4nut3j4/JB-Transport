@@ -17,6 +17,7 @@ public class SharedPrefs{
     public static final String SelectedRouteNumber = "selectedRoute";
     public static final String SelectedRouteFcmID = "fcm";
     public static final String AlreadySkipped = "skipped";
+    public static final String LocationSendFcmID= "location";
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -86,6 +87,17 @@ public class SharedPrefs{
 
     public String getSelectedRouteFcmID(){
         String value = sharedPreferences.getString(SelectedRouteFcmID,null);
+        return decode(value);
+    }
+
+    public void setLocationSendFcmID(String fcmID){
+        editor = sharedPreferences.edit();
+        editor.putString(LocationSendFcmID,encode(fcmID));
+        editor.commit();
+    }
+
+    public String getLocationSendFcmID(){
+        String value = sharedPreferences.getString(LocationSendFcmID,null);
         return decode(value);
     }
 

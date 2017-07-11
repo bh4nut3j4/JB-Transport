@@ -68,6 +68,7 @@
     <string name="bodymail"><![CDATA[&body=]]></string>
     <string name="mailintro">Hello, Team Sync  I want to report a bug/give feedback corresponding to the app JB Transport...  -Your name</string>
     <string name="sendemail">Send Email</string>
+    <string name="requestlocation">Request Location</string>
     <string name="opensource">Open Source Licenses</string>
     <string name="aboutmsg">This is developed by the ACM STUDENT CHAPTER JBIET</string>
     <string name="licenses_text">\t\nThe following are third party software/api that are used in JB Transport app.\n\n
@@ -120,10 +121,21 @@
     <string name="descrription_required">Description Required !</string>
     <string name="subject_required">Subject Required !</string>
     <string name="submitted_successdull">Complaint Submitted Successfully</string>
+    <string name="shared_successfully">Location Shared Successfully</string>
+    <string name="requestsent">Request Sent Successfully</string>
     <string name="nameurlpic">profileimage</string>
+    <string name="failed">failed</string>
     <string name="signincancelled">Sign In Cancelled</string>
     <string name="helloname">Hello </string>
     <string name="nogmaps">You dont have google maps installed</string>
+    <string name="lcoationrequest_titile">Location Permission Required</string>
+    <string name="locationreqmsg">Inorder to share the current bus location, you need to grant permission to access your location</string>
+    <string name="receiverfcmtoken">receiverFcmToken</string>
+    <string name="receiverrouteID">routeID</string>
+    <string name="fcmToken">fcmToken</string>
+    <string name="latitude">latitude</string>
+    <string name="longitude">longitude</string>
+    <string name="buslocationfewsecondsago">(Bus Location few Seconds Ago)</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

@@ -23,6 +23,8 @@ public class Constants {
     public static final String ComplaintSubject="ComplaintTitle";
     public static final String ComplaintDesc="ComplaintDescription";
     public static final String ComplaintID="ComplaintRollNumber";
+    public static final String FirebasePushtoDevice=BaseURL+"firebasepushtodevice.php";
+    public static final String FirebaseRequest=BaseURL+"firebaserequestlocation.php";
     public static final String RouteAllDetails=BaseURL+"getAllRoutes.php";
     public static final String GmapsDirectionsBaseURL="https://maps.googleapis.com/maps/api/directions/";
     public static final String GmapsResultType="json?";
@@ -37,4 +39,7 @@ public class Constants {
     public static final String GmapsModeStyle="driving";
     public static final String GmapsAlternative="alternatives=";
     public static final String Gmapskey="key";
+    public static final String ReceiverFcmToken="receiverFcmToken";
+    public static final String FirebaseLatitude="Latitude";
+    public static final String FirebaseLongitude="Longitude";
 }
