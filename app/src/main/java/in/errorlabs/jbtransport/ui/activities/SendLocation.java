@@ -8,8 +8,9 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
-import android.util.Log;
+import android.view.Gravity;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
@@ -72,6 +73,9 @@ public class SendLocation extends Service implements LocationListener{
 
     @Override
     public void onProviderDisabled(String provider) {
+        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
         public void sendLocation(Double lat,Double lng){
             String fcmToken = sharedPrefs.getLocationSendFcmID();
@@ -96,7 +100,9 @@ public class SendLocation extends Service implements LocationListener{
                     public void onResponse(JSONObject response) {
                         if (response.length() > 0) {
                             if (!response.has(getString(R.string.AuthError)) && !response.has(getString(R.string.ErrorSelecting))) {
-                                Toast.makeText(getApplicationContext(), R.string.shared_successfully, Toast.LENGTH_LONG).show();
+                                Toast toast = Toast.makeText(getApplicationContext(), R.string.shared_successfully, Toast.LENGTH_SHORT);
+                                toast.setGravity(Gravity.CENTER, 0, 0);
+                                toast.show();
                             } else {
                                 showError();
                             }

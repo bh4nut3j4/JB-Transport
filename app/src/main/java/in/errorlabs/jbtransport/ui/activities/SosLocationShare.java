@@ -148,5 +148,5 @@ public class SosLocationShare extends AppCompatActivity  {
             }
         }
     }
-    
+
 }

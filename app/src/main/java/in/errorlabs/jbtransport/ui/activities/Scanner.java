@@ -56,7 +56,7 @@ public class Scanner extends AppCompatActivity implements ZXingScannerView.Resul
         String ps3 = String.valueOf(data.charAt(2));
         String ps4 = String.valueOf(data.charAt(3));
         String code = ps3+ps4;
-        String[] codes = {"67","J2","GE"};
+        String[] codes = {"67","J2","GE","17","EF"};
         Log.v("TAG", ps3+ps4);
         if (Arrays.asList(codes).contains(code)){
             mScannerView.stopCamera();
@@ -70,7 +70,6 @@ public class Scanner extends AppCompatActivity implements ZXingScannerView.Resul
                 startActivity(intent);
                 finish();
             }
-
         }else {
             Toast.makeText(getApplicationContext(), R.string.invalid_identity,Toast.LENGTH_SHORT).show();
             startActivity(new Intent(getApplicationContext(),HomeActivity.class));
