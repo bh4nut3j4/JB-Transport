@@ -13,15 +13,25 @@ import com.google.zxing.Result;
 import java.util.Arrays;
 
 import in.errorlabs.jbtransport.R;
+import in.errorlabs.jbtransport.utils.SharedPrefs;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class Scanner extends AppCompatActivity implements ZXingScannerView.ResultHandler{
     private ZXingScannerView mScannerView;
+    String fromIntent;
+    SharedPrefs sharedPrefs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mScannerView = new ZXingScannerView(this);
+        sharedPrefs = new SharedPrefs(this);
         setContentView(mScannerView);
+        try{
+            Bundle bundle = getIntent().getExtras();
+            fromIntent = bundle.getString("IntentFrom");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         Snackbar.make(mScannerView,"Please Scan the BarCode present at backside of your ID card",Snackbar.LENGTH_INDEFINITE).show();
     }
 
@@ -35,10 +45,17 @@ public class Scanner extends AppCompatActivity implements ZXingScannerView.Resul
         Log.v("TAG", ps3+ps4);
         if (Arrays.asList(codes).contains(code)){
             mScannerView.stopCamera();
-            Intent intent = new Intent(getApplicationContext(),Complaints.class);
-            intent.putExtra("ScannerCode",data);
-            startActivity(intent);
-            finish();
+            if (fromIntent.equals("SOS")){
+                sharedPrefs.setRollNumber(data);
+                startActivity(new Intent(getApplicationContext(),Sos.class));
+                finish();
+            }else {
+                Intent intent = new Intent(getApplicationContext(),Complaints.class);
+                intent.putExtra("ScannerCode",data);
+                startActivity(intent);
+                finish();
+            }
+
         }else {
             Toast.makeText(getApplicationContext(), R.string.invalid_identity,Toast.LENGTH_SHORT).show();
             startActivity(new Intent(getApplicationContext(),HomeActivity.class));

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="in.errorlabs.jbtransport.ui.activities.Sos">
 
     <LinearLayout
@@ -12,7 +13,7 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:id="@+id/c1">
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,7 +22,7 @@
             android:orientation="vertical">
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 tools:text="Hello"
                 android:layout_gravity="center"
                 android:gravity="center"
@@ -31,8 +32,56 @@
                 android:layout_margin="10dp"
                 android:textColor="@color/white"
                 android:textSize="20sp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Email"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:id="@+id/email"
+                android:fontFamily="sans-serif-smallcaps"
+                android:textColor="@color/white" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Roll Number"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:id="@+id/rollnumber"
+                android:fontFamily="sans-serif-smallcaps"
+                android:textColor="@color/white" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="5dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:text="@string/requestlocationabout"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="10dp"
+                    android:textSize="15sp"
+                    android:fontFamily="sans-serif-smallcaps"
+                    android:text="@string/locationnote"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
 
 <Button
     android:layout_width="match_parent"

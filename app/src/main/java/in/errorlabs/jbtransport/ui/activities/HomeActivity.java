@@ -80,10 +80,9 @@ public class HomeActivity extends AppCompatActivity
         if (savedInstanceState==null){
             startMainActivity();
         }else {
+            noticeFragment = (NoticeFragment) getSupportFragmentManager().getFragment(savedInstanceState,NOTICE_FRAG);
             homeDataFragment = (HomeDataFragment) getSupportFragmentManager().getFragment(savedInstanceState,HOMEDATA_FRAG);
             homeMapFragment = (HomeMapFragment) getSupportFragmentManager().getFragment(savedInstanceState,MAP_FRAG);
-            noticeFragment = (NoticeFragment) getSupportFragmentManager().getFragment(savedInstanceState,NOTICE_FRAG);
-
         }
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -277,18 +276,18 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        getSupportFragmentManager().putFragment(outState,NOTICE_FRAG,noticeFragment);
         getSupportFragmentManager().putFragment(outState,HOMEDATA_FRAG,homeDataFragment);
         getSupportFragmentManager().putFragment(outState,MAP_FRAG,homeMapFragment);
-        getSupportFragmentManager().putFragment(outState,NOTICE_FRAG,noticeFragment);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         if (savedInstanceState!=null){
+            noticeFragment = (NoticeFragment) getSupportFragmentManager().getFragment(savedInstanceState,NOTICE_FRAG);
             homeDataFragment = (HomeDataFragment) getSupportFragmentManager().getFragment(savedInstanceState,HOMEDATA_FRAG);
             homeMapFragment = (HomeMapFragment) getSupportFragmentManager().getFragment(savedInstanceState,MAP_FRAG);
-            noticeFragment = (NoticeFragment) getSupportFragmentManager().getFragment(savedInstanceState,NOTICE_FRAG);
         }
     }
 

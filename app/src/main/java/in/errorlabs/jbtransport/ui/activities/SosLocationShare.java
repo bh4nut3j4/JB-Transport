@@ -53,12 +53,32 @@ public class SosLocationShare extends AppCompatActivity  {
         }
         if (fcmToken != null && fcmToken.length() > 0) {
             sharedPrefs.setLocationSendFcmID(fcmToken);
-            checkLocationPermission();
-            if (ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED) {
-                fetchData();
-            }
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle(R.string.sharebuslocation);
+            alert.setMessage(R.string.sharelocationwarning);
+            alert.setIcon(R.drawable.searchalert);
+            alert.setPositiveButton(R.string.sharelocationbutn, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    startResponse();
+                }
+            });
+            alert.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+            alert.show();
+        }
+    }
+
+    public void startResponse(){
+        checkLocationPermission();
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            fetchData();
         }
     }
 

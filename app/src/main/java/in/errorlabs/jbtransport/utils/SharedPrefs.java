@@ -18,6 +18,10 @@ public class SharedPrefs{
     public static final String SelectedRouteFcmID = "fcm";
     public static final String AlreadySkipped = "skipped";
     public static final String LocationSendFcmID= "location";
+    public static final String Email= "email";
+    public static final String RollNumber= "rollnumber";
+    public static final String UserName= "username";
+    public static final String ReceiverEmail= "receiverEmail";
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -98,6 +102,50 @@ public class SharedPrefs{
 
     public String getLocationSendFcmID(){
         String value = sharedPreferences.getString(LocationSendFcmID,null);
+        return decode(value);
+    }
+
+    public void setEmail(String email){
+        editor = sharedPreferences.edit();
+        editor.putString(Email,encode(email));
+        editor.commit();
+    }
+
+    public String getEmail(){
+        String value = sharedPreferences.getString(Email,null);
+        return decode(value);
+    }
+
+    public void setRollNumber(String rollNumber){
+        editor = sharedPreferences.edit();
+        editor.putString(RollNumber,encode(rollNumber));
+        editor.commit();
+    }
+
+    public String getRollNumber(){
+        String value = sharedPreferences.getString(RollNumber,null);
+        return decode(value);
+    }
+
+    public void setUserName(String userName){
+        editor = sharedPreferences.edit();
+        editor.putString(UserName,encode(userName));
+        editor.commit();
+    }
+
+    public String getUserName(){
+        String value = sharedPreferences.getString(UserName,null);
+        return decode(value);
+    }
+
+    public void setReceiverEmail(String email){
+        editor = sharedPreferences.edit();
+        editor.putString(ReceiverEmail,encode(email));
+        editor.commit();
+    }
+
+    public String getReceiverEmail(){
+        String value = sharedPreferences.getString(ReceiverEmail,null);
         return decode(value);
     }
 

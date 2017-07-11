@@ -75,12 +75,20 @@ public class SendLocation extends Service implements LocationListener{
     }
         public void sendLocation(Double lat,Double lng){
             String fcmToken = sharedPrefs.getLocationSendFcmID();
+            String username = sharedPrefs.getUserName();
+            String email = sharedPrefs.getEmail();
+            String rollnumber = sharedPrefs.getRollNumber();
         Toast.makeText(getApplicationContext(),lat.toString()+lng.toString(),Toast.LENGTH_SHORT).show();
         AndroidNetworking.post(Constants.FirebasePushtoDevice)
                 .addBodyParameter(Constants.AppKey,getString(R.string.transportAppKey))
                 .addBodyParameter(Constants.ReceiverFcmToken,fcmToken)
                 .addBodyParameter(Constants.FirebaseLatitude,lat.toString())
                 .addBodyParameter(Constants.FirebaseLongitude,lng.toString())
+                .addBodyParameter(getString(R.string.gmailname),username)
+                .addBodyParameter(getString(R.string.gmailemail),email)
+                .addBodyParameter(getString(R.string.rollnumber),rollnumber)
+                .addBodyParameter(getString(R.string.locationsent),lat+","+lat)
+                .addBodyParameter(getString(R.string.receiveremail),sharedPrefs.getReceiverEmail())
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -96,18 +104,15 @@ public class SendLocation extends Service implements LocationListener{
                             showError();
                         }
                     }
-
                     @Override
                     public void onError(ANError anError) {
-                        Log.d("LOG",anError.toString());
                         showError();
                     }
                 });
     }
 
     public void showError() {
-        Toast.makeText(getApplicationContext(),"Failed to send bus location",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), R.string.failedtosendlocation,Toast.LENGTH_SHORT).show();
     }
-
 
 }

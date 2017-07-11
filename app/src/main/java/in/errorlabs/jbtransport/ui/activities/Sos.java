@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,6 +36,8 @@ public class Sos extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener authStateListener;
     public static final int RC_SIGN_IN=1;
     @BindView(R.id.namearea)TextView name;
+    @BindView(R.id.email)TextView email;
+    @BindView(R.id.rollnumber)TextView rollnumber;
     @BindView(R.id.request)Button request;
     SharedPrefs sharedPrefs;
     LoadToast loadToast;
@@ -53,7 +54,7 @@ public class Sos extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user!=null){
-                    onSignedInInitialize(user.getDisplayName());
+                    onSignedInInitialize(user.getDisplayName(),user.getEmail());
                 }else {
                     startActivityForResult(AuthUI.getInstance()
                     .createSignInIntentBuilder()
@@ -72,46 +73,50 @@ public class Sos extends AppCompatActivity {
             public void onClick(View v) {
                 String token = FirebaseInstanceId.getInstance().getToken();
                 String routeId = sharedPrefs.getSelectedRouteFcmID();
+                String username = sharedPrefs.getUserName();
+                String useremail = sharedPrefs.getEmail();
+                String roll = sharedPrefs.getRollNumber();
                 if (token!=null && token.length()>0 && routeId!=null && routeId.length()>0){
-                    requestLocation(token,routeId);
-                }else {
-
+                    requestLocation(token,routeId,useremail,username,roll);
                 }
             }
         });
     }
 
-    private void requestLocation(String token,String routeID) {
+    private void requestLocation(String token,String routeID,String useremail,String username,String rollnumber) {
         loadToast.show();
         AndroidNetworking.post(Constants.FirebaseRequest)
                 .setPriority(Priority.HIGH)
                 .addBodyParameter(Constants.AppKey,getString(R.string.AuthError))
                 .addBodyParameter(getString(R.string.receiverfcmtoken),token)
                 .addBodyParameter(getString(R.string.receiverrouteID),routeID)
+                .addBodyParameter(getString(R.string.gmailname),username)
+                .addBodyParameter(getString(R.string.gmailemail),useremail)
+                .addBodyParameter(getString(R.string.rollnumber),rollnumber)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("TAG",response.toString());
                         if (response.length() > 0) {
                             loadToast.success();
                             if (!response.has(getString(R.string.AuthError)) && !response.has(getString(R.string.ErrorSelecting))) {
                                 Toast.makeText(getApplicationContext(), R.string.requestsent, Toast.LENGTH_LONG).show();
                                 startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                                 finish();
-                            } else {
+                            } else if (response.has(getString(R.string.invalidtime))){
+                                Toast.makeText(getApplicationContext(),"Not available at this time", Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                                finish();
+                            }else {
                                 showError();
-                                Log.d("TAG","err1");
                             }
                         } else {
                             showError();
-                            Log.d("TAG","err2");
                         }
                     }
                     @Override
                     public void onError(ANError anError) {
                         loadToast.error();
-                        Log.d("TAG","err");
                         showError();
                     }
                 });
@@ -142,16 +147,28 @@ public class Sos extends AppCompatActivity {
         if (item.getItemId()==android.R.id.home){
             onBackPressed();
         }else if (item.getItemId()==R.id.logout){
+            sharedPrefs.setEmail(null);
+            sharedPrefs.setRollNumber(null);
+            sharedPrefs.setUserName(null);
             AuthUI.getInstance().signOut(this);
+            startActivity(new Intent(getApplicationContext(),HomeActivity.class));
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void onSignedInInitialize(String displayName) {
+    private void onSignedInInitialize(String displayName,String e_mail) {
+        sharedPrefs.setUserName(displayName);
+        sharedPrefs.setEmail(e_mail);
         name.setText(getString(R.string.helloname)+" "+displayName);
+        email.setText(e_mail);
+        rollnumber.setText(sharedPrefs.getRollNumber());
+        if (sharedPrefs.getRollNumber()==null){
+            Intent i = new Intent(getApplicationContext(),Scanner.class);
+            i.putExtra("IntentFrom","SOS");
+            startActivity(i);
+        }
     }
-
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();

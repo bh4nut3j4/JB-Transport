@@ -61,7 +61,11 @@ public class FirebaseMessageReceiveService extends FirebaseMessagingService {
             }else if (click_action.equals("in.errorlabs.jbtransport.ui.activities.LOCATION_REQUEST")){
                 SharedPrefs sharedPrefs = new SharedPrefs(this);
                 String token = remoteMessage.getData().get("fcmToken");
-                //if (!token.equals(sharedPrefs.getFirebaseInstanceToken())){
+                String receiverEmail = remoteMessage.getData().get("receiverEmail");
+                if (token.equals(sharedPrefs.getFirebaseInstanceToken()) && sharedPrefs.getEmail()!=null &&
+                        sharedPrefs.getEmail().length()!=0 && sharedPrefs.getRollNumber()!=null &&
+                        sharedPrefs.getRollNumber().length()!=0){
+                    sharedPrefs.setReceiverEmail(receiverEmail);
                     Intent intent = new Intent(click_action);
                     intent.putExtra("fcmToken",token);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -75,7 +79,7 @@ public class FirebaseMessageReceiveService extends FirebaseMessagingService {
                             .setContentIntent(pendingIntent);
                     NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                     notificationManager.notify(0, notificationBuilder.build());
-               // }
+                }
             }
         }
     }
