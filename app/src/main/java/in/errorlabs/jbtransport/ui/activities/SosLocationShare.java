@@ -46,7 +46,6 @@ public class SosLocationShare extends AppCompatActivity  {
         Bundle bundle = getIntent().getExtras();
         try {
             fcmToken = bundle.getString(getString(R.string.fcmToken));
-            Toast.makeText(getApplicationContext(), fcmToken, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -119,12 +118,14 @@ public class SosLocationShare extends AppCompatActivity  {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle(R.string.sharebuslocation);
             alert.setMessage(R.string.sharelocationwarning);
-            alert.setIcon(R.drawable.searchalert);
+            alert.setIcon(R.drawable.start);
             alert.setPositiveButton(R.string.sharelocationbutn, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     Intent i = new Intent(getApplicationContext(),SendLocation.class);
                     startService(i);
+                    Toast.makeText(getApplicationContext(), R.string.location_will_be_shared,Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             });
             alert.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {

@@ -94,7 +94,7 @@ public class Notifications extends AppCompatActivity {
         AndroidNetworking.post(Constants.NotificationURL)
                 .setOkHttpClient(okHttpClient)
                 .setPriority(Priority.HIGH)
-                .addBodyParameter(Constants.AppKey,String.valueOf(R.string.transportAppKey))
+                .addBodyParameter(Constants.AppKey, getString(R.string.transportAppKey))
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override

@@ -1,15 +1,18 @@
 package in.errorlabs.jbtransport.ui.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +43,7 @@ public class Sos extends AppCompatActivity {
     @BindView(R.id.email)TextView email;
     @BindView(R.id.rollnumber)TextView rollnumber;
     @BindView(R.id.request)Button request;
+    @BindView(R.id.requestimg)ImageView imgrequest;
     SharedPrefs sharedPrefs;
     LoadToast loadToast;
     @Override
@@ -72,23 +76,34 @@ public class Sos extends AppCompatActivity {
         request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String token = FirebaseInstanceId.getInstance().getToken();
-                String routeId = sharedPrefs.getSelectedRouteFcmID();
-                String username = sharedPrefs.getUserName();
-                String useremail = sharedPrefs.getEmail();
-                String roll = sharedPrefs.getRollNumber();
-                if (token!=null && token.length()>0 && routeId!=null && routeId.length()>0){
-                    requestLocation(token,routeId,useremail,username,roll);
-                }
+                startRequest();
             }
         });
+        imgrequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startRequest();
+            }
+        });
+
+    }
+
+    private void startRequest(){
+        String token = FirebaseInstanceId.getInstance().getToken();
+        String routeId = sharedPrefs.getSelectedRouteFcmID();
+        String username = sharedPrefs.getUserName();
+        String useremail = sharedPrefs.getEmail();
+        String roll = sharedPrefs.getRollNumber();
+        if (token!=null && token.length()>0 && routeId!=null && routeId.length()>0){
+            requestLocation(token,routeId,useremail,username,roll);
+        }
     }
 
     private void requestLocation(String token,String routeID,String useremail,String username,String rollnumber) {
         loadToast.show();
         AndroidNetworking.post(Constants.FirebaseRequest)
                 .setPriority(Priority.HIGH)
-                .addBodyParameter(Constants.AppKey,getString(R.string.AuthError))
+                .addBodyParameter(Constants.AppKey, getString(R.string.transportAppKey))
                 .addBodyParameter(getString(R.string.receiverfcmtoken),token)
                 .addBodyParameter(getString(R.string.receiverrouteID),routeID)
                 .addBodyParameter(getString(R.string.gmailname),username)
@@ -151,12 +166,23 @@ public class Sos extends AppCompatActivity {
         if (item.getItemId()==android.R.id.home){
             onBackPressed();
         }else if (item.getItemId()==R.id.logout){
-            sharedPrefs.setEmail(null);
-            sharedPrefs.setRollNumber(null);
-            sharedPrefs.setUserName(null);
-            AuthUI.getInstance().signOut(this);
-            startActivity(new Intent(getApplicationContext(),HomeActivity.class));
-            finish();
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle(R.string.logoutbtn);
+            alert.setMessage("Are you sure you want to logout ?");
+            alert.setIcon(R.drawable.logout);
+            alert.setPositiveButton(R.string.logout_btn, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    sharedPrefs.setEmail(null);
+                    sharedPrefs.setRollNumber(null);
+                    sharedPrefs.setUserName(null);
+                    AuthUI.getInstance().signOut(Sos.this);
+                    startActivity(new Intent(getApplicationContext(),HomeActivity.class));
+                    finish();
+                }
+            });
+            alert.setNegativeButton(getString(R.string.cancel),null);
+            alert.show();
         }
         return super.onOptionsItemSelected(item);
     }

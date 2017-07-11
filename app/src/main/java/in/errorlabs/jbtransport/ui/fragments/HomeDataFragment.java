@@ -75,6 +75,7 @@ public class HomeDataFragment extends Fragment implements LoaderManager.LoaderCa
         View rootView = inflater.inflate(R.layout.fragment_home_data, container, false);
         ButterKnife.bind(this,rootView);
         loadToast = new LoadToast(getContext());
+        connection = new Connection(getContext());
         if (savedInstanceState==null){
             getData();
         }else {
@@ -148,7 +149,7 @@ public class HomeDataFragment extends Fragment implements LoaderManager.LoaderCa
         AndroidNetworking.post(Constants.RouteGetDetailsById)
                 .setOkHttpClient(okHttpClient)
                 .setPriority(Priority.HIGH)
-                .addBodyParameter(Constants.AppKey, String.valueOf(R.string.transportAppKey))
+                .addBodyParameter(Constants.AppKey, getString(R.string.transportAppKey))
                 .addBodyParameter(Constants.RouteNumber,RNumber)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {

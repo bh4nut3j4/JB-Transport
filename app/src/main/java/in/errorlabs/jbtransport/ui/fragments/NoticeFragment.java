@@ -90,7 +90,7 @@ public class NoticeFragment extends Fragment implements LoaderManager.LoaderCall
         AndroidNetworking.post(Constants.NoticeUrl)
                 .setOkHttpClient(okHttpClient)
                 .setPriority(Priority.HIGH)
-                .addBodyParameter(Constants.AppKey, String.valueOf(R.string.transportAppKey))
+                .addBodyParameter(Constants.AppKey, getString(R.string.transportAppKey))
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
@@ -161,6 +161,4 @@ public class NoticeFragment extends Fragment implements LoaderManager.LoaderCall
         }
 
     }
-
-
 }

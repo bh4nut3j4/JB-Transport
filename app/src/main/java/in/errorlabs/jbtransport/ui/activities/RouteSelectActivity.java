@@ -85,7 +85,7 @@ public class RouteSelectActivity extends AppCompatActivity {
     private void getRouteSelectData() {
         AndroidNetworking.post(Constants.RouteSelectDataUrl)
                 .setPriority(Priority.HIGH)
-                .addBodyParameter(Constants.AppKey, String.valueOf(R.string.transportAppKey))
+                .addBodyParameter(Constants.AppKey, getString(R.string.transportAppKey))
                 .setOkHttpClient(okHttpClient)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {

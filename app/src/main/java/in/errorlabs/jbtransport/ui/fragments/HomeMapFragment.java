@@ -162,7 +162,7 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
         AndroidNetworking.post(Constants.Coordinates)
                 .setOkHttpClient(okHttpClient)
                 .setPriority(Priority.HIGH)
-                .addBodyParameter(Constants.AppKey, String.valueOf(R.string.transportAppKey))
+                .addBodyParameter(Constants.AppKey, getString(R.string.transportAppKey))
                 .addBodyParameter(Constants.RouteNumber, busNumber)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {

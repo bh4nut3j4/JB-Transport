@@ -69,12 +69,10 @@
     <string name="mailintro">Hello, Team Sync  I want to report a bug/give feedback corresponding to the app JB Transport...  -Your name</string>
     <string name="sendemail">Send Email</string>
     <string name="requestlocation">Request Location</string>
-    <string name="scanID">Scan the BarCode on ID Card</string>
+    <string name="sharelocation">Share Location</string>
     <string name="opensource">Open Source Licenses</string>
-    <string name="requestlocationabout">when requested, Location request will be sent to the students of your route anonymously</string>
-    <string name="locationresponsetext">You\'ll receive the bus location as soon as someone responds to your request</string>
+    <string name="requestlocationabout">When requested, Location request will be sent to the students of your route anonymously.</string>
     <string name="locationnote">NOTE : The location you receive may or may not be correct, only students are solely responsible for location sharing.\n\nAll the requests and responses are monitored by the management. Serious Actions will be taken for wrong location sharing.</string>
-    <string name="aboutmsg">This is developed by the ACM STUDENT CHAPTER JBIET</string>
     <string name="licenses_text">\t\nThe following are third party software/api that are used in JB Transport app.\n\n
         \t<a href="https://github.com/amitshekhariitbhu/Fast-Android-Networking">Fast-Android-Networking</a>\n\n
 \t<a href="https://github.com/bumptech/glide">Glide</a>\n\n
@@ -116,7 +114,6 @@
     <string name="timestamp">NotificationTimeStamp</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="no_notifications">No Notifications</string>
     <string name="invalid_identity">Invalid Identity</string>
     <string name="please_tell_us_your_concern">Please Tell Us Your Concern</string>
@@ -127,8 +124,6 @@
     <string name="submitted_successdull">Complaint Submitted Successfully</string>
     <string name="shared_successfully">Location Shared Successfully</string>
     <string name="requestsent">Request Sent Successfully</string>
-    <string name="nameurlpic">profileimage</string>
-    <string name="failed">failed</string>
     <string name="signincancelled">Sign In Cancelled</string>
     <string name="helloname">Hello </string>
     <string name="nogmaps">You dont have google maps installed</string>
@@ -148,8 +143,12 @@
     <string name="receiveremail">ReceiverEmail</string>
     <string name="invalidtime">InvalidTime</string>
     <string name="sharebuslocation">Share Bus Location</string>
-    <string name="sharelocationwarning">Someone has requested for the current bus location. Please send your location only if your are in the BUS All the request and responses are monitored and actions will be taken location is shared outside of the bus route.</string>
+    <string name="sharelocationwarning">Someone has requested for the current bus location. \nPlease send your location only if your are in the BUS. \nAll the requests and responses are monitored by the management and actions will be taken if the location is shared outside of the bus route. \n You are solely responsible for your action.</string>
     <string name="sharelocationbutn">Share Location</string>
+    <string name="scanyouridmsg">Please Scan the BarCode present at backside of your ID card</string>
+    <string name="location_will_be_shared">Location will be shared, Thank you!</string>
+    <string name="logoutbtn">Logout</string>
+    <string name="logout_btn">logout</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

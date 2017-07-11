@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -74,7 +75,7 @@ public class Complaints extends AppCompatActivity {
         loadToast.show();
         AndroidNetworking.post(Constants.ComplaintsURL)
                 .setPriority(Priority.HIGH)
-                .addBodyParameter(Constants.AppKey, String.valueOf(R.string.transportAppKey))
+                .addBodyParameter(Constants.AppKey, getString(R.string.transportAppKey))
                 .addBodyParameter(Constants.ComplaintSubject, subject)
                 .addBodyParameter(Constants.ComplaintDesc, desc)
                 .addBodyParameter(Constants.ComplaintID, idData)
@@ -85,6 +86,7 @@ public class Complaints extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         if (response.length() > 0) {
                             loadToast.success();
+                            Log.d("TAG",response.toString());
                             if (!response.has(getString(R.string.AuthError)) && !response.has(getString(R.string.ErrorSelecting))) {
                                 Toast.makeText(getApplicationContext(), R.string.submitted_successdull, Toast.LENGTH_LONG).show();
                                 startActivity(new Intent(getApplicationContext(), HomeActivity.class));

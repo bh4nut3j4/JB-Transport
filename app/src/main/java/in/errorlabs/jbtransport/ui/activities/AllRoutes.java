@@ -103,7 +103,7 @@ public class AllRoutes extends AppCompatActivity {
         }
         AndroidNetworking.post(Url)
                 .setPriority(Priority.HIGH)
-                .addBodyParameter(Constants.AppKey, String.valueOf(R.string.transportAppKey))
+                .addBodyParameter(Constants.AppKey, getString(R.string.transportAppKey))
                 .addBodyParameter(Constants.AreaName, areaName)
                 .setOkHttpClient(okHttpClient)
                 .build()

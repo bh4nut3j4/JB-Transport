@@ -63,12 +63,10 @@ public class SendLocation extends Service implements LocationListener{
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-
     }
 
     @Override
     public void onProviderEnabled(String provider) {
-
     }
 
     @Override
@@ -82,7 +80,7 @@ public class SendLocation extends Service implements LocationListener{
             String username = sharedPrefs.getUserName();
             String email = sharedPrefs.getEmail();
             String rollnumber = sharedPrefs.getRollNumber();
-        Toast.makeText(getApplicationContext(),lat.toString()+lng.toString(),Toast.LENGTH_SHORT).show();
+
         AndroidNetworking.post(Constants.FirebasePushtoDevice)
                 .addBodyParameter(Constants.AppKey,getString(R.string.transportAppKey))
                 .addBodyParameter(Constants.ReceiverFcmToken,fcmToken)

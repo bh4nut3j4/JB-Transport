@@ -39,7 +39,7 @@ public class FirebaseMessageReceiveService extends FirebaseMessagingService {
                 NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
                 notificationBuilder.setSmallIcon(R.drawable.busleft)
                         .setContentTitle(title)
-                        .setContentText(lat+lng)
+                        .setContentText(message)
                         .setAutoCancel(true)
                         .setContentIntent(pendingIntent);
                 NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

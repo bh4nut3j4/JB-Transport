@@ -45,7 +45,7 @@ public class Scanner extends AppCompatActivity implements ZXingScannerView.Resul
             }catch (Exception e){
                 e.printStackTrace();
             }
-            Snackbar.make(mScannerView,"Please Scan the BarCode present at backside of your ID card",Snackbar.LENGTH_INDEFINITE).show();
+            Snackbar.make(mScannerView, getString(R.string.scanyouridmsg),Snackbar.LENGTH_INDEFINITE).show();
 
         }
     }
@@ -60,11 +60,15 @@ public class Scanner extends AppCompatActivity implements ZXingScannerView.Resul
         Log.v("TAG", ps3+ps4);
         if (Arrays.asList(codes).contains(code)){
             mScannerView.stopCamera();
-            if (fromIntent.equals("SOS")){
-                sharedPrefs.setRollNumber(data);
-                startActivity(new Intent(getApplicationContext(),Sos.class));
-                finish();
-            }else {
+            if (fromIntent!=null){
+                if (fromIntent.equals("SOS")){
+                    sharedPrefs.setRollNumber(data);
+                    startActivity(new Intent(getApplicationContext(),Sos.class));
+                    finish();
+                }else {
+                    Snackbar.make(mScannerView, getString(R.string.tryagainlater),Snackbar.LENGTH_INDEFINITE).show();
+                }
+            } else {
                 Intent intent = new Intent(getApplicationContext(),Complaints.class);
                 intent.putExtra("ScannerCode",data);
                 startActivity(intent);
