@@ -34,7 +34,6 @@ public class SosLocationShare extends AppCompatActivity  {
     String fcmToken;
     SharedPrefs sharedPrefs;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,41 +52,22 @@ public class SosLocationShare extends AppCompatActivity  {
         }
         if (fcmToken != null && fcmToken.length() > 0) {
             sharedPrefs.setLocationSendFcmID(fcmToken);
-            AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.setTitle(R.string.sharebuslocation);
-            alert.setMessage(R.string.sharelocationwarning);
-            alert.setIcon(R.drawable.searchalert);
-            alert.setPositiveButton(R.string.sharelocationbutn, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    startResponse();
-                }
-            });
-            alert.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    finish();
-                }
-            });
-            alert.show();
-        }
-    }
-
-    public void startResponse(){
-        checkLocationPermission();
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            fetchData();
+            if (ContextCompat.checkSelfPermission(SosLocationShare.this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+                checkLocationPermission();
+            }else{
+                fetchData();
+            }
         }
     }
 
     public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
+                Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    Manifest.permission.ACCESS_COARSE_LOCATION)) {
                 new AlertDialog.Builder(this)
                         .setTitle(getString(R.string.lcoationrequest_titile))
                         .setMessage(getString(R.string.locationreqmsg))
@@ -95,7 +75,7 @@ public class SosLocationShare extends AppCompatActivity  {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 ActivityCompat.requestPermissions(SosLocationShare.this,
-                                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                                         MY_PERMISSIONS_REQUEST_LOCATION);
                             }
                         })
@@ -103,7 +83,7 @@ public class SosLocationShare extends AppCompatActivity  {
                         .show();
             } else {
                 ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                         MY_PERMISSIONS_REQUEST_LOCATION);
             }
             return false;
@@ -120,7 +100,7 @@ public class SosLocationShare extends AppCompatActivity  {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     if (ContextCompat.checkSelfPermission(this,
-                            Manifest.permission.ACCESS_FINE_LOCATION)
+                            Manifest.permission.ACCESS_COARSE_LOCATION)
                             == PackageManager.PERMISSION_GRANTED) {
                         fetchData();
                     }
@@ -136,8 +116,24 @@ public class SosLocationShare extends AppCompatActivity  {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            Intent i = new Intent(getApplicationContext(),SendLocation.class);
-            startService(i);
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle(R.string.sharebuslocation);
+            alert.setMessage(R.string.sharelocationwarning);
+            alert.setIcon(R.drawable.searchalert);
+            alert.setPositiveButton(R.string.sharelocationbutn, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent i = new Intent(getApplicationContext(),SendLocation.class);
+                    startService(i);
+                }
+            });
+            alert.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+            alert.show();
         }
     }
 
@@ -152,5 +148,5 @@ public class SosLocationShare extends AppCompatActivity  {
             }
         }
     }
-
+    
 }

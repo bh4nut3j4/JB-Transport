@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -98,15 +99,18 @@ public class Sos extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         if (response.length() > 0) {
+                            Log.d("LOGG",response.toString());
                             loadToast.success();
                             if (!response.has(getString(R.string.AuthError)) && !response.has(getString(R.string.ErrorSelecting))) {
-                                Toast.makeText(getApplicationContext(), R.string.requestsent, Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                                finish();
-                            } else if (response.has(getString(R.string.invalidtime))){
-                                Toast.makeText(getApplicationContext(),"Not available at this time", Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                                finish();
+                                if (response.has(getString(R.string.invalidtime))){
+                                    Toast.makeText(getApplicationContext(),"Not available at this time", Toast.LENGTH_LONG).show();
+                                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                                    finish();
+                                }else {
+                                    Toast.makeText(getApplicationContext(), R.string.requestsent, Toast.LENGTH_LONG).show();
+                                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                                    finish();
+                                }
                             }else {
                                 showError();
                             }
