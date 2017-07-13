@@ -149,6 +149,7 @@
     <string name="location_will_be_shared">Location will be shared, Thank you!</string>
     <string name="logoutbtn">Logout</string>
     <string name="logout_btn">logout</string>
+    <string name="connecting_to_transport_department">connecting</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

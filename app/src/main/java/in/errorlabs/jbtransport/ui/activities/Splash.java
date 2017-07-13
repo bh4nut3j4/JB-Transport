@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import net.steamcrafted.loadtoast.LoadToast;
 
@@ -18,7 +19,7 @@ public class Splash extends AppCompatActivity {
     SharedPrefs sharedPrefs;
     Connection connection;
     LoadToast loadToast;
-    @BindView(R.id.linear)LinearLayout linearLayout;
+    @BindView(R.id.linear)RelativeLayout linearLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
