@@ -191,8 +191,7 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
                         list.clear();
                         try {
                             int array_lenght = coOrdinatesArray.length();
-
-                            for (int i = 0; i <= coOrdinatesArray.length(); i++) {
+                            for (int i = 0; i <=coOrdinatesArray.length(); i++) {
                                 int middle = coOrdinatesArray.length() / 4;
                                 JSONObject ordinates = coOrdinatesArray.getJSONObject(i);
                                 Double lat = Double.valueOf(ordinates.getString(HomeConstants.latitude));
@@ -200,7 +199,7 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
                                 LatLng latLng = new LatLng(lat, lng);
                                 String name = ordinates.getString(HomeConstants.stopName);
                                 String isStop = ordinates.getString(HomeConstants.isStop);
-                                if (i==0 || i>=coOrdinatesArray.length()){
+                                if (i==0 || name.equals(getString(R.string.JBIET))){
                                     list.add(latLng);
                                 }
                                 if(isStop.equals("0")){
@@ -210,13 +209,13 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
                                     MarkerOptions markerOptions = new MarkerOptions();
                                     markerOptions.position(latLng);
                                     markerOptions.title(name);
-                                    //markerOptions.snippet(name);
+                                    markerOptions.snippet(name);
                                     if (i==0){
                                         BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.start);
                                         Bitmap b=bitmapdraw.getBitmap();
                                         Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 100, false);
                                         markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
-                                    }else if (i==coOrdinatesArray.length()){
+                                    }else if (name.equals(getString(R.string.JBIET))){
                                         BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.end);
                                         Bitmap b=bitmapdraw.getBitmap();
                                         Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 100, false);
@@ -238,7 +237,6 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
                                         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                                     }
                                 }
-
                             }
 
                         }catch (Exception e){
@@ -281,10 +279,6 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
         latLng=list.get(0);
         String Origin = latLng.latitude+","+latLng.longitude;
         String DestinationName =Constants.GmapsDestination;
-        //int last= list.size();
-        //Toast.makeText(getContext(),,Toast.LENGTH_SHORT).show();
-        latLng=list.get(list.size()-1);
-        String Destination = latLng.latitude+","+latLng.longitude;
         String WayPoints = Constants.Gmapswaypoints;
         String Optimize = Constants.GmapswaypointsOptimize;
         String True = "true";
@@ -297,14 +291,16 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
         String Alternatives = Constants.GmapsAlternative;
         String Key = getString(R.string.google_api_key);
         String DataURL = BaseUrl+ReslutType+OriginName+Origin+And+WayPoints+Optimize+True;
-        for (int i = 1; i<list.size(); i++){
+        for (int i = 1; i<list.size()-1; i++){
             latLng=list.get(i);
             DataURL=DataURL+Seperator;
             String value = latLng.latitude+","+latLng.longitude;
             DataURL=DataURL+value;
         }
-        DataURL=DataURL+Seperator;
-        DataURL=DataURL+And+DestinationName+Destination+And+Sensor+False+And+Mode+ModeStyle+And+Alternatives+True+And+Key;
+        //DataURL=DataURL+Seperator;
+        latLng=list.get(list.size()-1);
+        String Destination = latLng.latitude+","+latLng.longitude;
+        DataURL=DataURL+And+DestinationName+Destination+And+Sensor+False+And+Mode+ModeStyle+And+Alternatives+False+And+Key;
         Log.d("KEYURL",DataURL);
         Bundle bundle = new Bundle();
         bundle.putString(STRING_CONSTANT,DataURL);

@@ -6,7 +6,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -92,7 +91,6 @@ public class RouteSelectActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         loadToast.success();
-                        Log.d("TAG", response.toString());
                         if (response.length() > 0 || response.has(getString(R.string.AuthError)) || response.has(getString(R.string.ErrorSelecting))) {
                             try {
                                 JSONArray jsonArray = response.getJSONArray(getString(R.string.RoutesSelectJsonArrayName));

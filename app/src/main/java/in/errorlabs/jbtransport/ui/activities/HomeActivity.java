@@ -25,7 +25,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -123,7 +122,7 @@ public class HomeActivity extends AppCompatActivity
         alert.setPositiveButton(getString(R.string.search), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String result = input.getText().toString();
-                Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
                 if (result.length()>0){
                     Intent intent = new Intent(getApplicationContext(),AllRoutes.class);
                     intent.putExtra(getString(R.string.AreaName),result);

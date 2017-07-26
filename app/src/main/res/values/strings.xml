@@ -150,6 +150,7 @@
     <string name="logoutbtn">Logout</string>
     <string name="logout_btn">logout</string>
     <string name="connecting_to_transport_department">connecting</string>
+    <string name="JBIET">JBIET</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

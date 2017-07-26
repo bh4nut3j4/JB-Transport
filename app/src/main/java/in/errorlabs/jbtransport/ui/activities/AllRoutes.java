@@ -214,7 +214,6 @@ public class AllRoutes extends AppCompatActivity {
         overridePendingTransition(R.anim.push_back_up_in, R.anim.push_back_up_out);
     }
 
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
