@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -27,6 +28,8 @@ public class FirebaseMessageReceiveService extends FirebaseMessagingService {
             String title = remoteMessage.getNotification().getTitle();
             String message = remoteMessage.getNotification().getBody();
             String click_action = remoteMessage.getNotification().getClickAction();
+            Log.d("TAGG",title+message+click_action);
+           // Toast.makeText(getApplicationContext(),title+click_action+message,Toast.LENGTH_SHORT).show();
             if (click_action.equals("in.errorlabs.jbtransport.ui.activities.MAP_REDIRECTION")){
                 String lat = remoteMessage.getData().get("latitude");
                 String lng = remoteMessage.getData().get("longitude");

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
@@ -81,6 +82,9 @@ public class SendLocation extends Service implements LocationListener{
             String email = sharedPrefs.getEmail();
             String rollnumber = sharedPrefs.getRollNumber();
 
+            Log.d("TAGGGG",fcmToken+lat+lng+username+email+rollnumber+sharedPrefs.getReceiverEmail().toString());
+            Toast.makeText(getApplicationContext(),fcmToken+lat+lng+username+email+rollnumber+sharedPrefs.getReceiverEmail().toString(),Toast.LENGTH_SHORT).show();
+
         AndroidNetworking.post(Constants.FirebasePushtoDevice)
                 .addBodyParameter(Constants.AppKey,getString(R.string.transportAppKey))
                 .addBodyParameter(Constants.ReceiverFcmToken,fcmToken)
@@ -89,7 +93,7 @@ public class SendLocation extends Service implements LocationListener{
                 .addBodyParameter(getString(R.string.gmailname),username)
                 .addBodyParameter(getString(R.string.gmailemail),email)
                 .addBodyParameter(getString(R.string.rollnumber),rollnumber)
-                .addBodyParameter(getString(R.string.locationsent),lat+","+lat)
+                //.addBodyParameter(getString(R.string.locationsent),lat+","+lat)
                 .addBodyParameter(getString(R.string.receiveremail),sharedPrefs.getReceiverEmail())
                 .setPriority(Priority.HIGH)
                 .build()
@@ -111,6 +115,7 @@ public class SendLocation extends Service implements LocationListener{
                     @Override
                     public void onError(ANError anError) {
                         showError();
+                        Log.d("LOg",anError.toString());
                     }
                 });
     }

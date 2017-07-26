@@ -191,9 +191,7 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
                         list.clear();
                         try {
                             int array_lenght = coOrdinatesArray.length();
-                            if (array_lenght>=8){
 
-                            }
                             for (int i = 0; i <= coOrdinatesArray.length(); i++) {
                                 int middle = coOrdinatesArray.length() / 4;
                                 JSONObject ordinates = coOrdinatesArray.getJSONObject(i);
@@ -243,7 +241,6 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
 
                             }
 
-
                         }catch (Exception e){
                             e.printStackTrace();
                         }
@@ -272,7 +269,6 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
                     }
                     @Override
                     public void onError(ANError anError) {
-
                     }
                 });
     }
@@ -301,7 +297,6 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
         String Alternatives = Constants.GmapsAlternative;
         String Key = getString(R.string.google_api_key);
         String DataURL = BaseUrl+ReslutType+OriginName+Origin+And+WayPoints+Optimize+True;
-
         for (int i = 1; i<list.size(); i++){
             latLng=list.get(i);
             DataURL=DataURL+Seperator;

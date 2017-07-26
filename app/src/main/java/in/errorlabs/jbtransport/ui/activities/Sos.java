@@ -101,6 +101,7 @@ public class Sos extends AppCompatActivity {
 
     private void requestLocation(String token,String routeID,String useremail,String username,String rollnumber) {
         loadToast.show();
+        Log.d("LOG",rollnumber);
         AndroidNetworking.post(Constants.FirebaseRequest)
                 .setPriority(Priority.HIGH)
                 .addBodyParameter(Constants.AppKey, getString(R.string.transportAppKey))
