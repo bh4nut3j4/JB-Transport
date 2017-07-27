@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.LinearLayout;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import net.steamcrafted.loadtoast.LoadToast;
 
@@ -20,6 +22,8 @@ public class Splash extends AppCompatActivity {
     Connection connection;
     LoadToast loadToast;
     @BindView(R.id.linear)RelativeLayout linearLayout;
+    @BindView(R.id.progress_bar)ProgressBar progressBar;
+    @BindView(R.id.conn_text)TextView conn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +44,8 @@ public class Splash extends AppCompatActivity {
                 finish();
             }
         }else {
+            progressBar.setVisibility(View.GONE);
+            conn.setVisibility(View.GONE);
             Snackbar.make(linearLayout,getString(R.string.nointernet),Snackbar.LENGTH_INDEFINITE).show();
         }
     }

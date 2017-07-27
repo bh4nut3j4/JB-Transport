@@ -55,6 +55,8 @@
     <string name="proceed">PROCEED</string>
     <string name="cancel">CANCEL</string>
     <string name="tryagainlater">Try Again Later</string>
+    <string name="checknoticeboard">Check Notice Board</string>
+    <string name="routenotavailable">Route has been cancelled for today. Please check the Notice Board for Buses Info.</string>
     <string name="AuthError">AuthKeyError</string>
     <string name="ErrorSelecting">ErrorSelecting</string>
     <string name="RoutesSelectJsonArrayName">Routes</string>
@@ -149,9 +151,13 @@
     <string name="location_will_be_shared">Location will be shared, Thank you!</string>
     <string name="logoutbtn">Logout</string>
     <string name="logout_btn">logout</string>
-    <string name="connecting_to_transport_department">connecting</string>
+    <string name="connecting_to_transport_department">connecting...</string>
     <string name="JBIET">JBIET</string>
     <string name="areyousuretologout">Are you sure you want to logout ?</string>
+    <string name="jb_public_push">JB-Public-Push</string>
+    <string name="na">NA</string>
+    <string name="designed_amp_developed_by">designedanddevelopedbby</string>
+    <string name="error_labs">errorlabs</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

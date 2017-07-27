@@ -293,16 +293,16 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
         String Alternatives = Constants.GmapsAlternative;
         String Key = getString(R.string.google_api_key);
         String DataURL = BaseUrl+ReslutType+OriginName+Origin+And+WayPoints+Optimize+True;
-        for (int i = 1; i<list.size()-1; i++){
+        for (int i = 0; i<list.size(); i++){
             latLng=list.get(i);
             DataURL=DataURL+Seperator;
             String value = latLng.latitude+","+latLng.longitude;
             DataURL=DataURL+value;
         }
-        //DataURL=DataURL+Seperator;
+        DataURL=DataURL+Seperator;
         latLng=list.get(list.size()-1);
         String Destination = latLng.latitude+","+latLng.longitude;
-        DataURL=DataURL+And+DestinationName+Destination+And+Sensor+False+And+Mode+ModeStyle+And+Alternatives+False+And+Key;
+        DataURL=DataURL+And+DestinationName+Destination+And+Sensor+False+And+Mode+ModeStyle+And+Alternatives+True+And+Key;
         Log.d("KEYURL",DataURL);
         Bundle bundle = new Bundle();
         bundle.putString(STRING_CONSTANT,DataURL);
@@ -327,7 +327,7 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
 
             Polyline line = mMap.addPolyline(new PolylineOptions()
                     .addAll(list)
-                    .width(12)
+                    .width(15)
                     .color(Color.parseColor("#05b1fb"))
                     .geodesic(true)
             );

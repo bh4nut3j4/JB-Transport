@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -141,7 +140,6 @@ public class HomeDataFragment extends Fragment implements LoaderManager.LoaderCa
                         forceLoad();
                     }
                 }
-
                 @Override
                 public Void loadInBackground() {
                     fetchData(RouteNumber);
@@ -180,33 +178,25 @@ public class HomeDataFragment extends Fragment implements LoaderManager.LoaderCa
                                     for (int i = 0; i <= routeArray.length(); i++) {
                                         JSONObject routeObject = routeArray.getJSONObject(i);
                                         String available = routeObject.getString(HomeConstants.available);
-                                        Toast.makeText(getContext(), available, Toast.LENGTH_SHORT).show();
-                                        route_Number.setText(routeObject.getString(HomeConstants.routeNumber));
-                                        startingPoint.setText(routeObject.getString(HomeConstants.startPoint));
-                                        endingPoint.setText(routeObject.getString(HomeConstants.endPoint));
-                                        viaPoint.setText(routeObject.getString(HomeConstants.viaPoint));
-                                        busNumber.setText(routeObject.getString(HomeConstants.busNumber));
-                                        departureTime.setText(routeObject.getString(HomeConstants.departureTime));
-                                        lastUpdatedMain.setText(routeObject.getString(HomeConstants.lastUpdatedTime));
-//                                        if (available.equals("0")) {
-//                                            Toast.makeText(getContext(), available, Toast.LENGTH_SHORT).show();
-//                                            if (sharedPrefs.getSelectedRouteFcmID() != null || !sharedPrefs.getSelectedRouteFcmID().equals("")) {
-//                                                sharedPrefs.setSelectedRouteFcmID(null);
-//                                                sharedPrefs.setRouteSelectedAsFalse();
-//                                                sharedPrefs.setSelectedRouteNumber(null);
-//                                                Intent intent = new Intent(getContext(), Splash.class);
-//                                                getContext().startActivity(intent);
-//                                                ((Activity) getContext()).finish();
-//                                            }
-//                                        } else {
-//                                            route_Number.setText(routeObject.getString(HomeConstants.routeNumber));
-//                                            startingPoint.setText(routeObject.getString(HomeConstants.startPoint));
-//                                            endingPoint.setText(routeObject.getString(HomeConstants.endPoint));
-//                                            viaPoint.setText(routeObject.getString(HomeConstants.viaPoint));
-//                                            busNumber.setText(routeObject.getString(HomeConstants.busNumber));
-//                                            departureTime.setText(routeObject.getString(HomeConstants.departureTime));
-//                                            lastUpdatedMain.setText(routeObject.getString(HomeConstants.lastUpdatedTime));
-//                                        }
+//
+                                        if (available.equals("0")) {
+                                            Snackbar.make(rootView, getString(R.string.routenotavailable), Snackbar.LENGTH_INDEFINITE).show();
+                                            route_Number.setText(routeObject.getString(HomeConstants.routeNumber));
+                                            startingPoint.setText(routeObject.getString(HomeConstants.startPoint));
+                                            endingPoint.setText(routeObject.getString(HomeConstants.endPoint));
+                                            viaPoint.setText(routeObject.getString(HomeConstants.viaPoint));
+                                            busNumber.setText(getString(R.string.checknoticeboard));
+                                            departureTime.setText(routeObject.getString(HomeConstants.departureTime));
+                                            lastUpdatedMain.setText(routeObject.getString(HomeConstants.lastUpdatedTime));
+                                        } else {
+                                            route_Number.setText(routeObject.getString(HomeConstants.routeNumber));
+                                            startingPoint.setText(routeObject.getString(HomeConstants.startPoint));
+                                            endingPoint.setText(routeObject.getString(HomeConstants.endPoint));
+                                            viaPoint.setText(routeObject.getString(HomeConstants.viaPoint));
+                                            busNumber.setText(routeObject.getString(HomeConstants.busNumber));
+                                            departureTime.setText(routeObject.getString(HomeConstants.departureTime));
+                                            lastUpdatedMain.setText(routeObject.getString(HomeConstants.lastUpdatedTime));
+                                        }
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();

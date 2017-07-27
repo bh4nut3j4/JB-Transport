@@ -62,7 +62,6 @@ public class HomeActivity extends AppCompatActivity
     public static final String MAP_FRAG = "mapdata";
     public static final String NOTICE_FRAG = "noticedata";
 
-    
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,7 +123,6 @@ public class HomeActivity extends AppCompatActivity
         alert.setPositiveButton(getString(R.string.search), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String result = input.getText().toString();
-                //Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
                 if (result.length()>0){
                     Intent intent = new Intent(getApplicationContext(),AllRoutes.class);
                     intent.putExtra(getString(R.string.AreaName),result);
@@ -142,6 +140,7 @@ public class HomeActivity extends AppCompatActivity
     public void startMainActivity() {
         if (sharedPrefs.getRouteSelected()) {
              if (FirebaseInstanceId.getInstance().getToken() != null) {
+                 FirebaseMessaging.getInstance().subscribeToTopic(getString(R.string.jb_public_push));
                 FirebaseMessaging.getInstance().subscribeToTopic(sharedPrefs.getSelectedRouteFcmID());
             }
             getSelectedRouteDetails(sharedPrefs.getSelectedRouteNumber());

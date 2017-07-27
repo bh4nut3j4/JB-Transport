@@ -35,4 +35,13 @@
             android:icon="@drawable/license"
             android:title="Open Source License" />
     </group>
+
+    <item android:title="@string/designed_amp_developed_by">
+        <menu>
+            <item
+                android:id="@+id/errorlabs"
+                android:icon="@drawable/logo_black"
+                android:title="@string/error_labs" />
+        </menu>
+    </item>
 </menu>
