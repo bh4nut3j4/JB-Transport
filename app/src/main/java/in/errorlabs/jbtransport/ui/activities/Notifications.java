@@ -125,7 +125,7 @@ public class Notifications extends AppCompatActivity {
     private void parseJSON(JSONObject response) {
         loadToast.success();
         list.clear();
-        if (response.has(getString(R.string.Notifications)) && !response.has(getString(R.string.AuthError))){
+        if (response.has(getString(R.string.Notifications)) &&!response.has(getString(R.string.ErrorSelecting)) && !response.has(getString(R.string.AuthError))){
             try {
                 JSONArray jsonArray = response.getJSONArray(getString(R.string.Notifications));
                 if (jsonArray.length()>0){

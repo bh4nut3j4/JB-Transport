@@ -209,26 +209,26 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
                                     Log.d("LOGG",list.toString());
                                     MarkerOptions markerOptions = new MarkerOptions();
                                     markerOptions.position(latLng);
-                                    markerOptions.title(name);
+                                    markerOptions.title(name).visible(true);
                                     if (i==0){
                                         BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.start);
                                         Bitmap b=bitmapdraw.getBitmap();
                                         Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 100, false);
                                         markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
-                                        markerOptions.snippet(name);
+                                        markerOptions.snippet("Start Point");
                                     }else if (name.equals(getString(R.string.JBIET))){
                                         BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.end);
                                         Bitmap b=bitmapdraw.getBitmap();
                                         Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 100, false);
                                         markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
-                                        markerOptions.snippet(name);
+                                        markerOptions.snippet("End Point");
                                     }else {
                                         BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.updown);
                                         Bitmap b=bitmapdraw.getBitmap();
                                         Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 100, false);
                                         markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
                                     }
-                                    mMap.addMarker(markerOptions).showInfoWindow();
+                                    mMap.addMarker(markerOptions).setVisible(true);
                                     if (i == 0) {
                                         CameraPosition cameraPosition = new CameraPosition.Builder()
                                                 .target(latLng)

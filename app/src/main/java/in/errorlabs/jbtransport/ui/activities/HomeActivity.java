@@ -61,6 +61,8 @@ public class HomeActivity extends AppCompatActivity
     public static final String HOMEDATA_FRAG = "homedata";
     public static final String MAP_FRAG = "mapdata";
     public static final String NOTICE_FRAG = "noticedata";
+
+    
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

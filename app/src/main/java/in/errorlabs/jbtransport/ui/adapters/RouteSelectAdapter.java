@@ -72,8 +72,12 @@ public class RouteSelectAdapter extends RecyclerView.Adapter<RouteSelectAdapter.
             @Override
             public void onClick(View v) {
                 String routeNumber = holder.routeNumber.getText().toString();
+                String start = holder.routeStartPoint.getText().toString();
+                String end = holder.rouetEndPoint.getText().toString();
+                String routename = start+" <--> "+end;
                 Intent intent = new Intent(context, MapViewActivity.class);
                 intent.putExtra("Gmaps",routeNumber);
+                intent.putExtra("Route",routename);
                 context.startActivity(intent);
             }
         });

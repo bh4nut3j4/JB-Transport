@@ -45,7 +45,7 @@ public class CollegeMapFragment extends Fragment implements OnMapReadyCallback {
         GoogleMap mMap = googleMap;
         LatLng jbiet_entrance = new LatLng(17.331382, 78.297474);
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.end);
+        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.clgpointer);
         Bitmap b=bitmapdraw.getBitmap();
         Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 100, false);
         mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(smallMarker)).position(jbiet_entrance).title(getString(R.string.JBIET_Entrance)));

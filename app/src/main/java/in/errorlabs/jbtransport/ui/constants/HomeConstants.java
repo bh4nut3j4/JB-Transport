@@ -19,4 +19,5 @@ public class HomeConstants {
     public static final String isStop ="isstop";
     public static final String noticemessage ="NoticeMessage";
     public static final String noticetimestamp ="NoticeTimeStamp";
+    public static final String available ="Available";
 }

@@ -14,7 +14,7 @@ import in.errorlabs.jbtransport.ui.fragments.CollegeMapFragment;
 public class MapViewActivity extends AppCompatActivity {
 
     private GoogleMap mMap;
-    String route;
+    String route,routename;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +23,10 @@ public class MapViewActivity extends AppCompatActivity {
         try{
             Bundle bundle= getIntent().getExtras();
             route= bundle.getString("Gmaps");
+            routename = bundle.getString("Route");
+            if(routename!=null || !routename.equals(" ")){
+                getSupportActionBar().setTitle(routename);
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
