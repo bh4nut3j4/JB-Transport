@@ -7,6 +7,11 @@
         android:title="@string/reset"
         app:showAsAction="never" />
     <item
+        android:id="@+id/call"
+        android:title="@string/call"
+        android:icon="@drawable/call"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/refresh"
         android:title="@string/refresh"
         android:icon="@drawable/refresh"

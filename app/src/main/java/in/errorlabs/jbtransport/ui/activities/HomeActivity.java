@@ -1,14 +1,19 @@
 package in.errorlabs.jbtransport.ui.activities;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -25,6 +30,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -49,6 +55,7 @@ public class HomeActivity extends AppCompatActivity
     Connection connection;
     public static final int DETAILS_LOADER_ID = 11;
     public static final int COORDINATES_LOADER_ID = 12;
+    public static final int REQUEST_PHONE_CALL=1;
     NavigationView navigationView;
     Menu menu;
     @BindView(R.id.relative_lay)RelativeLayout relativeLayout;
@@ -216,8 +223,47 @@ public class HomeActivity extends AppCompatActivity
         }else if(id == R.id.refresh) {
             startMainActivity();
             return true;
+        }else if(id == R.id.call) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle(R.string.calltransportdept);
+            alert.setMessage(R.string.transportcallmsg);
+            alert.setIcon(R.drawable.call);
+            alert.setPositiveButton(getString(R.string.call), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    if (ContextCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(HomeActivity.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
+                    } else {
+                        makeCall();
+                    }
+                }
+            });
+            alert.setNegativeButton(getString(R.string.cancel),null);
+            alert.show();
+            return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public void makeCall(){
+        Uri phone = Uri.parse("tel:"+"9866983606");
+        Intent i = new Intent(Intent.ACTION_CALL,phone);
+        startActivity(i);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_PHONE_CALL: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    makeCall();
+                } else {
+                    Snackbar.make(relativeLayout, R.string.needpermissiontomakecall,Snackbar.LENGTH_LONG).show();
+                }
+                return;
+            }
+        }
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

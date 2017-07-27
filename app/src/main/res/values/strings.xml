@@ -51,6 +51,7 @@
     <string name="nointernet">No Internet Connection</string>
     <string name="search">SEARCH</string>
     <string name="refresh">REFRESH</string>
+    <string name="call">CALL</string>
     <string name="logout">Logout</string>
     <string name="proceed">PROCEED</string>
     <string name="cancel">CANCEL</string>
@@ -96,10 +97,11 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="warning">Warning</string>
-
+    <string name="calltransportdept">Call Transport Department</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="searchtitle">Search</string>
     <string name="searchmessage">Enter the area name</string>
+    <string name="transportcallmsg">Prefer calling only if you are confused about bus routes and bus numbers or incase of Emergency</string>
     <string name="resetwarning">You wont be able to receive notification updates regarding this route.\n\nAre you sure to change your Primary Route ?</string>
     <string name="searchhint">E.g: Punjagutta</string>
     <string name="invalidinput">Invalid Input</string>
@@ -158,6 +160,7 @@
     <string name="na">NA</string>
     <string name="designed_amp_developed_by">designedanddevelopedbby</string>
     <string name="error_labs">errorlabs</string>
+    <string name="needpermissiontomakecall">Need permission to make a call</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>
