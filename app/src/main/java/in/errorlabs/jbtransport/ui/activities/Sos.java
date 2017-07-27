@@ -65,6 +65,9 @@ public class Sos extends AppCompatActivity {
                     .createSignInIntentBuilder()
                             .setIsSmartLockEnabled(false)
                     .setLogo(R.drawable.busleft)
+                            .setTheme(R.style.AppTheme)
+                            .setLogo(R.drawable.busleft)
+
                     .setProviders(
                             AuthUI.GOOGLE_PROVIDER
                     )
@@ -169,7 +172,7 @@ public class Sos extends AppCompatActivity {
         }else if (item.getItemId()==R.id.logout){
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle(R.string.logoutbtn);
-            alert.setMessage("Are you sure you want to logout ?");
+            alert.setMessage(R.string.areyousuretologout);
             alert.setIcon(R.drawable.logout);
             alert.setPositiveButton(R.string.logout_btn, new DialogInterface.OnClickListener() {
                 @Override

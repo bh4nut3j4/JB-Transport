@@ -93,6 +93,7 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap=googleMap;
+        mMap.setTrafficEnabled(true);
         LoaderManager loaderManager = getLoaderManager();
         Loader<Object> details = loaderManager.getLoader(COORDINATES_LOADER_ID);
         if (details == null) {
@@ -209,24 +210,25 @@ public class HomeMapFragment extends Fragment implements OnMapReadyCallback, Loa
                                     MarkerOptions markerOptions = new MarkerOptions();
                                     markerOptions.position(latLng);
                                     markerOptions.title(name);
-                                    markerOptions.snippet(name);
                                     if (i==0){
                                         BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.start);
                                         Bitmap b=bitmapdraw.getBitmap();
                                         Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 100, false);
                                         markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+                                        markerOptions.snippet(name);
                                     }else if (name.equals(getString(R.string.JBIET))){
                                         BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.end);
                                         Bitmap b=bitmapdraw.getBitmap();
                                         Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 100, false);
                                         markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+                                        markerOptions.snippet(name);
                                     }else {
                                         BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.updown);
                                         Bitmap b=bitmapdraw.getBitmap();
                                         Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 100, false);
                                         markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
                                     }
-                                    mMap.addMarker(markerOptions);
+                                    mMap.addMarker(markerOptions).showInfoWindow();
                                     if (i == 0) {
                                         CameraPosition cameraPosition = new CameraPosition.Builder()
                                                 .target(latLng)

@@ -60,6 +60,7 @@
         </service>
 
         <service android:name=".ui.activities.SendLocation"/>
+        <service android:name=".ui.activities.LocationSend"/>
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

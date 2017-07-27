@@ -29,7 +29,6 @@ public class FirebaseMessageReceiveService extends FirebaseMessagingService {
             String message = remoteMessage.getNotification().getBody();
             String click_action = remoteMessage.getNotification().getClickAction();
             Log.d("TAGG",title+message+click_action);
-           // Toast.makeText(getApplicationContext(),title+click_action+message,Toast.LENGTH_SHORT).show();
             if (click_action.equals("in.errorlabs.jbtransport.ui.activities.MAP_REDIRECTION")){
                 String lat = remoteMessage.getData().get("latitude");
                 String lng = remoteMessage.getData().get("longitude");

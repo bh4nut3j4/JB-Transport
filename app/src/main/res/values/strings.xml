@@ -151,6 +151,7 @@
     <string name="logout_btn">logout</string>
     <string name="connecting_to_transport_department">connecting</string>
     <string name="JBIET">JBIET</string>
+    <string name="areyousuretologout">Are you sure you want to logout ?</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

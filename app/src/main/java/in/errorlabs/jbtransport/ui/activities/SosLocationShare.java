@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
 import in.errorlabs.jbtransport.R;
 import in.errorlabs.jbtransport.utils.SharedPrefs;
 
-public class SosLocationShare extends AppCompatActivity  {
+public class SosLocationShare extends AppCompatActivity {
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     LocationManager locationManager;
@@ -40,7 +40,7 @@ public class SosLocationShare extends AppCompatActivity  {
         setContentView(R.layout.activity_sos_location_share);
         ButterKnife.bind(this);
         loadToast = new LoadToast(this);
-        sharedPrefs= new SharedPrefs(this);
+        sharedPrefs = new SharedPrefs(this);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         provider = locationManager.getBestProvider(new Criteria(), false);
         Bundle bundle = getIntent().getExtras();
@@ -51,12 +51,11 @@ public class SosLocationShare extends AppCompatActivity  {
         }
         if (fcmToken != null && fcmToken.length() > 0) {
             sharedPrefs.setLocationSendFcmID(fcmToken);
-            if (ContextCompat.checkSelfPermission(SosLocationShare.this,
-                    Manifest.permission.ACCESS_COARSE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED) {
-                checkLocationPermission();
-            }else{
+            boolean check = checkLocationPermission();
+            if (check) {
                 fetchData();
+            } else {
+                checkLocationPermission();
             }
         }
     }
@@ -84,6 +83,7 @@ public class SosLocationShare extends AppCompatActivity  {
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                         MY_PERMISSIONS_REQUEST_LOCATION);
+                fetchData();
             }
             return false;
         } else {
@@ -107,7 +107,6 @@ public class SosLocationShare extends AppCompatActivity  {
                     checkLocationPermission();
                 }
             }
-
         }
     }
 
@@ -122,9 +121,9 @@ public class SosLocationShare extends AppCompatActivity  {
             alert.setPositiveButton(R.string.sharelocationbutn, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Intent i = new Intent(getApplicationContext(),SendLocation.class);
+                    Intent i = new Intent(getApplicationContext(), LocationSend.class);
                     startService(i);
-                    Toast.makeText(getApplicationContext(), R.string.location_will_be_shared,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.location_will_be_shared, Toast.LENGTH_SHORT).show();
                     finish();
                 }
             });
@@ -143,9 +142,8 @@ public class SosLocationShare extends AppCompatActivity  {
         super.onResume();
         if (checkLocationPermission()) {
             if (ContextCompat.checkSelfPermission(this,
-                    Manifest.permission. ACCESS_FINE_LOCATION)
+                    Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
-
             }
         }
     }
