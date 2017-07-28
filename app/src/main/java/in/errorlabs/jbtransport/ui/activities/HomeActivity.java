@@ -312,6 +312,14 @@ public class HomeActivity extends AppCompatActivity
             AlertDialog welcomeAlert = builder.create();
             welcomeAlert.show();
             ((TextView) welcomeAlert.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
+        } else if (id == R.id.errorlabs) {
+            Intent intent = new Intent(getApplicationContext(),WsWebView.class);
+            intent.putExtra(getString(R.string.url),getString(R.string.err_lbs));
+            startActivity(intent);
+        } else if (id == R.id.acmjbiet) {
+            Intent intent = new Intent(getApplicationContext(),WsWebView.class);
+            intent.putExtra(getString(R.string.url),getString(R.string.acmname));
+            startActivity(intent);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

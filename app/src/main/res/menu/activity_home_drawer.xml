@@ -5,35 +5,35 @@
         <item
             android:id="@+id/nav_all_routes"
             android:icon="@drawable/allbuses"
-            android:title="All Routes" />
+            android:title="@string/all_routes" />
         <item
             android:id="@+id/nav_complaints"
             android:icon="@drawable/complaints"
-            android:title="Complaints" />
+            android:title="@string/complaints" />
         <item
             android:id="@+id/nav_notifications"
             android:icon="@drawable/notifications"
-            android:title="Notifications" />
+            android:title="@string/notifications" />
         <item
             android:id="@+id/nav_sos"
             android:icon="@drawable/sos"
-            android:title="SOS Request Bus Location" />
+            android:title="@string/sos_request_bus_location" />
         <item
             android:id="@+id/nav_collegemap"
             android:icon="@drawable/maps"
-            android:title="College Map" />
+            android:title="@string/college_map" />
         <item
             android:id="@+id/nav_aboutus"
             android:icon="@drawable/aboutus"
-            android:title="About Us" />
+            android:title="@string/about_us" />
         <item
             android:id="@+id/nav_reportabug"
             android:icon="@drawable/bugreport"
-            android:title="Report A Bug" />
+            android:title="@string/report_a_bug" />
         <item
             android:id="@+id/nav_opensourcelicenses"
             android:icon="@drawable/license"
-            android:title="Open Source License" />
+            android:title="@string/open_source_license" />
     </group>
 
     <item android:title="@string/designed_amp_developed_by">
@@ -43,6 +43,11 @@
                 android:icon="@drawable/logo_black"
                 android:title="@string/error_labs"
                 android:titleCondensed="@string/ajbietstartup"/>
+            <item
+                android:id="@+id/acmjbiet"
+                android:icon="@drawable/acm"
+                android:title="@string/acm_jbiet"
+                android:titleCondensed="@string/acmdesc"/>
         </menu>
     </item>
 </menu>

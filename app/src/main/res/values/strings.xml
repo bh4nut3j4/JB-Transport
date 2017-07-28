@@ -111,6 +111,7 @@
     <string name="searcherrorselecting">SearchErrorSelecting</string>
     <string name="aboutus">About Us</string>
     <string name="ajbietstartup">JBIET STudent StartUp</string>
+    <string name="acmdesc">Association for computing machinary</string>
     <string name="OK">OK</string>
     <string name="retry">Retry</string>
     <string name="Notifications">Notifications</string>
@@ -128,6 +129,7 @@
     <string name="subject_required">Subject Required !</string>
     <string name="submitted_successdull">Complaint Submitted Successfully</string>
     <string name="shared_successfully">Location Shared Successfully</string>
+    <string name="holdon">Hold On !</string>
     <string name="requestsent">Request Sent Successfully</string>
     <string name="signincancelled">Sign In Cancelled</string>
     <string name="helloname">Hello </string>
@@ -158,10 +160,25 @@
     <string name="JBIET">JBIET</string>
     <string name="areyousuretologout">Are you sure you want to logout ?</string>
     <string name="jb_public_push">JB-Public-Push</string>
-    <string name="na">NA</string>
-    <string name="designed_amp_developed_by">Designed &amp; Developed by</string>
+    <string name="designed_amp_developed_by">Designed &amp; Developed By</string>
     <string name="error_labs">Error Labs</string>
+    <string name="acm_jbiet">ACM-Jbiet</string>
     <string name="needpermissiontomakecall">Need permission to make a call</string>
+    <string name="all_routes">All Routes</string>
+    <string name="complaints">Complaints</string>
+    <string name="notifications">Notifications</string>
+    <string name="sos_request_bus_location">SOS Request Bus Location</string>
+    <string name="college_map">College Map</string>
+    <string name="about_us">About Us</string>
+    <string name="report_a_bug">Report A Bug</string>
+    <string name="open_source_license">Open Source License</string>
+    <string name="errorlabsurl">https://errorlabs.in</string>
+    <string name="acmurl">https://jbgroup.org.in/ACM</string>
+    <string name="errurl">www.errorlabs.in</string>
+    <string name="cnctng">Conneting...</string>
+    <string name="url">url</string>
+    <string name="err_lbs">errorlabs</string>
+    <string name="acmname">acm</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

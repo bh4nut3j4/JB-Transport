@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,7 @@ public class RouteSelectAdapter extends RecyclerView.Adapter<RouteSelectAdapter.
     }
 
     @Override
-    public void onBindViewHolder(final RouteSelectViewHolder holder, int position) {
+    public void onBindViewHolder(final RouteSelectViewHolder holder, final int position) {
         RouteSelectModel model = list.get(position);
         holder.routeNumber.setText(model.getRouteNumber());
         holder.routeStartPoint.setText(model.getRouteStartPoint());
@@ -75,6 +76,9 @@ public class RouteSelectAdapter extends RecyclerView.Adapter<RouteSelectAdapter.
                 String start = holder.routeStartPoint.getText().toString();
                 String end = holder.rouetEndPoint.getText().toString();
                 String routename = start+" <--> "+end;
+                Toast toast = Toast.makeText(context, R.string.holdon, Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
                 Intent intent = new Intent(context, MapViewActivity.class);
                 intent.putExtra("Gmaps",routeNumber);
                 intent.putExtra("Route",routename);

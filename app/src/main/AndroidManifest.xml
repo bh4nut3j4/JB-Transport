@@ -13,8 +13,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.LOCATION_HARDWARE"/>
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.LOCATION_HARDWARE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -59,9 +59,8 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <service android:name=".ui.activities.SendLocation"/>
-        <service android:name=".ui.activities.LocationSend"/>
+        <service android:name=".ui.activities.SendLocation" />
+        <service android:name=".ui.activities.LocationSend" />
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -125,11 +124,14 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.activities.Intro"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Intro" />
+        <activity
+            android:name=".ui.activities.WsWebView"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

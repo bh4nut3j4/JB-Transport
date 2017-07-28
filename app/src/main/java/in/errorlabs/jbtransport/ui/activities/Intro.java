@@ -26,7 +26,7 @@ public class Intro extends IntroActivity {
         setNavigationPolicy(new NavigationPolicy() {
             @Override
             public boolean canGoForward(int position) {
-                return position != 5;
+                return position != 6;
             }
             @Override
             public boolean canGoBackward(int position) {
@@ -34,7 +34,7 @@ public class Intro extends IntroActivity {
             }
         });
         addSlide(new SimpleSlide.Builder()
-                .title("JB Transport")
+                .title("JB Group Transport Department")
                 .description("Welcome")
                 .image(R.drawable.bus_front)
                 .background(R.color.color_canteen)
