@@ -126,6 +126,10 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ui.activities.Intro"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Intro" />
     </application>
 
 </manifest>

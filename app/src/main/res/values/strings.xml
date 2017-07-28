@@ -47,7 +47,7 @@
     <string name="admin">Administration Block</string>
     <string name="mba">MBA Block</string>
     <string name="fullroute">Full Route :</string>
-    <string name="areyousure">By setting this as your primary route, you will be able to receive update notifications if any bus changes are for this route.\n\nYou can change your primary route later if needed.</string>
+    <string name="areyousure">By setting this as your primary route, you will be able to receive update notifications for any bus changes that pertain to this route.\n\nThe primary route can be changed later if needed.</string>
     <string name="nointernet">No Internet Connection</string>
     <string name="search">SEARCH</string>
     <string name="refresh">REFRESH</string>
@@ -102,14 +102,15 @@
     <string name="searchtitle">Search</string>
     <string name="searchmessage">Enter the area name</string>
     <string name="transportcallmsg">Prefer calling only if you are confused about bus routes and bus numbers or incase of Emergency</string>
-    <string name="resetwarning">You wont be able to receive notification updates regarding this route.\n\nAre you sure to change your Primary Route ?</string>
+    <string name="resetwarning">You wont be able to receive notification updates regarding this route.\n\nAre you sure you wish to change your primary Route ?</string>
     <string name="searchhint">E.g: Punjagutta</string>
     <string name="invalidinput">Invalid Input</string>
     <string name="AreaName">AreaName</string>
     <string name="jbgrouppublic">JB-Public-Push</string>
-    <string name="searcherror">No Details Found ! \nTry searching area name with exact keywords and spacing do not use dots or speacial characters.</string>
+    <string name="searcherror">No Details Found ! \nTry searching area name with exact keywords. Please refrain or try not to use dots or special characters.</string>
     <string name="searcherrorselecting">SearchErrorSelecting</string>
     <string name="aboutus">About Us</string>
+    <string name="ajbietstartup">JBIET STudent StartUp</string>
     <string name="OK">OK</string>
     <string name="retry">Retry</string>
     <string name="Notifications">Notifications</string>
@@ -158,8 +159,8 @@
     <string name="areyousuretologout">Are you sure you want to logout ?</string>
     <string name="jb_public_push">JB-Public-Push</string>
     <string name="na">NA</string>
-    <string name="designed_amp_developed_by">designedanddevelopedbby</string>
-    <string name="error_labs">errorlabs</string>
+    <string name="designed_amp_developed_by">Designed &amp; Developed by</string>
+    <string name="error_labs">Error Labs</string>
     <string name="needpermissiontomakecall">Need permission to make a call</string>
 
     <!-- TODO: Remove or change this placeholder text -->

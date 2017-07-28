@@ -8,6 +8,7 @@ public class Constants {
     public static final String AppKey="TransportAppKey";
     public static final String RouteNumber="RouteNumber";
     public static final String HomeRouteObjectName="Routes";
+    public static final String WayTO="WayTo";
     public static final String NoticeName="Notice";
     public static final String ErrorSelecting="ErrorSelecting";
     public static final String HomeRouteCoordinatesObjectName="Coordinates";

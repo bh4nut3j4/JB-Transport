@@ -13,6 +13,7 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -67,6 +68,8 @@ public class HomeDataFragment extends Fragment implements LoaderManager.LoaderCa
     TextView lastUpdatedMain;
     @BindView(R.id.data_l1)
     LinearLayout rootView;
+    @BindView(R.id.busimg)
+    ImageView bus_img;
     public static final String CONSTANT_ROUTENUMBER = "Rnumber";
     public static final String CONSTANT_STARTING = "Straring";
     public static final String CONSTANT_ENDING = "ending";
@@ -174,11 +177,14 @@ public class HomeDataFragment extends Fragment implements LoaderManager.LoaderCa
                         if (response.length() > 0) {
                             if (response.has(Constants.HomeRouteObjectName)) {
                                 try {
+                                    String wayTo = response.getString(Constants.WayTO);
+                                    if (wayTo.equals("0")){
+                                        bus_img.setImageResource(R.drawable.busright);
+                                    }
                                     JSONArray routeArray = response.getJSONArray(Constants.HomeRouteObjectName);
                                     for (int i = 0; i <= routeArray.length(); i++) {
                                         JSONObject routeObject = routeArray.getJSONObject(i);
                                         String available = routeObject.getString(HomeConstants.available);
-//
                                         if (available.equals("0")) {
                                             Snackbar.make(rootView, getString(R.string.routenotavailable), Snackbar.LENGTH_INDEFINITE).show();
                                             route_Number.setText(routeObject.getString(HomeConstants.routeNumber));

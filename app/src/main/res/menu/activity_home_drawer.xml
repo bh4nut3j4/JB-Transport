@@ -41,7 +41,8 @@
             <item
                 android:id="@+id/errorlabs"
                 android:icon="@drawable/logo_black"
-                android:title="@string/error_labs" />
+                android:title="@string/error_labs"
+                android:titleCondensed="@string/ajbietstartup"/>
         </menu>
     </item>
 </menu>

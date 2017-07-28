@@ -227,7 +227,7 @@ public class HomeActivity extends AppCompatActivity
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle(R.string.calltransportdept);
             alert.setMessage(R.string.transportcallmsg);
-            alert.setIcon(R.drawable.call);
+            alert.setIcon(R.drawable.bus_front);
             alert.setPositiveButton(getString(R.string.call), new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
                     if (ContextCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {

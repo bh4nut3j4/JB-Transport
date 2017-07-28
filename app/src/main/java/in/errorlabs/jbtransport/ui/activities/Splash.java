@@ -34,15 +34,21 @@ public class Splash extends AppCompatActivity {
         sharedPrefs = new SharedPrefs(this);
         connection = new Connection(this);
         if (connection.isInternet()){
-            if (sharedPrefs.getRouteSelected()){
-                loadToast.success();
-                startActivity(new Intent(getApplicationContext(),HomeActivity.class));
+            if (!sharedPrefs.getFirstOpen()){
+                startActivity(new Intent(getApplicationContext(),Intro.class));
                 finish();
             }else {
-                loadToast.success();
-                startActivity(new Intent(getApplicationContext(),RouteSelectActivity.class));
-                finish();
+                if (sharedPrefs.getRouteSelected()){
+                    loadToast.success();
+                    startActivity(new Intent(getApplicationContext(),HomeActivity.class));
+                    finish();
+                }else {
+                    loadToast.success();
+                    startActivity(new Intent(getApplicationContext(),RouteSelectActivity.class));
+                    finish();
+                }
             }
+
         }else {
             progressBar.setVisibility(View.GONE);
             conn.setVisibility(View.GONE);

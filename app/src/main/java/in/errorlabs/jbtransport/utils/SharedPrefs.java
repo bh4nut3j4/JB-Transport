@@ -26,6 +26,7 @@ public class SharedPrefs{
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
+
     public SharedPrefs(Context context){
         this.context=context;
         sharedPreferences = context.getSharedPreferences(myprefs,Context.MODE_PRIVATE);
@@ -159,4 +160,13 @@ public class SharedPrefs{
         return sharedPreferences.getBoolean(AlreadySkipped,false);
     }
 
+    public boolean getFirstOpen() {
+        return sharedPreferences.getBoolean(FirstOpen,false);
+    }
+
+    public void setFirstOpen(){
+        editor = sharedPreferences.edit();
+        editor.putBoolean(FirstOpen,true);
+        editor.apply();
+    }
 }
