@@ -64,7 +64,7 @@ public class FirebaseMessageReceiveService extends FirebaseMessagingService {
                 SharedPrefs sharedPrefs = new SharedPrefs(this);
                 String token = remoteMessage.getData().get("fcmToken");
                 String receiverEmail = remoteMessage.getData().get("receiverEmail");
-                if (token.equals(sharedPrefs.getFirebaseInstanceToken()) && sharedPrefs.getEmail()!=null &&
+                if (!token.equals(sharedPrefs.getFirebaseInstanceToken()) && sharedPrefs.getEmail()!=null &&
                         sharedPrefs.getEmail().length()!=0 && sharedPrefs.getRollNumber()!=null &&
                         sharedPrefs.getRollNumber().length()!=0){
                     sharedPrefs.setReceiverEmail(receiverEmail);

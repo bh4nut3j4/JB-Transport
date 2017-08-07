@@ -221,6 +221,7 @@ public class HomeActivity extends AppCompatActivity
             alert.show();
             return true;
         }else if(id == R.id.refresh) {
+            Snackbar.make(relativeLayout,"Refreshing...",Snackbar.LENGTH_SHORT).show();
             startMainActivity();
             return true;
         }else if(id == R.id.call) {

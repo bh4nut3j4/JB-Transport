@@ -88,15 +88,9 @@ public class RouteSelectAdapter extends RecyclerView.Adapter<RouteSelectAdapter.
         holder.setRouteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                String s,e,f;
-                s=holder.routeStartPoint.getText().toString();
-                e=holder.rouetEndPoint.getText().toString();
-                f=holder.fullRoute.getText().toString();
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                builder.setTitle(s+"<-->"+e);
                 builder.setIcon(R.drawable.route);
-                builder.setMessage(context.getString(R.string.fullroute)+"\n\n"
-                        +f+"\n\n\n"+context.getString(R.string.areyousure));
+                builder.setMessage(context.getString(R.string.areyousure));
                 builder.setPositiveButton(R.string.proceed, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

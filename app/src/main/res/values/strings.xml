@@ -74,8 +74,8 @@
     <string name="requestlocation">Request Location</string>
     <string name="sharelocation">Share Location</string>
     <string name="opensource">Open Source Licenses</string>
-    <string name="requestlocationabout">When requested, Location request will be sent to the students of your route anonymously.</string>
-    <string name="locationnote">NOTE : The location you receive may or may not be correct, only students are solely responsible for location sharing.\n\nAll the requests and responses are monitored by the management. Serious Actions will be taken for wrong location sharing.</string>
+    <string name="requestlocationabout">Upon requesting for location, an anonymous request shall be sent to all the app users of your bus.\nTo which only the people present or boarding the bus are requested to respond.</string>
+    <string name="locationnote">NOTE : The location you receive may or may not be correct as even people not onboard the bus may also respond, only students are solely responsible for location sharing.\n\nAll the requests and responses are monitored by the management. Serious Actions will be taken for wrong location sharing.</string>
     <string name="licenses_text">\t\nThe following are third party software/api that are used in JB Transport app.\n\n
         \t<a href="https://github.com/amitshekhariitbhu/Fast-Android-Networking">Fast-Android-Networking</a>\n\n
 \t<a href="https://github.com/bumptech/glide">Glide</a>\n\n
@@ -101,7 +101,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="searchtitle">Search</string>
     <string name="searchmessage">Enter the area name</string>
-    <string name="transportcallmsg">Prefer calling only if you are confused about bus routes and bus numbers or incase of Emergency</string>
+    <string name="transportcallmsg">** Prefer calling only incase of emergencies.</string>
     <string name="resetwarning">You wont be able to receive notification updates regarding this route.\n\nAre you sure you wish to change your primary Route ?</string>
     <string name="searchhint">E.g: Punjagutta</string>
     <string name="invalidinput">Invalid Input</string>
@@ -129,6 +129,7 @@
     <string name="subject_required">Subject Required !</string>
     <string name="submitted_successdull">Complaint Submitted Successfully</string>
     <string name="shared_successfully">Location Shared Successfully</string>
+    <string name="route_reset">Your Route Has Been Reset</string>
     <string name="holdon">Hold On !</string>
     <string name="requestsent">Request Sent Successfully</string>
     <string name="signincancelled">Sign In Cancelled</string>
@@ -150,7 +151,7 @@
     <string name="receiveremail">ReceiverEmail</string>
     <string name="invalidtime">InvalidTime</string>
     <string name="sharebuslocation">Share Bus Location</string>
-    <string name="sharelocationwarning">Someone has requested for the current bus location. \nPlease send your location only if your are in the BUS. \nAll the requests and responses are monitored by the management and actions will be taken if the location is shared outside of the bus route. \n You are solely responsible for your action.</string>
+    <string name="sharelocationwarning">Someone has requested for the current bus location. \nPlease send your location only if your are in the BUS. \nAll the requests and responses are monitored by the management and actions will be taken if the location is shared outside of the bus route.\n Only ou are solely responsible for your action.</string>
     <string name="sharelocationbutn">Share Location</string>
     <string name="scanyouridmsg">Please Scan the BarCode present at backside of your ID card</string>
     <string name="location_will_be_shared">Location will be shared, Thank you!</string>
@@ -179,6 +180,8 @@
     <string name="url">url</string>
     <string name="err_lbs">errorlabs</string>
     <string name="acmname">acm</string>
+    <string name="status">Status</string>
+    <string name="number">Number</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

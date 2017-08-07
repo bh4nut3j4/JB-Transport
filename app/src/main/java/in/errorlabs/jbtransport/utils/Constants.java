@@ -12,7 +12,8 @@ public class Constants {
     public static final String NoticeName="Notice";
     public static final String ErrorSelecting="ErrorSelecting";
     public static final String HomeRouteCoordinatesObjectName="Coordinates";
-    private static final String BaseURL="https://jbgroup.org.in/sync/sync_mapp/transport_php/";
+    //private static final String BaseURL="https://jbgroup.org.in/sync/sync_mapp/transport_php/";
+    private static final String BaseURL="https://errorlabs.in/android_wrappers/jbgroup_transport/transport_m_php/";
     public static final String RouteSelectDataUrl=BaseURL+"routeregister.php";
     public static final String RouteGetDetailsById=BaseURL+"getDetailsByRoute.php";
     public static final String ComplaintsURL=BaseURL+"complaints.php";
@@ -20,6 +21,7 @@ public class Constants {
     public static final String Coordinates=BaseURL+"getCoordinatesById.php";
     public static final String SearchByName=BaseURL+"searchByName.php";
     public static final String NotificationURL=BaseURL+"notifications.php";
+    public static final String InitialCheck=BaseURL+"initialcheck.php";
     public static final String AreaName="AreaName";
     public static final String ComplaintSubject="ComplaintTitle";
     public static final String ComplaintDesc="ComplaintDescription";
