@@ -138,6 +138,10 @@
             android:name=".ui.activities.WsWebView"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.activities.MapsActivityCurrentPlace"
+            android:label="@string/title_activity_maps">
+            </activity>
     </application>
 
 </manifest>
