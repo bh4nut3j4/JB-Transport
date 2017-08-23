@@ -11,7 +11,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -46,7 +45,6 @@ public class Scanner extends AppCompatActivity implements ZXingScannerView.Resul
                 e.printStackTrace();
             }
             Snackbar.make(mScannerView, getString(R.string.scanyouridmsg),Snackbar.LENGTH_INDEFINITE).show();
-
         }
     }
 
@@ -56,8 +54,7 @@ public class Scanner extends AppCompatActivity implements ZXingScannerView.Resul
         String ps3 = String.valueOf(data.charAt(2));
         String ps4 = String.valueOf(data.charAt(3));
         String code = ps3+ps4;
-        String[] codes = {"67","J2","GE","17","EF"};
-        Log.v("TAG", ps3+ps4);
+        String[] codes = {"67","J2","GE","DQ","EF","17"};
         if (Arrays.asList(codes).contains(code)){
             mScannerView.stopCamera();
             if (fromIntent!=null){

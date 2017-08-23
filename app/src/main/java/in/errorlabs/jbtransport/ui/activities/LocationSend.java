@@ -78,7 +78,7 @@ public class LocationSend extends Service {
         };
 
         locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,500,0,listener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,listener);
     }
 
     @Override

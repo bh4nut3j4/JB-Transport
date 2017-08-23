@@ -2,14 +2,11 @@ package in.errorlabs.jbtransport.ui.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -51,21 +48,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             holder.message.setVisibility(View.GONE);
         }
         if (model.getTimeStamp()!=null || model.getTimeStamp().length()>0){
-            String time = model.getTimeStamp().substring(0,10);
+            String time = model.getTimeStamp();
             holder.timstamp.setText(time);
         }else {
             holder.timstamp.setVisibility(View.GONE);
         }
-    }
-
-    public Date compareTime(Date date) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        return cal.getTime();
     }
 
     @Override

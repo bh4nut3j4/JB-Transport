@@ -7,20 +7,39 @@
     android:gravity="center"
     tools:context="in.errorlabs.jbtransport.ui.activities.Splash">
 
-    <ProgressBar
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_gravity="center"
-        android:id="@+id/progress_bar"
-        android:foregroundGravity="center"/>
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/progress_bar"
         android:gravity="center"
-        android:id="@+id/conn_text"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/black"
-        android:text="@string/connecting_to_transport_department"/>
+        android:id="@+id/r1">
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:id="@+id/img" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/r1">
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:id="@+id/progress_bar"
+            android:foregroundGravity="center"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/progress_bar"
+            android:gravity="center"
+            android:id="@+id/conn_text"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black"
+            android:text="@string/connecting_to_transport_department"/>
+    </RelativeLayout>
+
+
 
 </RelativeLayout>

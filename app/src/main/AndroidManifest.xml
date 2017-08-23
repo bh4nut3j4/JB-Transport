@@ -43,7 +43,13 @@
             android:name=".ui.activities.HomeActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+        <intent-filter>
+            <action android:name="in.errorlabs.jbtransport.ui.activities.HomeActivity" />
+
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+        </activity>
         <activity
             android:name=".ui.activities.RouteSelectActivity"
             android:label="@string/select_route"

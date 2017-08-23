@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.bumptech.glide.Glide;
 
 import net.steamcrafted.loadtoast.LoadToast;
 
@@ -37,14 +39,15 @@ public class Splash extends AppCompatActivity {
     @BindView(R.id.linear)RelativeLayout linearLayout;
     @BindView(R.id.progress_bar)ProgressBar progressBar;
     @BindView(R.id.conn_text)TextView conn;
+    @BindView(R.id.img)ImageView img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         loadToast = new LoadToast(this);
-        loadToast.show();
         ButterKnife.bind(this);
+        Glide.with(this).load(R.drawable.logomain).into(img);
         sharedPrefs = new SharedPrefs(this);
         connection = new Connection(this);
         if (connection.isInternet()) {
@@ -63,7 +66,7 @@ public class Splash extends AppCompatActivity {
         } else {
             progressBar.setVisibility(View.GONE);
             conn.setVisibility(View.GONE);
-            Snackbar.make(linearLayout, getString(R.string.nointernet), Snackbar.LENGTH_INDEFINITE).show();
+            Snackbar.make(linearLayout,getString(R.string.nointernet), Snackbar.LENGTH_INDEFINITE).show();
         }
     }
 
@@ -91,7 +94,6 @@ public class Splash extends AppCompatActivity {
         }
     }
     private void check(String routeNumber){
-        loadToast.show();
         AndroidNetworking.post(Constants.InitialCheck)
                 .setPriority(Priority.HIGH)
                 .addBodyParameter(Constants.AppKey,getString(R.string.transportAppKey))
